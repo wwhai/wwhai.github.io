@@ -153,7 +153,7 @@ scroll_top_arrow:  # 向顶部滚动的箭头
 #---------------------------
 index:
   banner_img: /img/index.jpg  # 首页 Banner 头图，以下相同
-  banner_img_height: 50  # 头图高度，屏幕百分比，available: 0 - 100
+  banner_img_height: 40  # 头图高度，屏幕百分比，available: 0 - 100
   banner_mask_alpha: 0.4  # 头图黑色蒙版的透明度，available: 0 - 1.0， 0 是完全透明（无蒙版），1 是完全不透明
   post_default_img: '' # 默认的文章封面图，当没有指定 index_img 时会使用该图片，若都为空则不显示任何图片
   slogan:  # 首页副标题的独立设置
@@ -171,7 +171,7 @@ index:
 # Custom Page
 page:
   banner_img: /img/default.png
-  banner_img_height: 50  # available: 0 - 100
+  banner_img_height: 40  # available: 0 - 100
   banner_mask_alpha: 0.3  # available: 0 - 1.0
 
 #---------------------------
@@ -251,11 +251,11 @@ utterances:
 # You can get yout ClientID and ClientSecret from https://github.com/settings/applications/new
 # More info available at https://github.com/gitalk/gitalk#options
 gitalk:
-  clientID: 4556d60759bb45d3bf68                    # GitHub Application Client ID
-  clientSecret: a9c65dbd8e93d0cb609f44bcc994def8e6ae4b50                 # GitHub Application Client Secret
+  clientID: 5a23a3cb82e4562a7645                    # GitHub Application Client ID
+  clientSecret: 20aae0ede082217ee29cc56b653144936cb7d4d2                 # GitHub Application Client Secret
   repo: gitalk                         # The repo to store comments
   owner: wwhai                        # GitHub repository owner. Can be personal user or organization.
-  admin: ['admin']                        # GitHub repo owner and collaborators, only these guys can initialize github issues, should be like "['admin']" or "['admin1','admin2']"
+  admin: ['wwhai']                        # GitHub repo owner and collaborators, only these guys can initialize github issues, should be like "['admin']" or "['admin1','admin2']"
   id: location.pathname         # The unique id of the page. Length must less than 70.
   language: zh-CN               # Localization language key, en, zh-CN and zh-TW are currently available.
   labels: ['Gitalk']          # GitHub issue labels.
@@ -264,41 +264,13 @@ gitalk:
   distractionFreeMode: false    # Facebook-like distraction free mode.
   createIssueManually: true     # By default, Gitalk will create a corresponding github issue for your every single page automatically when the logined user is belong to the admin users. You can create it manually by setting this option to true.
 
-# Valine
-# 完整文档 https://valine.js.org/configuration.html
-# 注意：下列配置项中的 true/false 不要用引号括起来
-valine:
-  appid:  # 从 LeanCloud 的应用中得到的 appId
-  appkey:  # 从 LeanCloud 的应用中得到的 APP Key
-  placeholder: 说点什么 # 评论框占位提示符
-  path: window.location.pathname # 当前文章页路径，用于区分不同的文章页，以保证正确读取该文章页下的评论列表
-  avatar: retro # Gravatar 头像展示方式
-  meta: ['nick', 'mail', 'link']  # 评论者相关属性
-  pageSize: 10 # 评论列表分页，每页条数
-  lang: zh-CN # zh-CN | zh-TW | en | ja
-  highlight: false # 代码高亮
-  recordIP: false # 是否记录评论者IP
-  serverURLs:  # REST API 服务器地址，国际版不填
-
-# 畅言
-# http://changyan.kuaizhan.com/
-changyan:
-  appid: ''
-  appkey: ''
-
-# Livere 来必力
-# You can get your uid from https://www.livere.com/my_Livere
-livere:
-  uid: ''
-
-
 #---------------------------
 # 归档页
 # Archive Page
 #---------------------------
 archive:
   banner_img: /img/archive.jpg
-  banner_img_height: 50  # available: 0 - 100
+  banner_img_height: 40  # available: 0 - 100
   banner_mask_alpha: 0.3  # available: 0 - 1.0
   subtitle:  # 打字机内容
 
@@ -308,7 +280,7 @@ archive:
 #---------------------------
 category:
   banner_img: /img/category.jpg
-  banner_img_height: 50  # available: 0 - 100
+  banner_img_height: 40  # available: 0 - 100
   banner_mask_alpha: 0.3  # available: 0 - 1.0
   subtitle:  # 打字机内容
   post_limit: 10  # 单个分类中折叠展示文章数的最大值，超过限制会显示 More
@@ -320,7 +292,7 @@ category:
 #---------------------------
 tag:
   banner_img: /img/tags.jpg
-  banner_img_height: 50  # available: 0 - 100
+  banner_img_height: 40  # available: 0 - 100
   banner_mask_alpha: 0.3  # available: 0 - 1.0
   subtitle:  # 打字机内容
   tagcloud: # 标签云
@@ -337,7 +309,7 @@ tag:
 #---------------------------
 about:  # 关于页需要手动创建，具体请见：https://hexo.fluid-dev.com/docs/guide/#%E5%85%B3%E4%BA%8E%E9%A1%B5
   banner_img: /img/about.jpg
-  banner_img_height: 50  # available: 0 - 100
+  banner_img_height: 40  # available: 0 - 100
   banner_mask_alpha: 0.3  # available: 0 - 1.0
   subtitle:  # 打字机内容
   avatar: /img/nn.png # 头像
@@ -352,7 +324,7 @@ about:  # 关于页需要手动创建，具体请见：https://hexo.fluid-dev.co
 #---------------------------
 page404:
   banner_img: /img/default.png
-  banner_img_height: 50  # available: 0 - 100
+  banner_img_height: 40  # available: 0 - 100
   banner_mask_alpha: 0.3  # available: 0 - 1.0
   subtitle: 'Page not found'  # 打字机内容
 

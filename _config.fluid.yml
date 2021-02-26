@@ -12,7 +12,7 @@ language: zh-CN
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://openlab.ezlinker.cn/
+url: http://wwhai.gitee.io/
 root: /
 permalink: :year/:month/:day/:id.html
 permalink_defaults:
@@ -72,11 +72,13 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: hexo-theme-fluid-1.8.1
+theme: hexo-theme-fluid-1.8.8
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
+# Deployment
 deploy:
   type: git
-  repo: no
-  # repo: https://git.dev.tencent.com/ChildeWWH/HexoBlog.git
+  repository: https://gitee.com/wwhai/wwhai.git
+  # repository: https://github.com/wwhai/wwhai.github.io.git
+  branch: master

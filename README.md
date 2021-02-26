@@ -1,6 +1,6 @@
 # 这个仓库是我的个人博客
 ## 访问
-- 地址:https://openlab.ezlinker.cn
+- 地址:https://wwhai.gitee.io
 - 部署地址:https://github.com/wwhai/wwhai.github.io
 > 其实就是一个仓库保存源码，一个仓库保存Hexo编译后的www资源。网站托管在github，没有CDN，速度较慢
 

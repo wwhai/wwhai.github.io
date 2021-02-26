@@ -152,7 +152,7 @@ disqus:
 # You can get yout ClientID and ClientSecret from https://github.com/settings/applications/new
 # More info available at https://github.com/gitalk/gitalk#options
 gitalk:
-  clientID: 4556d60759bb45d3bf68                    # GitHub Application Client ID
+  clientID: 5a23a3cb82e4562a7645                    # GitHub Application Client ID
   clientSecret: a9c65dbd8e93d0cb609f44bcc994def8e6ae4b50                 # GitHub Application Client Secret
   repo: wwhai.github.io                         # The repo to store comments
   owner: wwhai                        # GitHub repository owner. Can be personal user or organization.

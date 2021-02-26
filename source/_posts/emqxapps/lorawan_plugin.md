@@ -11,11 +11,11 @@ categories:
 appname: EMQX LoraWan Gateway
 collection: emqxapps
 
-homepage: https://openlab.ezlinker.cn
+homepage: https://wwhai.gitee.io
 
-release: https://openlab.ezlinker.cn
+release: https://wwhai.gitee.io
 
-document: https://openlab.ezlinker.cn
+document: https://wwhai.gitee.io
 
 author: wwhai
 

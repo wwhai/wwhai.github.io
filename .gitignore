@@ -2,3 +2,6 @@
 db.json
 package-lock.json
 node_modules/
+.deploy_git
+public/
+.deploy_git/
