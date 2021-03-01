@@ -74,13 +74,18 @@ page.banner_mask_alpha = theme.post.banner_mask_alpha
               <% } %>
             </div>
 
-            <% if(page.comments && theme.post.comments.enable) { %>
               <!-- Comments -->
               <div class="comments" id="comments">
-                <% var type = '_partial/comments/' + theme.post.comments.type %>
-                <%- partial(type) %>
+                  <script src="https://utteranc.es/client.js"
+                    repo="wwhai/gitalk"
+                    issue-term="url"
+                    label="[Utterances]"
+                    theme="preferred-color-scheme"
+                    crossorigin="anonymous"
+                    async>
+                  </script>
               </div>
-            <% } %>
+
           </div>
         </div>
       </div>
