@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="技术分享">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>BigNullNull</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>BigNullNull</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/openlab/academic.html">
+                
+                FreeOpenLab
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                
+                友链
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/emqx/">
+                
+                EMQX插件市场
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/community/">
+                
+                讨论区
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/index.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.4)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+      <div class="container nopadding-md">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board"
+          >
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/11/19/cklrl5dwt003lx6teg8o5e0xc.html" target="_self">
+          <img src="/static/3.jpg" srcset="/img/loading.gif" alt="Java8Lambda表达式写法">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/11/19/cklrl5dwt003lx6teg8o5e0xc.html">Java8Lambda表达式写法</a>
+
+      <a href="/2019/11/19/cklrl5dwt003lx6teg8o5e0xc.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>本文作者：[wangwenhai] # 概要：Java8的lambda的简单实践</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-11-19 22:54:51
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Java/">Java</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Java/">Java</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/11/19/cklrl5dxp006dx6tegx5u8vaw.html" target="_self">
+          <img src="/uploads/wps1.jpg" srcset="/img/loading.gif" alt="物联网终端设计">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/11/19/cklrl5dxp006dx6tegx5u8vaw.html">物联网终端设计</a>
+
+      <a href="/2019/11/19/cklrl5dxp006dx6tegx5u8vaw.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>本文作者：[wangwenhai] # 概要：物联网设备终端硬件设计思路。</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-11-19 18:13:06
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%A1%AC%E4%BB%B6%E8%AE%BE%E8%AE%A1/">硬件设计</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/11/19/cklrl5dxo0068x6tefi9ubzek.html" target="_self">
+          <img src="/uploads/wps11.png" srcset="/img/loading.gif" alt="Web模拟终端设计">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/11/19/cklrl5dxo0068x6tefi9ubzek.html">Web模拟终端设计</a>
+
+      <a href="/2019/11/19/cklrl5dxo0068x6tefi9ubzek.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>本文作者：[wangwenhai] # 概要：准备结合MQTT协议做一个Web Terminal，功能就是通过外网管理内网Linux主机或者运行Linux的设备。</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-11-19 18:06:40
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91%E8%AE%BE%E8%AE%A1/">物联网设计</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/11/19/cklrl5dxo006ax6te5vcoawe0.html" target="_self">
+          <img src="/uploads/image-20191119180352073.png" srcset="/img/loading.gif" alt="多状态开关设计">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/11/19/cklrl5dxo006ax6te5vcoawe0.html">多状态开关设计</a>
+
+      <a href="/2019/11/19/cklrl5dxo006ax6te5vcoawe0.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>本文作者：[wangwenhai] # 概要：本文讲如何设计一个多状态开关</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-11-19 18:01:35
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91%E8%AE%BE%E8%AE%A1/">物联网设计</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/11/19/cklrl5dww003yx6teajcs3m38.html" target="_self">
+          <img src="/static/2.jpg" srcset="/img/loading.gif" alt="RestFul风格权限系统设计">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/11/19/cklrl5dww003yx6teajcs3m38.html">RestFul风格权限系统设计</a>
+
+      <a href="/2019/11/19/cklrl5dww003yx6teajcs3m38.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>本文作者：[wangwenhai] # 概要：概要-&gt;在认真分析了传统Rolebase设计西路以后，和Restful风格接口进行对比，提炼了一些通用的思路和不同的思路，设计了一套权限管理系统。</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-11-19 17:55:44
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%9D%82%E6%96%87/">杂文</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/WEB%E5%BC%80%E5%8F%91/">WEB开发</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/11/19/cklrl5dx6004ux6te1tsb5l1m.html" target="_self">
+          <img src="/uploads/image-20191119101316202.png" srcset="/img/loading.gif" alt="纪念来之不易的爱情">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/11/19/cklrl5dx6004ux6te1tsb5l1m.html">纪念来之不易的爱情</a>
+
+      <a href="/2019/11/19/cklrl5dx6004ux6te1tsb5l1m.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>本文作者：[wangwenhai] # 概要：纪念我和女朋友这三年来之不易的爱情。</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-11-19 10:07:06
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%9D%82%E8%B0%88/">杂谈</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/python/">python</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/11/06/cklrl5dwr003fx6te8oo3hd9o.html" target="_self">
+          <img src="/static/6.jpg" srcset="/img/loading.gif" alt="dl4j的BaseLayer前向与反向传播算法计算过程简介">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/11/06/cklrl5dwr003fx6te8oo3hd9o.html">dl4j的BaseLayer前向与反向传播算法计算过程简介</a>
+
+      <a href="/2019/11/06/cklrl5dwr003fx6te8oo3hd9o.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>本文作者：[gerry] # 概要：本文以org.deeplearning4j.nn.layers.BaseLayer为例，DenseLayer继承BaseLayer，并使用其前向与反向传播方法。</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-11-06 11:13:00
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Springboot/">Springboot</a>
+            
+              <a href="/tags/java/">java</a>
+            
+              <a href="/tags/Dl4J/">Dl4J</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/11/06/cklrl5dws003kx6te4t75gs33.html" target="_self">
+          <img src="/static/22.jpg" srcset="/img/loading.gif" alt="Spring webflux使用websocket实现单播和广播">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/11/06/cklrl5dws003kx6te4t75gs33.html">Spring webflux使用websocket实现单播和广播</a>
+
+      <a href="/2019/11/06/cklrl5dws003kx6te4t75gs33.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>本文作者：[gerry] # 概要：先前搜了一些关于reactive websocket的示例都是单个session收到消息后又发送给自己，例如：session.send(session.receive())，这种形式和单次http的作用无差别，</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-11-06 11:12:13
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Springboot/">Springboot</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Springboot/">Springboot</a>
+            
+              <a href="/tags/java/">java</a>
+            
+              <a href="/tags/websocket/">websocket</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/11/06/cklrl5dwq003dx6te8s1020e2.html" target="_self">
+          <img src="/static/3.jpg" srcset="/img/loading.gif" alt="DeepLearning4j的StackVertex实现参数共享">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/11/06/cklrl5dwq003dx6te8s1020e2.html">DeepLearning4j的StackVertex实现参数共享</a>
+
+      <a href="/2019/11/06/cklrl5dwq003dx6te8s1020e2.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>本文作者：[gerry] # 概要：设input1和input2是shape为(M,I)的张量，权重W是shape为(I,O)的张量,设对应的两个输出值为output1和output2，其shape是(M,O)，设损失函数对输出值的导数为epsilon1和epsilon2，损失函数对线性部分的导数为delta1和delta2，shape也都是(M,O)：</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-11-06 11:11:36
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Springboot/">Springboot</a>
+            
+              <a href="/tags/java/">java</a>
+            
+              <a href="/tags/Neo4J/">Neo4J</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/11/06/cklrl5dxn0063x6te42od70gi.html" target="_self">
+          <img src="/static/18.jpg" srcset="/img/loading.gif" alt="物联网系统开发杂谈">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/11/06/cklrl5dxn0063x6te42od70gi.html">物联网系统开发杂谈</a>
+
+      <a href="/2019/11/06/cklrl5dxn0063x6te42od70gi.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>本文作者：[wangwenhai] # 概要：本文主要讲一下物联网业务系统和中间件的使用以及技术选型</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-11-06 09:08:43
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%9D%82%E8%B0%88/">杂谈</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91%E6%8A%80%E6%9C%AF/">物联网技术</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/page/7/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/9/"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
+  
+  <script>
+    for (ele of document.getElementById("pagination").getElementsByTagName("a")) {
+      ele.href += '#board';
+    }
+  </script>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "愿无岁月可回首，愿忙碌取得成就&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
