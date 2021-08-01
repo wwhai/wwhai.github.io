@@ -79,6 +79,6 @@ theme: hexo-theme-fluid-1.8.1
 # Deployment
 deploy:
   type: git
-  repository: https://gitee.com/wwhai/wwhai.git
+  # repository: https://gitee.com/wwhai/wwhai.git
   # repository: https://github.com/wwhai/wwhai.github.io.git
   branch: master

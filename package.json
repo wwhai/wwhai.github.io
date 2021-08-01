@@ -1,5 +1,5 @@
 {
-  "name": "bigbullbull-blog",
+  "name": "bignullnull-blog",
   "version": "1.0.0",
   "private": true,
   "hexo": {
@@ -20,9 +20,6 @@
     "hexo-server": "^0.2.2",
     "hexo-tag-bilibili": "^0.3.1",
     "js-yaml": "^3.5.0",
-    "live2d-widget-model-gf": "^1.0.5",
-    "live2d-widget-model-haru": "^1.0.5",
-    "live2d-widget-model-miku": "^1.0.5",
     "s": "^1.0.0"
   }
 }

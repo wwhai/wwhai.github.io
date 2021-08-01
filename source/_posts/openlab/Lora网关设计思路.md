@@ -1,29 +1,33 @@
 ---
-title: LoraWan网关插件
-date: 2021-12-6 00:00:00
+title: Lora 网关设计思路
+date: 2022-12-6 00:00:00
 index_img: /img/article-banner.png
 tags:
-  - emqxapps
+
+  - freeopenlab
 
 categories:
-  - emqxapps
 
-appname: EMQX LoraWan Gateway
-collection: emqxapps
+  - freeopenlab
 
-homepage: https://wwhai.gitee.io
+collection: freeopenlab
+type: 理论研究
+team : [
 
-release: https://wwhai.gitee.io
+    ["wwhai", "CPU虚拟指令集"],
+    ["LiuZY", "浏览器渲染技术"]
 
-document: https://wwhai.gitee.io
+]
+resources: [
 
-author: wwhai
+    ["PCB电路图","#"],
+    ["设计架构图","#"]
 
-description: 这是一款 EMQX LoraWan 插件，主要用于Lora网关上报数据到emqx时接收数据。
+]
+abstract: 本文主要讲了Lora 网关设计思路
+progress : 80
 
 ---
-这是一款 EMQX LoraWan 插件，主要用于Lora网关上报数据到emqx时接收数据。
-<!-- more -->
 
 # EMQX LoraWAN 设计思路
 
