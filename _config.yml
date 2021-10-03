@@ -79,5 +79,6 @@ deploy:
   type: git
   # repository: https://gitee.com/wwhai/wwhai.git
   # repository: https://e.coding.net/ChildeWWH/hexoblog/BlogWWW.git
-  repository: https://github.com/wwhai/wwhai.github.io.git
+  # repository: https://github.com/wwhai/wwhai.github.io.git
+  repository: git@github.com:wwhai/wwhai.github.io.git
   branch: master
