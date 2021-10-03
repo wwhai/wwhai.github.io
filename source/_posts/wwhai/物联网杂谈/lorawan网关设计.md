@@ -1,12 +1,12 @@
 ---
-title: LoraWan网关插件
+title: LoraWan网关设计思路
 date: 2021-12-6 00:00:00
-index_img: /img/article-banner.png
+index_img: /uploads/iot/lora-gw.png
 tags:
-  - emqxapps
+  - 物联网终端设计
 
 categories:
-  - emqxapps
+  - 物联网终端设计
 
 appname: EMQX LoraWan Gateway
 collection: emqxapps
@@ -19,13 +19,11 @@ document: https://wwhai.gitee.io
 
 author: wwhai
 
-description: 这是一款 EMQX LoraWan 插件，主要用于Lora网关上报数据到emqx时接收数据。
-
 ---
-这是一款 EMQX LoraWan 插件，主要用于Lora网关上报数据到emqx时接收数据。
+
 <!-- more -->
 
-# EMQX LoraWAN 设计思路
+# LoraWAN 设计思路
 
 ## 1.简介
 
