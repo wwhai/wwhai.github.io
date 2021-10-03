@@ -1,6 +1,6 @@
 ---
 title: OHVM 编程语言设计思路
-date: 2022-12-6 00:00:00
+date: 2021-10-6 00:00:00
 index_img: /img/article-banner.png
 tags:
 
