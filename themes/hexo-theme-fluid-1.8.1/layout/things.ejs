@@ -16,7 +16,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>FREE-OPEN-LAB</title>
+    <title>作品展示</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
@@ -29,38 +29,49 @@
     <![endif]-->
 </head>
 
+
 <body>
-
-    <div class="container-fluid" style="width: 100%;margin-top: 8px;">
-        <%- partial('_partial/openlab_header') %>
-        <h2>最新项目</h2>
+    <div class="container" style="width: 100%;margin-top: 8px;">
+        <h2>最新作品</h2>
         <hr>
+        <ul class="list-unstyled">
+            <!-- for 拿文章列表 -->
+            <% let posts = site.posts.find({collection: 'things'});%>
+            <% posts.find({collection: 'things'}).forEach(function(post, index){ %>
 
-        <div class="row">
+            <!-- 只有特殊分类才显示出来 -->
+            <% if ((post.collection != undefined)&& (post.collection == 'things')) {%>
 
-
-            <div class="card mb-3"">
-                <div class=" row no-gutters">
-                <div class="col-md-4">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/NewTux.svg/300px-NewTux.svg.png"
-                        class="card-img" alt="...">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">Linux</h5>
-                        <p class="card-text">
-                            Linux是一种自由和开放源码的类UNIX操作系统。该操作系统的内核由林纳斯·托瓦兹在1991年10月5日首次发布[5][6]，在加上用户空间的应用程序之后，成为Linux操作系统。Linux也是自由软件和开放源代码软件发展中最著名的例子。只要遵循GNU
-                            通用公共许可证（GPL），任何个人和机构都可以自由地使用Linux的所有底层源代码，也可以自由地修改和再发布。大多数Linux系统还包括像提供GUI的X
-                            Window之类的程序。除了一部分专家之外，大多数人都是直接使用Linux 发行版，而不是自己选择每一样组件或自行设置</p>
-                        <p class="card-text">发布时间    <small class="text-muted">2020-11-2</small></p>
-                        <button type="button" class="btn btn-outline-info">项目主页</button>
+            <li class="media">
+                <div class="card mb-3"">
+                    <div class=" row no-gutters">
+                    <div class="col-md-4">
+                        <img src="<%= post.index_img %>" class="card-img" alt="<%= post.index_img %>">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h4 class="card-title"><%= post.title %></h4>
+                            <hr>
+                            <p class="card-text">
+                                <%= post.summary %>
+                            <p class="card-text">发布时间    <small class="text-muted"><%= post.date %></small></p>
+                            <button type="button" class="btn btn-outline-info">项目主页</button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </li>
+
+            <% } %>
+            <!-- if结束 -->
+            <% }); %>
+            <!-- for 循环结束 -->
+        </ul>
+
+        <div class="alert alert-primary" role="alert">
+            本站点所有文章除特别声明外，均采用 CC BY-SA 4.0 协议 ，转载请注明出处！
         </div>
     </div>
 
-    </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>

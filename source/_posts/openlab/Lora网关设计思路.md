@@ -90,7 +90,7 @@ RESSACS16-Low-cost-LoRa-IoT-step-by-step.pdf
 
 ## 1. 驱动规范
 
-规定 EMQX LoraWan GateWay 对模组的驱动方式为标准串口，其中串口参数可以自己适配，默认值如下：
+规定 LoraWan Gateway 对模组的驱动方式为标准串口，其中串口参数可以自己适配，默认值如下：
 
 | 项目     | 默认值 |
 | -------- | ------ |
@@ -103,7 +103,7 @@ RESSACS16-Low-cost-LoRa-IoT-step-by-step.pdf
 
 ### 2.1 地址规范
 
-MAC层规定了能连接到 EMQX LoraWan Gateway 的终端一些规范：
+MAC层规定了能连接到 LoraWan Gateway 的终端一些规范：
 
 - 信道：标准 Lora 信道，值为1-127之间
 
@@ -119,7 +119,7 @@ $$
 
 ***一个案例：***100::0001-0001-0001-0001.10
 
-规定在  EMQX LoraWan Gateway 管理的网络中，*UUID*作为唯一识别码。
+规定在  LoraWan Gateway 管理的网络中，*UUID*作为唯一识别码。
 
 > UUID 可以看做是互联网中的IP地址，而 UUID 组成中的 CHANNEL 可以看成是网关地址，CID可以看成是子网IP，DR可以看成是子网掩码。
 
