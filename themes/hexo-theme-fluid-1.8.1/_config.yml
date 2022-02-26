@@ -108,8 +108,7 @@ navbar:
     - { key: 'FreeOpenLab', link: '/openlab/academic.html'}
     - { key: 'about', link: '/about/'}
     - { key: '作品', link: '/things/'}
-    - { key: '插件', link: '/emqx/'}
-
+    # - { key: '插件', link: '/emqx/'}
     - { key: 'Bilibili', link: 'https://space.bilibili.com/14649762'}
 
 search: # 搜索栏，基于 hexo-generator-search 插件，若已安装其他搜索插件请关闭此功能，以避免生成多余的索引文件。
@@ -358,3 +357,13 @@ links:
       link: 'https://github.com/hamler-lang/hamler',
       image: '/img/hamler-logo.png'
     }
+# hexo-hide-posts
+hide_posts:
+  enable: true
+  # Change the filter name to fit your need
+  filter: hidden
+  # Generators which you want to expose all posts (include hidden ones) to.
+  # Common generators: index, tag, category, archive, sitemap, feed, etc.
+  public_generators: []
+  # Add "noindex" meta tag to prevent hidden posts from being indexed by search engines
+  noindex: true

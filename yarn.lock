@@ -156,7 +156,7 @@
     "strip-ansi" "^3.0.0"
     "supports-color" "^2.0.0"
 
-"chalk@^4.0.0":
+"chalk@^4.0.0", "chalk@^4.1.2":
   "integrity" "sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA=="
   "resolved" "https://repo.huaweicloud.com/repository/npm/chalk/-/chalk-4.1.2.tgz"
   "version" "4.1.2"
@@ -563,6 +563,13 @@
   dependencies:
     "hexo-pagination" "0.0.2"
     "object-assign" "^4.0.1"
+
+"hexo-hide-posts@^0.2.0":
+  "integrity" "sha512-euTftMGCSYkhn/ARVuOv+XQIMNTUy5vCiutaY0qcN92NdZTfPG/wKCkeR3yE7LpMs/Y0aTuEp9F5NUVP/Dt6nA=="
+  "resolved" "https://registry.npmjs.org/hexo-hide-posts/-/hexo-hide-posts-0.2.0.tgz"
+  "version" "0.2.0"
+  dependencies:
+    "chalk" "^4.1.2"
 
 "hexo-i18n@^1.0.0":
   "integrity" "sha512-yw90JHr7ybUHN/QOkpHmlWJj1luVk5/v8CUU5NRA0n4TFp6av8NT7ujZ10GDawgnQEdMHnN5PUfAbNIVGR6axg=="
