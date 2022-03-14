@@ -4,8 +4,8 @@
 
 # Site
 title: 来躺平新青年
-subtitle: 大牛牛的博客
-description: 技术分享
+subtitle: 来躺平新青年
+description: 来躺平新青年的技术分享
 author:
   wwhai
 language: zh-CN
@@ -77,8 +77,5 @@ theme: hexo-theme-fluid-1.8.1
 # Deployment
 deploy:
   type: git
-  # repository: https://gitee.com/wwhai/wwhai.git
-  # repository: https://e.coding.net/ChildeWWH/hexoblog/BlogWWW.git
-  # repository: https://github.com/wwhai/wwhai.github.io.git
-  repository: git@github.com:wwhai/wwhai.github.io.git
+  repository: https://github.com/wwhai/wwhai.github.io.git
   branch: master
