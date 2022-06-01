@@ -7,7 +7,7 @@ title: 来躺平新青年
 subtitle: 来躺平新青年
 description: 来躺平新青年的技术分享
 author: wwhai
-language: zh-CN
+
 server:
   port: 40000
   compress: true
