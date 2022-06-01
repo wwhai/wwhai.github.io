@@ -6,10 +6,12 @@
 title: 来躺平新青年
 subtitle: 来躺平新青年
 description: 来躺平新青年的技术分享
-author:
-  wwhai
+author: wwhai
 language: zh-CN
-
+server:
+  port: 40000
+  compress: true
+  header: true
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: http://wwhai.gitee.io/

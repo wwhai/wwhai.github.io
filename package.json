@@ -1,7 +1,7 @@
 {
-  "name": "来躺平新青年-blog",
+  "name": "nilyouth",
   "version": "1.0.0",
-  "private": true,
+  "private": false,
   "hexo": {
     "version": "5.4.0"
   },

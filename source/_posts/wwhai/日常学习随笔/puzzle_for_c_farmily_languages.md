@@ -1,7 +1,18 @@
 ---
-marp: true
+title: C语言家族的一些历史遗留和困惑
+date:  2019-11-06 09:08:43
+index_img: /static/8.jpg
+tags:
+- 物联网技术
+
+categories:
+- 杂谈
+
+author: wangwenhai
 ---
-<!-- _backgroundColor: #99CCFF -->
+本文作者：[wangwenhai] # 概要：C语言家族的一些历史遗留和困惑
+<!-- more -->
+
 
 # C语言家族的一些历史遗留和困惑
 ![bg left:25%](https://picsum.photos/720?image=29)

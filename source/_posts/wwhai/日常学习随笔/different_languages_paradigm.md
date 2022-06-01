@@ -1,6 +1,18 @@
 ---
-marp: true
+title: 关于编程范式的思考
+date:  2019-11-06 09:08:43
+index_img: /static/8.jpg
+tags:
+- 物联网技术
+
+categories:
+- 杂谈
+
+author: wangwenhai
 ---
+本文作者：[wangwenhai] # 概要：关于编程范式的思考
+<!-- more -->
+
 
 # 关于编程范式的思考
 
