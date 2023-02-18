@@ -32,7 +32,8 @@
 
 <body>
     <div class="container" style="width: 100%;margin-top: 8px;">
-        <h2>最新作品</h2>
+        <h2>作品展示</h2>
+        <a href="https://github.com/wwhai?tab=repositories">【更多轻量级作品请移步这里:https://github.com/wwhai?tab=repositories】</a>
         <hr>
         <ul class="list-unstyled">
             <!-- for 拿文章列表 -->
@@ -42,16 +43,15 @@
             <!-- 只有特殊分类才显示出来 -->
             <% if ((post.collection != undefined)&& (post.collection == 'things')) {%>
 
-            <li class="media">
-                <div class="card mb-4">
-                    <div class=" row no-gutters">
+            <li>
+                <div class="card mb-20">
+                    <div class="row no-gutters">
                     <div class="col-md-20">
                         <div class="card-body">
                             <h4 class="card-title"><%= post.title %></h4>
                             <hr>
-                            <p class="card-text">
-                                <%= post.summary %>
-                            <p class="card-text">发布时间    <small class="text-muted"><%= post.date %></small></p>
+                            <p class="card-text"></p><%= post.summary %> </p>
+                            <p class="card-text">发布时间:    <small class="text-muted"><%= post.date %></small></p>
                             <a type="button" class="btn btn-outline-info" href="<%= post.homepage %>">项目主页</a>
                         </div>
                     </div>
