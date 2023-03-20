@@ -34,10 +34,7 @@ layout: about
 > 任何来访请备注: `来自博客`,如果是Hr，可备注: `Hr`
 
 ## 交流社区
-<p style="text-align:center;">
-  QQ群: 475512169
-</p>
 
-<div style="text-align:center;">
-    <img src="./qq-group-qr.png" width="20%"></img>
-</div>
+<h4 style="text-align:center;">
+  微信群: 本群是一个技术交流群，为了防止恶意广告，请先加 `nilyouth`好友 , 然后备注“来自博客”, 然后会被邀请加入本群。
+</h4>
