@@ -17,6 +17,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           npm install -g hexo-cli
+          yarn
           git config --global user.email "cnwwhai@gmail.com"
           git config --global user.name "wwhai"
           hexo g
