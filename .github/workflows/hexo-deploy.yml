@@ -25,4 +25,5 @@ jobs:
           git init .
           git add .
           git commit -m "$(date +%Y年%m月%d日)"
+          git checkout -b www
           git push https://github.com/wwhai/wwhai.github.io.git www -f
