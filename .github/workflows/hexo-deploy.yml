@@ -16,6 +16,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
+          npm install -g hexo-cli
           git config --global user.email "cnwwhai@gmail.com"
           git config --global user.name "wwhai"
           hexo g
