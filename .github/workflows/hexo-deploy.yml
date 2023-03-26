@@ -22,6 +22,6 @@ jobs:
           git config --global user.name "wwhai"
           hexo g
           ls -al
-          hexo d
+          # hexo d
           # cd .deploy_git/
           # git push https://github.com/wwhai/wwhai.github.io.git www -f
