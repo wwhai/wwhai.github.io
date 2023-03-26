@@ -1,27 +1,23 @@
-name: HEXO CI
-
-on: [push]
-
+name: "自动获取最新网易新闻热点"
+on:
+  push:
+  schedule:
+    # 每天早上8点运行
+    - cron: "0 0 * * *"
+env:
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
 jobs:
-  build:
+  get-news:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [v19.0.1]
-
     steps:
-      - uses: actions/checkout@v1
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Deploy hexo
+      - name: "检查仓库"
+        uses: actions/checkout@v3
+      - name: "编译程序"
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           git config --global user.email "cnwwhai@gmail.com"
           git config --global user.name "wwhai"
-          npm install -g hexo-cli
-          yarn
           hexo g
-          hexo d
+          cd ./.deploy_git
+          git push https://github.com/wwhai/wwhai.github.io.git www -f
