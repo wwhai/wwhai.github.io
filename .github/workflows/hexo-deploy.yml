@@ -21,7 +21,8 @@ jobs:
           git config --global user.email "cnwwhai@gmail.com"
           git config --global user.name "wwhai"
           hexo g
-          ls -al
-          # hexo d
-          # cd .deploy_git/
-          # git push https://github.com/wwhai/wwhai.github.io.git www -f
+          cd ./public/
+          git init .
+          git add .
+          git commit -m "$(date +%Y年%m月%d日)"
+          git push https://github.com/wwhai/wwhai.github.io.git www -f
