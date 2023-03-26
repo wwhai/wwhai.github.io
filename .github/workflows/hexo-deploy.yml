@@ -19,6 +19,7 @@ jobs:
 
       - name: Deploy hexo
         run: |
+          npm install -g hexo-cli
           yarn
           hexo g
           hexo d
