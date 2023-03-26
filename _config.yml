@@ -80,4 +80,4 @@ theme: hexo-theme-fluid-1.8.1
 deploy:
   type: git
   repository: https://github.com/wwhai/wwhai.github.io.git
-  branch: master
+  branch: www
