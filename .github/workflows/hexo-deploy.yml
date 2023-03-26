@@ -18,10 +18,10 @@ jobs:
         run: |
           npm install -g hexo-cli
           yarn
-          git config --global user.email "cnwwhai@gmail.com"
-          git config --global user.name "wwhai"
           hexo g
           cd ./public/
+          git config --global user.email "cnwwhai@gmail.com"
+          git config --global user.name "wwhai"
           git init .
           git add .
           git commit -m "$(date +%Y年%m月%d日)"
