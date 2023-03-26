@@ -1,17 +1,24 @@
-name: Deploy
+name: HEXO CI
 
 on: [push]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: A job to deploy blog.
+    strategy:
+      matrix:
+        node-version: [v19.0.1]
+
     steps:
-    - name: Checkout
-      uses: actions/checkout@v1
-      with:
-        submodules: true
-      run: |
+      - uses: actions/checkout@v1
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Deploy hexo
+        run: |
           yarn
           hexo g
           hexo d
