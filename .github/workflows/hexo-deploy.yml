@@ -23,18 +23,21 @@ jobs:
           ${{ runner.os }}-node-
     - name: Install Dependencies
       if: steps.cache.outputs.cache-hit != 'true'
-      run: yarn
-
-    # Deploy hexo blog website.
-    - name: Deploy
-      id: deploy
-      uses: sma11black/hexo-action@v1.0.3
-      with:
-        deploy_key: ${{ secrets.HEXOKEY }}
-        user_name: wwhai
-        user_email: cnwwhai@gmail.com
-        commit_msg: ${{ github.event.head_commit.message }}  # (or delete this input setting to use hexo default settings)
-    # Use the output from the `deploy` step(use for test action)
-    - name: Get the output
       run: |
-        echo "${{ steps.deploy.outputs.notify }}"
+          yarn
+          hexo g
+          hexo d
+
+    # # Deploy hexo blog website.
+    # - name: Deploy
+    #   id: deploy
+    #   uses: sma11black/hexo-action@v1.0.3
+    #   with:
+    #     deploy_key: ${{ secrets.HEXOKEY }}
+    #     user_name: wwhai
+    #     user_email: cnwwhai@gmail.com
+    #     commit_msg: ${{ github.event.head_commit.message }}  # (or delete this input setting to use hexo default settings)
+    # # Use the output from the `deploy` step(use for test action)
+    # - name: Get the output
+    #   run: |
+    #     echo "${{ steps.deploy.outputs.notify }}"
