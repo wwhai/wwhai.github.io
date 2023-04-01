@@ -39,5 +39,7 @@ author: wwhai
 ### 压力测试
 
 ## 参考
-- 【官方文档1】https://mosquitto.org/documentation
-- 【官方文档2】https://mosquitto.org/api/files/mosquitto-h.html
+[^1]: 【官方文档1】https://mosquitto.org/documentation
+[^1]: 【官方文档2】https://mosquitto.org/api/files/mosquitto-h.html
+[^1]: 【Mqtt示例】https://cumulocity.com/guides/device-sdk/mqtt-examples
+[^1]: 【Mqtt3.1协议规范】http://stanford-clark.com/MQTT
