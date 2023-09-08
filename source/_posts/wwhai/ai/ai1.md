@@ -29,9 +29,13 @@ https://p.kdocs.cn/s/PS7HGBAAHU
 - Matlab工程化实践研究(二)
 https://p.kdocs.cn/s/MC7HGBAAHU
 
+- 针对软件工程师的人工智能入门导论（一）
+https://p.kdocs.cn/s/MM2IWBAAZY
+- 针对软件工程师的人工智能入门导论（二）
+https://p.kdocs.cn/s/OU2IWBAA5Y
+
 - AI生成文本，然后渲染画面
 https://p.kdocs.cn/s/PKJHIBAA2E
-
 
 - 在Windows上编译gocv
 https://p.kdocs.cn/s/SHGXWBAA3U
