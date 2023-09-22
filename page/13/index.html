@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="新四青年 的技术分享">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>新四青年</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+
+  <!-- 顶部提示 -->
+  <div class="alert alert-warning" role="alert"
+    style="margin-top: 70px; background-color: black;color: rgb(156, 255, 25);text-align: center;padding: 0 0 0 0;">
+    <strong>提示：本站一些文章的超时空时间是乱写的，主要是为了排序，并不是真实写作时间。</strong>
+  </div>
+
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar" style="background-color: #000000;">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>新四青年</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/openlab/academic.html">
+                
+                FreeOpenLab
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/things/">
+                
+                作品
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/index.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.4)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+
+      <div class="container nopadding-md">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board"
+          >
+          <!--  -->
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/10/15/clmu1cbd7001u18ue16engk2r.html" target="_self">
+          <img src="/uploads/1571135439867.png" srcset="/img/loading.gif" alt="ErlangTCP服务器实践">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/10/15/clmu1cbd7001u18ue16engk2r.html">ErlangTCP服务器实践</a>
+
+      <a href="/2019/10/15/clmu1cbd7001u18ue16engk2r.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>本文着重讲解ErlangTCP服务器从简单到复杂的集中构建形式，深入理解Erlang的TCP机制。</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-10-15 16:55:12
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/erlang/">erlang</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/erlang/">erlang</a>
+            
+              <a href="/tags/otp/">otp</a>
+            
+              <a href="/tags/tcp/">tcp</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+    <div class="col-12 col-md-12 mx-auto index-info">
+      <a class="index-header" href="/2019/10/12/clmu1cbdk003k18uehywn9229.html">辅助工具使用教程</a>
+
+      <a href="/2019/10/12/clmu1cbdk003k18uehywn9229.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>为了方便写Hexo博客，自己手动写了个简单的模板生成器
+1.源码&#x27;&#x27;&#x27;
+自己的Hexo博客辅助工具
+主要功能：生成重复性的模板,命令行操作如下:
+hexo_helper  -n [N] -t [T] -c [C]
+n:文章的名字
+t:Tag标签
+c:分类
+一个完整的命令如下所示:
+hexo_helper -n &quot;Java数组&quot; -c &quot;J</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-10-12 18:12:09
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Python%E5%B0%8F%E5%B7%A5%E5%85%B7/">Python小工具</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Python/">Python</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/10/12/clmu1cbdm003r18ue2w3idxn4.html" target="_self">
+          <img src="/static/5.jpg" srcset="/img/loading.gif" alt="日常学习随笔">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/10/12/clmu1cbdm003r18ue2w3idxn4.html">日常学习随笔</a>
+
+      <a href="/2019/10/12/clmu1cbdm003r18ue2w3idxn4.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>1. 什么是视图  视图本质是一个虚拟表，从一个表或多个表中导出来的表，作用和真实表一样，包含一系列带有行和列的数据 视图中，用户可以使用SELECT语句查询数据，也可以使用INSERT，UPDATE，DELETE修改记录，视图可以使用户操作方便，并保障数据库系统安全。
+2. 视图的优点
+简单，和创建普通表是一样的效果
+
+安全，用户只能查询或修改他们所能见到得到的数据
+
+独立性，可以屏蔽真实表结构</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-10-12 11:04:43
+          </div>
+        
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Mysql/">Mysql</a>
+            
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BC%98%E5%8C%96/">数据库优化</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/10/01/clmu1cbdb002e18ue4j4ndlib.html" target="_self">
+          <img src="/static/15.jpg" srcset="/img/loading.gif" alt="Ekka源码阅读">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/10/01/clmu1cbdb002e18ue4j4ndlib.html">Ekka源码阅读</a>
+
+      <a href="/2019/10/01/clmu1cbdb002e18ue4j4ndlib.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>
+Ekka是emqx自动集群和自动愈合的一个组件。
+
+1.节点发现与自动集群ekka_cluster_strategy 模块定义了一些行为。它们分别是：
+-type(options() :: list(proplists:property())).
+
+%% 发现
+-callback(discover(options()) -&gt; &#123;ok, list(node())&#125; | &</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-10-01 00:00:00
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Erlang%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">Erlang学习记录</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/erlang/">erlang</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/10/01/clmu1cbdc002i18ue74ii7c67.html" target="_self">
+          <img src="/static/15.jpg" srcset="/img/loading.gif" alt="运行时错误">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/10/01/clmu1cbdc002i18ue74ii7c67.html">运行时错误</a>
+
+      <a href="/2019/10/01/clmu1cbdc002i18ue74ii7c67.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>
+函数子句错误发生函数子句(function clause)错误的最可能原因是：函数的所有卫语句或所有的匹配模式都失败了。
+
+case 子句错误当忘记了一个特定的情况、传入的数据类型错误或者需要一个匹配一切的子句时，会发生case子句(case clause)错误。
+
+if子句错误if子句(if clause)错误的原因和case子句类似。当Erlang找不到一个可以求值为true的分支时，会引发</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-10-01 00:00:00
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Erlang%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">Erlang学习记录</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/erlang/">erlang</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/10/01/clmu1cbdd002k18ueb8vxbtbr.html" target="_self">
+          <img src="/static/15.jpg" srcset="/img/loading.gif" alt="ETS">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/10/01/clmu1cbdd002k18ueb8vxbtbr.html">ETS</a>
+
+      <a href="/2019/10/01/clmu1cbdd002k18ueb8vxbtbr.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>
+ETS 表可以用来高效存储海量的erlang数据，ETS提供大型的键-值查询表，
+
+1.四种不同的类型
+集合（set)
+相同的key-value元组只能出现一次。
+
+包（bag)
+每种key-value元组组合只能出现一次，但是同一个key可以出现多次。
+
+重复包(duplicate bag)
+允许重复的元组。
+
+有序集合（ordered set)
+相同的key-value元组只能出现一次，但是</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-10-01 00:00:00
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Erlang%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">Erlang学习记录</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/erlang/">erlang</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/10/01/clmu1cbde002o18ue3lra84yu.html" target="_self">
+          <img src="/static/15.jpg" srcset="/img/loading.gif" alt="Linux下安装Erlang和SSL">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/10/01/clmu1cbde002o18ue3lra84yu.html">Linux下安装Erlang和SSL</a>
+
+      <a href="/2019/10/01/clmu1cbde002o18ue3lra84yu.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>
+我们简单记录一下在Ubuntu上安装Erlang的过程 
+
+1.先安装openssl下载openssl源码
+$ wget http://www.openssl.org/source/openssl-1.0.2a.tar.gz
+$ tar -zxvf openssl-1.0.2a.tar.gz
+
+进入源码目录，注意如果不是最新下的目录，需要先执行 make clean 确保能够重新编译成功为了不和</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-10-01 00:00:00
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Erlang%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">Erlang学习记录</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/erlang/">erlang</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/10/01/clmu1cbde002r18ue52jd135v.html" target="_self">
+          <img src="/static/15.jpg" srcset="/img/loading.gif" alt="分布式Erlang">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/10/01/clmu1cbde002r18ue52jd135v.html">分布式Erlang</a>
+
+      <a href="/2019/10/01/clmu1cbde002r18ue52jd135v.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>Erlang内置了相关接口允许程序跨多节点允许：多个进程可以透明地在其他节点分裂出进程，并且相互通过发送消息来通讯。分布式的各个节点都可以位于同一台物理主机上，也可以分布在不同的主机上。
+1.命名与通讯一个Erlang节点想要成为分布式Erlang系统的一部分，它必须拥有一个名字。
+2. 节点间的连接与可见性为了能够相互通讯，Erlang的节点之间必须共享一个私密的cookie值。
+如果一组节点共</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-10-01 00:00:00
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Erlang%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">Erlang学习记录</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/erlang/">erlang</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/1994/07/24/clmu1cbcx000q18ue34gz1h2g.html" target="_self">
+          <img src="/uploads/things/rulex.png" srcset="/img/loading.gif" alt="RULEX-网关开发框架">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/1994/07/24/clmu1cbcx000q18ue34gz1h2g.html">RULEX-网关开发框架</a>
+
+      <a href="/1994/07/24/clmu1cbcx000q18ue34gz1h2g.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>RULEX 是一个轻量级工业类边缘网关开发框架</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;1994-07-24 00:00:00
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/things/">things</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/things/">things</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/page/12/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span>
+    </span>
+  </nav>
+  
+  <script>
+    for (ele of document.getElementById("pagination").getElementsByTagName("a")) {
+      ele.href += '#board';
+    }
+  </script>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "愿无岁月可回首，愿忙碌取得成就&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>

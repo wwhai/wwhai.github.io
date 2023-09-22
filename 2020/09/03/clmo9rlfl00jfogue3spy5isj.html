@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="新四青年 的技术分享">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>3.Netty基础知识-异步接口实现原理 - 新四青年</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+
+  <!-- 顶部提示 -->
+  <div class="alert alert-warning" role="alert"
+    style="margin-top: 70px; background-color: black;color: rgb(156, 255, 25);text-align: center;padding: 0 0 0 0;">
+    <strong>提示：本站一些文章的超时空时间是乱写的，主要是为了排序，并不是真实写作时间。</strong>
+  </div>
+
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar" style="background-color: #000000;">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>新四青年</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/openlab/academic.html">
+                
+                FreeOpenLab
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/things/">
+                
+                作品
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/post.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2020-09-03 17:02">
+      September 3, 2020 pm
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.6k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      49
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：June 30, 2023 pm
+                
+              </p>
+            
+            <article class="markdown-body">
+              <p>前面分析了Netty整体的流程 和 Channel的结构，我们看到 Netty 中有很多的异步调用，所以在介绍更多 NIO 相关的内容之前，我们来看看它的异步接口是怎么实现的。</p>
+<span id="more"></span>
+<blockquote>
+<p>本文来源于：【<a target="_blank" rel="noopener" href="https://github.com/ztgreat/blog-docs.git】">https://github.com/ztgreat/blog-docs.git】</a><br>编者仅仅做了简单排版和搬运收藏，非商业用途，最终知识版权归原作者所有。</p>
+</blockquote>
+<h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><p>前面我们在介绍 Echo 例子的时候，已经用过了 ChannelFuture 这个接口了，接下来我们就来看看 Netty 中的异步调用是如何实现的。</p>
+<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><pre><code class="hljs arduino"><span class="hljs-comment">// Start the client.</span>
+ChannelFuture future = b.<span class="hljs-built_in">connect</span>(HOST, PORT);
+future.<span class="hljs-built_in">sync</span>();
+
+<span class="hljs-comment">// Wait until the connection is closed.</span>
+Channel channel= future.<span class="hljs-built_in">channel</span>();
+ChannelFuture closeFuture=channel.<span class="hljs-built_in">closeFuture</span>();
+closeFuture.<span class="hljs-built_in">sync</span>();</code></pre>
+
+<h3 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h3><pre><code class="hljs cpp"><span class="hljs-comment">// Start the server.</span>
+ChannelFuture future = b.<span class="hljs-built_in">bind</span>(PORT);
+future.<span class="hljs-built_in">sync</span>();
+
+<span class="hljs-comment">// Wait until the server socket is closed.</span>
+Channel channel = future.<span class="hljs-built_in">channel</span>();
+ChannelFuture closeFuture = channel.<span class="hljs-built_in">closeFuture</span>();
+closeFuture.<span class="hljs-built_in">sync</span>();</code></pre>
+
+<p>特意把代码拆开，方便理解，可以看到 其实客户端和服务端 结构是差不多的，相信分析了Future 结构后，我们对上面的代码理解会更加的深刻。</p>
+<h2 id="JDK-中的-Future"><a href="#JDK-中的-Future" class="headerlink" title="JDK 中的 Future"></a>JDK 中的 Future</h2><p>关于 Future 接口，常用的就是在使用 Java 的线程池 ThreadPoolExecutor 的时候了。在 submit 一个任务到线程池中的时候，返回的就是一个 <strong>Future</strong> 实例，通过它来获取提交的任务的执行状态和最终的执行结果。</p>
+<p>下面是 JDK 中的 Future 接口 <code>java.util.concurrent.Future</code>：</p>
+<pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Future</span>&lt;<span class="hljs-title">V</span>&gt; </span>&#123;
+    <span class="hljs-comment">// 取消该任务</span>
+    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">cancel</span><span class="hljs-params">(<span class="hljs-keyword">boolean</span> mayInterruptIfRunning)</span></span>;
+    <span class="hljs-comment">// 任务是否已取消</span>
+    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">isCancelled</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-comment">// 任务是否已完成</span>
+    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">isDone</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-comment">// 阻塞获取任务执行结果</span>
+    <span class="hljs-function">V <span class="hljs-title">get</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException, ExecutionException</span>;
+    <span class="hljs-comment">// 带超时参数的获取任务执行结果</span>
+    <span class="hljs-function">V <span class="hljs-title">get</span><span class="hljs-params">(<span class="hljs-keyword">long</span> timeout, TimeUnit unit)</span></span>
+<span class="hljs-function">        <span class="hljs-keyword">throws</span> InterruptedException, ExecutionException, TimeoutException</span>;
+&#125;
+</code></pre>
+
+<p>Netty 中的 Future 接口继承了 JDK 中的 Future 接口，然后添加了一些方法：</p>
+<h2 id="Netty-中的Future"><a href="#Netty-中的Future" class="headerlink" title="Netty 中的Future"></a>Netty 中的Future</h2><p><code>io.netty.util.concurrent.Future</code>:</p>
+<pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Future</span>&lt;<span class="hljs-title">V</span>&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title">java</span>.<span class="hljs-title">util</span>.<span class="hljs-title">concurrent</span>.<span class="hljs-title">Future</span>&lt;<span class="hljs-title">V</span>&gt; </span>&#123;
+
+    <span class="hljs-comment">// 是否成功</span>
+    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">isSuccess</span><span class="hljs-params">()</span></span>;
+
+    <span class="hljs-comment">// 是否可取消</span>
+    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">isCancellable</span><span class="hljs-params">()</span></span>;
+
+    <span class="hljs-comment">// 如果任务执行失败，这个方法返回异常信息</span>
+    <span class="hljs-function">Throwable <span class="hljs-title">cause</span><span class="hljs-params">()</span></span>;
+
+    <span class="hljs-comment">// 添加 Listener 来进行回调</span>
+    <span class="hljs-function">Future&lt;V&gt; <span class="hljs-title">addListener</span><span class="hljs-params">(GenericFutureListener&lt;? extends Future&lt;? <span class="hljs-keyword">super</span> V&gt;&gt; listener)</span></span>;
+    <span class="hljs-function">Future&lt;V&gt; <span class="hljs-title">addListeners</span><span class="hljs-params">(GenericFutureListener&lt;? extends Future&lt;? <span class="hljs-keyword">super</span> V&gt;&gt;... listeners)</span></span>;
+    <span class="hljs-comment">// 移除 Listener</span>
+    <span class="hljs-function">Future&lt;V&gt; <span class="hljs-title">removeListener</span><span class="hljs-params">(GenericFutureListener&lt;? extends Future&lt;? <span class="hljs-keyword">super</span> V&gt;&gt; listener)</span></span>;
+    <span class="hljs-function">Future&lt;V&gt; <span class="hljs-title">removeListeners</span><span class="hljs-params">(GenericFutureListener&lt;? extends Future&lt;? <span class="hljs-keyword">super</span> V&gt;&gt;... listeners)</span></span>;
+
+    <span class="hljs-comment">// 阻塞等待任务结束，如果任务失败，将“导致失败的异常”重新抛出来</span>
+    <span class="hljs-function">Future&lt;V&gt; <span class="hljs-title">sync</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException</span>;
+    <span class="hljs-comment">// 不响应中断的 sync()</span>
+    <span class="hljs-function">Future&lt;V&gt; <span class="hljs-title">syncUninterruptibly</span><span class="hljs-params">()</span></span>;
+
+    <span class="hljs-comment">// 阻塞等待任务结束，和 sync() 功能是一样的，不过如果任务失败，它不会抛出执行过程中的异常</span>
+    <span class="hljs-function">Future&lt;V&gt; <span class="hljs-title">await</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException</span>;
+    <span class="hljs-function">Future&lt;V&gt; <span class="hljs-title">awaitUninterruptibly</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">await</span><span class="hljs-params">(<span class="hljs-keyword">long</span> timeout, TimeUnit unit)</span> <span class="hljs-keyword">throws</span> InterruptedException</span>;
+    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">await</span><span class="hljs-params">(<span class="hljs-keyword">long</span> timeoutMillis)</span> <span class="hljs-keyword">throws</span> InterruptedException</span>;
+    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">awaitUninterruptibly</span><span class="hljs-params">(<span class="hljs-keyword">long</span> timeout, TimeUnit unit)</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">awaitUninterruptibly</span><span class="hljs-params">(<span class="hljs-keyword">long</span> timeoutMillis)</span></span>;
+
+    <span class="hljs-comment">// 获取执行结果，不阻塞,如果没数据，返回 NULL。</span>
+    <span class="hljs-function">V <span class="hljs-title">getNow</span><span class="hljs-params">()</span></span>;
+
+    <span class="hljs-comment">// 取消任务执行</span>
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">cancel</span><span class="hljs-params">(<span class="hljs-keyword">boolean</span> mayInterruptIfRunning)</span></span>;
+&#125;
+</code></pre>
+
+<p>我们可以发现， Netty 的 Future 接口 扩展了 JDK 中 Future 接口，它加了 sync() 和 await() 用于阻塞等待，还加了 Listeners，只要任务结束去回调 Listener 们就可以了。</p>
+<p>这里顺便说下 sync() 和 await() 的区别：sync() 内部会先调用 await() 方法，等 await() 方法返回后，会检查下<strong>这个任务是否失败</strong>，如果失败，重新将导致失败的异常抛出来，这个我们将在后面的实现类中看到。</p>
+<h3 id="Future-体系"><a href="#Future-体系" class="headerlink" title="Future 体系"></a>Future 体系</h3><p><img src="http://img.blog.ztgreat.cn/document/netty/20190112153742.png" srcset="/img/loading.gif" alt="Future 体系"></p>
+<p>上面罗列了Future的部分结构，未全部列出来，稍后我们将分析 ChannelFuture,已经Promise。</p>
+<h3 id="ChannelFuture"><a href="#ChannelFuture" class="headerlink" title="ChannelFuture"></a>ChannelFuture</h3><p> Future 接口的子接口 ChannelFuture，它将和 IO 操作中的 Channel 关联在一起了，用于异步处理 Channel 中的事件。</p>
+<pre><code class="hljs aspectj"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">ChannelFuture</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Future</span>&lt;<span class="hljs-title">Void</span>&gt; </span>&#123;
+
+    <span class="hljs-comment">// ChannelFuture 关联的 Channel</span>
+    <span class="hljs-function">Channel <span class="hljs-title">channel</span><span class="hljs-params">()</span></span>;
+
+    <span class="hljs-comment">// 覆写以下几个方法，使得它们返回值为 ChannelFuture 类型 </span>
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function">ChannelFuture <span class="hljs-title">addListener</span><span class="hljs-params">(GenericFutureListener&lt;? <span class="hljs-keyword">extends</span> Future&lt;? <span class="hljs-keyword">super</span> Void&gt;&gt; listener)</span></span>;
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function">ChannelFuture <span class="hljs-title">addListeners</span><span class="hljs-params">(GenericFutureListener&lt;? <span class="hljs-keyword">extends</span> Future&lt;? <span class="hljs-keyword">super</span> Void&gt;&gt;... listeners)</span></span>;
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function">ChannelFuture <span class="hljs-title">removeListener</span><span class="hljs-params">(GenericFutureListener&lt;? <span class="hljs-keyword">extends</span> Future&lt;? <span class="hljs-keyword">super</span> Void&gt;&gt; listener)</span></span>;
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function">ChannelFuture <span class="hljs-title">removeListeners</span><span class="hljs-params">(GenericFutureListener&lt;? <span class="hljs-keyword">extends</span> Future&lt;? <span class="hljs-keyword">super</span> Void&gt;&gt;... listeners)</span></span>;
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function">ChannelFuture <span class="hljs-title">sync</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException</span>;
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function">ChannelFuture <span class="hljs-title">syncUninterruptibly</span><span class="hljs-params">()</span></span>;
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function">ChannelFuture <span class="hljs-title">await</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException</span>;
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function">ChannelFuture <span class="hljs-title">awaitUninterruptibly</span><span class="hljs-params">()</span></span>;
+
+    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">isVoid</span><span class="hljs-params">()</span></span>;
+&#125;
+</code></pre>
+
+<p>我们看到，ChannelFuture 接口相对于 Future 接口，除了将 channel 关联进来，没有增加什么东西，其他几个都是方法覆写，为了让返回值类型变为 ChannelFuture。</p>
+<h3 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h3><p>接下来 我们来介绍下 Promise 接口，它和 ChannelFuture 接口无关，而是和前面的 Future 接口相关，也就是说Promise的和ChannelFuture是独立的，在js 或者 nodejs 中都有一个 Promise的概念。</p>
+<p>Promise 这个接口其实可以算作是一个异步任务的抽象，这个我们在后面具体编程的时候，再来看。</p>
+<p>Promise 接口和 ChannelFuture 一样，也继承了 Netty 的 Future 接口，然后加了一些 Promise 的内容：</p>
+<pre><code class="hljs swift"><span class="hljs-keyword">public</span> interface <span class="hljs-type">Promise</span>&lt;<span class="hljs-type">V</span>&gt; extends <span class="hljs-type">Future</span>&lt;<span class="hljs-type">V</span>&gt; &#123;
+
+    <span class="hljs-comment">// 设置 该 future 成功及设置其执行结果，然后通知所有的 listeners。</span>
+    <span class="hljs-comment">// 如果该操作失败，将抛出异常</span>
+    <span class="hljs-type">Promise</span>&lt;<span class="hljs-type">V</span>&gt; setSuccess(<span class="hljs-type">V</span> result);
+
+    <span class="hljs-comment">// 和 setSuccess 方法一样，只不过如果失败，它不抛异常，返回 false</span>
+    boolean trySuccess(<span class="hljs-type">V</span> result);
+
+    <span class="hljs-comment">// 设置 该 future 失败，及其失败原因。</span>
+    <span class="hljs-comment">// 如果该操作失败，将抛出异常</span>
+    <span class="hljs-type">Promise</span>&lt;<span class="hljs-type">V</span>&gt; setFailure(<span class="hljs-type">Throwable</span> cause);
+
+    <span class="hljs-comment">// 设置 该 future 失败，及其失败原因。</span>
+    <span class="hljs-comment">// 如果该操作失败，返回 false，不抛出异常</span>
+    boolean tryFailure(<span class="hljs-type">Throwable</span> cause);
+
+    <span class="hljs-comment">// 设置该 future 不可以被取消</span>
+    boolean setUncancellable();
+
+    <span class="hljs-comment">// 覆写，返回 Promise 类型的实例</span>
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-type">Promise</span>&lt;<span class="hljs-type">V</span>&gt; addListener(<span class="hljs-type">GenericFutureListener</span>&lt;? extends <span class="hljs-type">Future</span>&lt;? <span class="hljs-keyword">super</span> <span class="hljs-type">V</span>&gt;&gt; listener);
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-type">Promise</span>&lt;<span class="hljs-type">V</span>&gt; addListeners(<span class="hljs-type">GenericFutureListener</span>&lt;? extends <span class="hljs-type">Future</span>&lt;? <span class="hljs-keyword">super</span> <span class="hljs-type">V</span>&gt;&gt;... listeners);
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-type">Promise</span>&lt;<span class="hljs-type">V</span>&gt; removeListener(<span class="hljs-type">GenericFutureListener</span>&lt;? extends <span class="hljs-type">Future</span>&lt;? <span class="hljs-keyword">super</span> <span class="hljs-type">V</span>&gt;&gt; listener);
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-type">Promise</span>&lt;<span class="hljs-type">V</span>&gt; removeListeners(<span class="hljs-type">GenericFutureListener</span>&lt;? extends <span class="hljs-type">Future</span>&lt;? <span class="hljs-keyword">super</span> <span class="hljs-type">V</span>&gt;&gt;... listeners);
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-type">Promise</span>&lt;<span class="hljs-type">V</span>&gt; <span class="hljs-keyword">await</span>() <span class="hljs-keyword">throws</span> <span class="hljs-type">InterruptedException</span>;
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-type">Promise</span>&lt;<span class="hljs-type">V</span>&gt; awaitUninterruptibly();
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-type">Promise</span>&lt;<span class="hljs-type">V</span>&gt; sync() <span class="hljs-keyword">throws</span> <span class="hljs-type">InterruptedException</span>;
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-type">Promise</span>&lt;<span class="hljs-type">V</span>&gt; syncUninterruptibly();
+&#125;
+</code></pre>
+
+<h3 id="ChannelPromise"><a href="#ChannelPromise" class="headerlink" title="ChannelPromise"></a>ChannelPromise</h3><p>接下来，我们再来看下 <strong>ChannelPromise</strong>，它继承了前面介绍的 ChannelFuture 和 Promise 接口，这样ChannelPromise 就联系上了Chaneel了。</p>
+<pre><code class="hljs aspectj"><span class="hljs-comment">/**</span>
+<span class="hljs-comment"> * Special &#123;<span class="hljs-doctag">@link</span> ChannelFuture&#125; which is writable.</span>
+<span class="hljs-comment"> */</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">ChannelPromise</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ChannelFuture</span>, <span class="hljs-title">Promise</span>&lt;<span class="hljs-title">Void</span>&gt; </span>&#123;
+
+    <span class="hljs-comment">//覆写 ChannelFuture 中的 channel() 方法</span>
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function">Channel <span class="hljs-title">channel</span><span class="hljs-params">()</span></span>;
+
+    <span class="hljs-comment">//覆写，目的是为了返回值类型是 ChannelPromise</span>
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function">ChannelPromise <span class="hljs-title">setSuccess</span><span class="hljs-params">(Void result)</span></span>;
+    <span class="hljs-function">ChannelPromise <span class="hljs-title">setSuccess</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">trySuccess</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function">ChannelPromise <span class="hljs-title">setFailure</span><span class="hljs-params">(Throwable cause)</span></span>;
+
+    <span class="hljs-comment">//覆写也是为了得到 ChannelPromise 类型的实例</span>
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function">ChannelPromise <span class="hljs-title">addListener</span><span class="hljs-params">(GenericFutureListener&lt;? <span class="hljs-keyword">extends</span> Future&lt;? <span class="hljs-keyword">super</span> Void&gt;&gt; listener)</span></span>;
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function">ChannelPromise <span class="hljs-title">addListeners</span><span class="hljs-params">(GenericFutureListener&lt;? <span class="hljs-keyword">extends</span> Future&lt;? <span class="hljs-keyword">super</span> Void&gt;&gt;... listeners)</span></span>;
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function">ChannelPromise <span class="hljs-title">removeListener</span><span class="hljs-params">(GenericFutureListener&lt;? <span class="hljs-keyword">extends</span> Future&lt;? <span class="hljs-keyword">super</span> Void&gt;&gt; listener)</span></span>;
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function">ChannelPromise <span class="hljs-title">removeListeners</span><span class="hljs-params">(GenericFutureListener&lt;? <span class="hljs-keyword">extends</span> Future&lt;? <span class="hljs-keyword">super</span> Void&gt;&gt;... listeners)</span></span>;
+
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function">ChannelPromise <span class="hljs-title">sync</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException</span>;
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function">ChannelPromise <span class="hljs-title">syncUninterruptibly</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function">ChannelPromise <span class="hljs-title">await</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException</span>;
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-function">ChannelPromise <span class="hljs-title">awaitUninterruptibly</span><span class="hljs-params">()</span></span>;
+
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">     * Returns a new &#123;<span class="hljs-doctag">@link</span> ChannelPromise&#125; if &#123;<span class="hljs-doctag">@link</span> #isVoid()&#125; returns &#123;<span class="hljs-doctag">@code</span> true&#125; otherwise itself.</span>
+<span class="hljs-comment">     */</span>
+    <span class="hljs-function">ChannelPromise <span class="hljs-title">unvoid</span><span class="hljs-params">()</span></span>;
+&#125;
+</code></pre>
+
+<p>我们可以看到，它综合了 ChannelFuture 和 Promise 中的方法，只不过通过覆写将返回值都变为 ChannelPromise 了而已，没有增加什么新的功能。</p>
+<p>我们上面介绍了几个接口，Future 以及它的子接口 ChannelFuture 和 Promise，然后是 ChannelPromise 接口同时继承了 ChannelFuture 和 Promise。</p>
+<p>接下来，我们需要来一个实现类，这样才能比较直观地看出它们是怎么使用的，因为上面的这些都是接口定义，具体还得看实现类是怎么工作的。</p>
+<h3 id="DefaultPromise"><a href="#DefaultPromise" class="headerlink" title="DefaultPromise"></a><strong>DefaultPromise</strong></h3><p>下面，我们来介绍下 <strong>DefaultPromise</strong> 这个实现类，内容有点多，我们就介绍几个关键的内容。</p>
+<p>首先，我们看下它有哪些属性：</p>
+<pre><code class="hljs scala">public <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DefaultPromise&lt;V&gt;</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractFuture&lt;V&gt;</span> <span class="hljs-title">implements</span> <span class="hljs-title">Promise&lt;V&gt;</span> </span>&#123;
+    <span class="hljs-comment">// 任务的执行结果</span>
+    <span class="hljs-keyword">private</span> volatile <span class="hljs-type">Object</span> result;
+    <span class="hljs-comment">// 执行任务的线程池，promise 持有 executor 的引用</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">EventExecutor</span> executor;
+    <span class="hljs-comment">// 监听者，回调函数</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-type">Object</span> listeners;
+
+    <span class="hljs-comment">// 调用sync()/await()进行等待的线程数量</span>
+    <span class="hljs-keyword">private</span> short waiters;
+
+    <span class="hljs-comment">// 是否正在唤醒等待线程，用于防止重复执行唤醒，不然会重复执行 listeners 的回调方法</span>
+    <span class="hljs-keyword">private</span> boolean notifyingListeners;
+    ......
+&#125;
+</code></pre>
+
+<blockquote>
+<p>DefaultPromise 实现了 Promise，但是没有实现 ChannelFuture，所以它还没有和 Channel 联系起来。</p>
+</blockquote>
+<p>我们 看到 DefaultPromise 中持有了一个 线程池引用。</p>
+<p>在 DefaultPromise  中 我们看到有如下注释：</p>
+<pre><code class="hljs php"><span class="hljs-comment">/**</span>
+<span class="hljs-comment"> * Get the executor used to notify listeners when this promise is complete.</span>
+<span class="hljs-comment"> * &lt;p&gt;</span>
+<span class="hljs-comment"> * It is assumed this executor will protect against &#123;<span class="hljs-doctag">@link</span> StackOverflowError&#125; exceptions.</span>
+<span class="hljs-comment"> * The executor may be used to avoid &#123;<span class="hljs-doctag">@link</span> StackOverflowError&#125; by executing a &#123;<span class="hljs-doctag">@link</span> Runnable&#125; if the stack</span>
+<span class="hljs-comment"> * depth exceeds a threshold.</span>
+<span class="hljs-comment"> * <span class="hljs-doctag">@return</span> The executor used to notify listeners when this promise is complete.</span>
+<span class="hljs-comment"> */</span>
+<span class="hljs-keyword">protected</span> EventExecutor executor() &#123;
+    <span class="hljs-keyword">return</span> executor;
+&#125;</code></pre>
+
+<p>当任务执行后，会进行 <strong>Listener</strong>  的调用，而<strong>Listener</strong>  的调用逻辑 这个是不清楚的，有可能是同步的，也可能是异步的，因此用线程池去执行，这样将 <strong>回调任务</strong> 和 和 <strong>任务的执行</strong> 进行了分割。</p>
+<p>我们来看看 DefaultPromise 中的一些方法：</p>
+<h4 id="addListener"><a href="#addListener" class="headerlink" title="addListener"></a>addListener</h4><p>添加监听者（回调函数）</p>
+<pre><code class="hljs reasonml">@Override
+public Promise&lt;V&gt; add<span class="hljs-constructor">Listener(GenericFutureListener&lt;? <span class="hljs-params">extends</span> Future&lt;? <span class="hljs-params">super</span> V&gt;&gt; <span class="hljs-params">listener</span>)</span> &#123;
+    check<span class="hljs-constructor">NotNull(<span class="hljs-params">listener</span>, <span class="hljs-string">&quot;listener&quot;</span>)</span>;
+    <span class="hljs-comment">//同步处理</span>
+    synchronized (this) &#123;
+        add<span class="hljs-constructor">Listener0(<span class="hljs-params">listener</span>)</span>;
+    &#125;
+    <span class="hljs-comment">//添加完后，判断任务是否完成了，如果是，则需要进行通知 </span>
+    <span class="hljs-keyword">if</span> (is<span class="hljs-constructor">Done()</span>) &#123;
+        notify<span class="hljs-constructor">Listeners()</span>;
+    &#125;
+    return this;
+&#125;</code></pre>
+
+<h4 id="isDone"><a href="#isDone" class="headerlink" title="isDone"></a>isDone</h4><p>判断任务是否执行完成了，这个判断 结果值类型就可以了，很简单。</p>
+<pre><code class="hljs typescript"><span class="hljs-meta">@Override</span>
+<span class="hljs-keyword">public</span> <span class="hljs-built_in">boolean</span> <span class="hljs-function"><span class="hljs-title">isDone</span>(<span class="hljs-params"></span>)</span> &#123;
+    <span class="hljs-keyword">return</span> isDone0(result);
+&#125;
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">boolean</span> <span class="hljs-function"><span class="hljs-title">isDone0</span>(<span class="hljs-params"><span class="hljs-built_in">Object</span> result</span>)</span> &#123;
+    <span class="hljs-keyword">return</span> result != <span class="hljs-literal">null</span> &amp;&amp; result != UNCANCELLABLE;
+&#125;</code></pre>
+
+<h4 id="setSuccess"><a href="#setSuccess" class="headerlink" title="setSuccess"></a>setSuccess</h4><p>设置 该 future 成功及设置其执行结果，并且会通知所有的 listeners。</p>
+<p>如果该操作失败，将抛出异常</p>
+<pre><code class="hljs reasonml">@Override
+public Promise&lt;V&gt; set<span class="hljs-constructor">Success(V <span class="hljs-params">result</span>)</span> &#123;
+    <span class="hljs-comment">//设置结果</span>
+    <span class="hljs-keyword">if</span> (set<span class="hljs-constructor">Success0(<span class="hljs-params">result</span>)</span>) &#123;
+        <span class="hljs-comment">// 如果设置成功，则开始进行回调处理</span>
+        notify<span class="hljs-constructor">Listeners()</span>;
+        return this;
+    &#125;
+    throw <span class="hljs-keyword">new</span> <span class="hljs-constructor">IllegalStateException(<span class="hljs-string">&quot;complete already: &quot;</span> + <span class="hljs-params">this</span>)</span>;
+&#125;
+
+<span class="hljs-keyword">private</span> boolean set<span class="hljs-constructor">Success0(V <span class="hljs-params">result</span>)</span> &#123;
+    return set<span class="hljs-constructor">Value0(<span class="hljs-params">result</span> <span class="hljs-operator">==</span> <span class="hljs-params">null</span> ? SUCCESS : <span class="hljs-params">result</span>)</span>;
+&#125;
+<span class="hljs-keyword">private</span> boolean set<span class="hljs-constructor">Value0(Object <span class="hljs-params">objResult</span>)</span> &#123;
+    <span class="hljs-keyword">if</span> (<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">RESULT_UPDATER</span>.</span></span>compare<span class="hljs-constructor">AndSet(<span class="hljs-params">this</span>, <span class="hljs-params">null</span>, <span class="hljs-params">objResult</span>)</span><span class="hljs-operator"> ||</span>
+<span class="hljs-operator">        </span><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">RESULT_UPDATER</span>.</span></span>compare<span class="hljs-constructor">AndSet(<span class="hljs-params">this</span>, UNCANCELLABLE, <span class="hljs-params">objResult</span>)</span>) &#123;
+        check<span class="hljs-constructor">NotifyWaiters()</span>;
+        return <span class="hljs-literal">true</span>;
+    &#125;
+    return <span class="hljs-literal">false</span>;
+&#125;
+</code></pre>
+
+<h4 id="trySuccess"><a href="#trySuccess" class="headerlink" title="trySuccess"></a>trySuccess</h4><p>设置 该 future 成功及设置其执行结果，并且会通知所有的 listeners。</p>
+<p>如果该操作失败，返回false，不抛出异常。</p>
+<pre><code class="hljs typescript"><span class="hljs-meta">@Override</span>
+<span class="hljs-keyword">public</span> <span class="hljs-built_in">boolean</span> <span class="hljs-function"><span class="hljs-title">trySuccess</span>(<span class="hljs-params">V result</span>)</span> &#123;
+    <span class="hljs-keyword">if</span> (setSuccess0(result)) &#123;
+        notifyListeners();
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    &#125;
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+&#125;</code></pre>
+
+<h4 id="setFailure"><a href="#setFailure" class="headerlink" title="setFailure"></a>setFailure</h4><p>设置 该 future 失败，及其失败原因。</p>
+<p>如果该操作失败，将抛出异常</p>
+<pre><code class="hljs typescript"><span class="hljs-meta">@Override</span>
+<span class="hljs-keyword">public</span> <span class="hljs-built_in">Promise</span>&lt;V&gt; <span class="hljs-function"><span class="hljs-title">setFailure</span>(<span class="hljs-params">Throwable cause</span>)</span> &#123;
+    <span class="hljs-keyword">if</span> (setFailure0(cause)) &#123;
+        notifyListeners();
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>;
+    &#125;
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalStateException(<span class="hljs-string">&quot;complete already: &quot;</span> + <span class="hljs-built_in">this</span>, cause);
+&#125;</code></pre>
+
+<h4 id="tryFailure"><a href="#tryFailure" class="headerlink" title="tryFailure"></a>tryFailure</h4><p>设置 该 future 失败，及其失败原因。</p>
+<p>如果该操作 失败，返回false，不抛出异常。</p>
+<pre><code class="hljs typescript"><span class="hljs-meta">@Override</span>
+<span class="hljs-keyword">public</span> <span class="hljs-built_in">boolean</span> <span class="hljs-function"><span class="hljs-title">tryFailure</span>(<span class="hljs-params">Throwable cause</span>)</span> &#123;
+    <span class="hljs-keyword">if</span> (setFailure0(cause)) &#123;
+        notifyListeners();
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    &#125;
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+&#125;</code></pre>
+
+<p>上面几个方法都非常简单，先设置好值，然后执行监听者们的回调方法。notifyListeners() 方法感兴趣的读者也可以看一看，不过它还涉及到 Netty 线程池的一些内容，我们还没有介绍到线程池，这里就不展开了。上面的代码，在 setSuccess0 或 setFailure0 方法中都会唤醒阻塞在 sync() 或 await() 的线程</p>
+<p>另外，就是可以看下 sync() 和 await() 的区别，其他的我觉得随便看看就好了。</p>
+<h4 id="sync"><a href="#sync" class="headerlink" title="sync"></a>sync</h4><pre><code class="hljs java"><span class="hljs-meta">@Override</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> Promise&lt;V&gt; <span class="hljs-title">sync</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException </span>&#123;
+    await();
+    <span class="hljs-comment">// 如果任务是失败的，重新抛出相应的异常</span>
+    rethrowIfFailed();
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+&#125;
+</code></pre>
+
+<p>我们看到 sync 内部会调用await 方法，只是如果 await 执行失败，那么会再次抛出异常问题。</p>
+<h4 id="实例代码"><a href="#实例代码" class="headerlink" title="实例代码"></a>实例代码</h4><p>我们通过一个实例，来了解 Promise的使用，以及监听器的使用：</p>
+<pre><code class="hljs arduino"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">String</span>[] args)</span></span>&#123;
+
+   <span class="hljs-comment">// 构造线程池</span>
+   EventExecutor executor = <span class="hljs-keyword">new</span> <span class="hljs-built_in">DefaultEventExecutor</span>();
+
+   <span class="hljs-comment">// 创建 DefaultPromise 实例</span>
+   Promise promise = <span class="hljs-keyword">new</span> <span class="hljs-built_in">DefaultPromise</span>(executor);
+
+   <span class="hljs-comment">// 添加 一个 listener</span>
+    promise.<span class="hljs-built_in">addListener</span>(<span class="hljs-keyword">new</span> GenericFutureListener&lt;Future&lt;<span class="hljs-keyword">String</span>&gt;&gt;() &#123;
+         @Override
+          <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-built_in">operationComplete</span>(Future future) throws Exception &#123;
+                <span class="hljs-keyword">if</span> (future.<span class="hljs-built_in">isSuccess</span>()) &#123;
+                    System.out.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;任务成功,结果：&quot;</span> + future.<span class="hljs-built_in">get</span>());
+                &#125; <span class="hljs-keyword">else</span> &#123;
+                    System.out.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;任务失败,异常：&quot;</span> + future.<span class="hljs-built_in">cause</span>());
+                &#125;
+           &#125;
+    &#125;);
+    <span class="hljs-comment">// 提交任务到线程池</span>
+    executor.<span class="hljs-built_in">submit</span>(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Runnable</span>() &#123;
+         @Override
+          <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-built_in">run</span>() &#123;
+                <span class="hljs-keyword">try</span> &#123;
+                    Thread.<span class="hljs-built_in">sleep</span>(<span class="hljs-number">3000</span>);
+                &#125; <span class="hljs-built_in"><span class="hljs-keyword">catch</span></span> (InterruptedException e) &#123;
+                &#125;
+                <span class="hljs-comment">// 设置 promise 的结果</span>
+                <span class="hljs-comment">// promise.setFailure(new RuntimeException());</span>
+                promise.<span class="hljs-built_in">setSuccess</span>(<span class="hljs-string">&quot;success&quot;</span>);
+           &#125;
+     &#125;);
+
+     <span class="hljs-comment">// 主线程线程阻塞等待执行结果</span>
+      <span class="hljs-keyword">try</span> &#123;
+           promise.<span class="hljs-built_in">sync</span>();
+      &#125; <span class="hljs-built_in"><span class="hljs-keyword">catch</span></span> (InterruptedException e) &#123;
+
+      &#125;
+&#125;</code></pre>
+
+<p>运行代码， 3 秒后将输出：</p>
+<pre><code class="hljs">任务成功,结果：success</code></pre>
+
+<p>这里我们也可以试一下 sync() 和 await() 的区别，开启  promise.setFailure(new RuntimeException()) 代码，同时最后调用await 方法，对比区别，这里就不展示了，读者可以自行去尝试。</p>
+<h4 id="小结一下"><a href="#小结一下" class="headerlink" title="小结一下"></a>小结一下</h4><p>对比JDK 中的Future 如果我们需要获取结果，我们需要调用get 方法获取，或者通过isDone 来判断任务是否完成，这都是<strong>主动轮询</strong>的方式。</p>
+<p>而Netty中的Future  我们 可以用 await()，等 await() 方法返回后，得到 promise 的执行结果，然后处理它；</p>
+<p>另一种就是提供 <strong>Listener</strong> 实例，<strong>我们不太关心任务什么时候会执行完，只要它执行完了以后会去执行 listener 中我们定义的逻辑就可以了</strong>。</p>
+<p>在 DefaultPromise 中以及 上面的代码中，我们看到promise  持有了 线程池引用，这个是为什么呢？</p>
+<p>在 DefaultPromise  中 我们看到有如下注释：</p>
+<pre><code class="hljs php"><span class="hljs-comment">/**</span>
+<span class="hljs-comment"> * Get the executor used to notify listeners when this promise is complete.</span>
+<span class="hljs-comment"> * &lt;p&gt;</span>
+<span class="hljs-comment"> * It is assumed this executor will protect against &#123;<span class="hljs-doctag">@link</span> StackOverflowError&#125; exceptions.</span>
+<span class="hljs-comment"> * The executor may be used to avoid &#123;<span class="hljs-doctag">@link</span> StackOverflowError&#125; by executing a &#123;<span class="hljs-doctag">@link</span> Runnable&#125; if the stack</span>
+<span class="hljs-comment"> * depth exceeds a threshold.</span>
+<span class="hljs-comment"> * <span class="hljs-doctag">@return</span> The executor used to notify listeners when this promise is complete.</span>
+<span class="hljs-comment"> */</span>
+<span class="hljs-keyword">protected</span> EventExecutor executor() &#123;
+    <span class="hljs-keyword">return</span> executor;
+&#125;</code></pre>
+
+<p>当任务执行后，会进行 <strong>Listener</strong>  的调用，而<strong>Listener</strong>  的调用逻辑 这个是不清楚的，有可能是同步的，也可能是异步的，因此用线程池去执行，这样将 <strong>回调任务</strong> 和 和 <strong>任务的执行</strong> 进行了分割。</p>
+<h3 id="DefaultChannelPromise"><a href="#DefaultChannelPromise" class="headerlink" title="DefaultChannelPromise"></a>DefaultChannelPromise</h3><p>DefaultChannelPromise 基本上都是调用 DefaultPromise的方法 ,实现了ChannelPromise 接口，将Channle 关联了进来。</p>
+<pre><code class="hljs scala">public <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DefaultChannelPromise</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">DefaultPromise&lt;Void&gt;</span> <span class="hljs-title">implements</span> <span class="hljs-title">ChannelPromise</span>, <span class="hljs-title">FlushCheckpoint</span> </span>&#123;
+
+  <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">Channel</span> channel;
+  <span class="hljs-keyword">private</span> long checkpoint;
+
+  <span class="hljs-comment">/**</span>
+<span class="hljs-comment">  * Creates a new instance.</span>
+<span class="hljs-comment">  *</span>
+<span class="hljs-comment">  * @param channel</span>
+<span class="hljs-comment">  *        the &#123;@link Channel&#125; associated with this future</span>
+<span class="hljs-comment">  */</span>
+  public <span class="hljs-type">DefaultChannelPromise</span>(<span class="hljs-type">Channel</span> channel) &#123;
+      <span class="hljs-keyword">this</span>.channel = checkNotNull(channel, <span class="hljs-string">&quot;channel&quot;</span>);
+  &#125;
+  <span class="hljs-comment">//... 省略其它方法</span>
+&#125;</code></pre>
+
+<p>有了上面的认识，下面 我们回过头来再看<strong>客户端中Future</strong>的调用：</p>
+<pre><code class="hljs arduino"><span class="hljs-comment">// Start the client.</span>
+ChannelFuture future = b.<span class="hljs-built_in">connect</span>(HOST, PORT);
+future.<span class="hljs-built_in">sync</span>();
+
+<span class="hljs-comment">// Wait until the connection is closed.</span>
+Channel channel= future.<span class="hljs-built_in">channel</span>();
+ChannelFuture closeFuture=channel.<span class="hljs-built_in">closeFuture</span>();
+closeFuture.<span class="hljs-built_in">sync</span>();</code></pre>
+
+<p>当客户端进行 connect 后，返回了一个 Future，这个connect 是异步的，因此还不知道任务执行如何，因此这里我们调用 future的sync，等待connect 完成。</p>
+<p>当connect 后，我们从future 中获取 Channel, 再从这个 Channle 获取一个 Future,而这个Future 是监听 Channle 是否关闭的，通过sync 方法，我们可以一直等待Channle的关闭，因此如果不进行<code>closeFuture.sync()</code>,那么主线程就会直接执行完毕，不会阻塞在最后。</p>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Netty%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">Netty基础知识</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Java/">Java</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Netty/">Netty</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/09/03/clmo9rlfl00jeogue8035ccb7.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">4.Netty基础知识-Netty深度解析</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/08/13/clmo9rle0008iogue48bh0e4o.html">
+                        <span class="hidden-mobile">在闽回忆录</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                  <script src="https://utteranc.es/client.js"
+                    repo="wwhai/gitalk"
+                    issue-term="url"
+                    label="[Utterances]"
+                    theme="preferred-color-scheme"
+                    crossorigin="anonymous"
+                    async>
+                  </script>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "3.Netty基础知识-异步接口实现原理&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "#"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>

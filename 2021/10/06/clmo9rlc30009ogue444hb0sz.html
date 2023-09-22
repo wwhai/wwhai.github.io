@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="新四青年 的技术分享">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>OHVM 编程语言设计思路 - 新四青年</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+
+  <!-- 顶部提示 -->
+  <div class="alert alert-warning" role="alert"
+    style="margin-top: 70px; background-color: black;color: rgb(156, 255, 25);text-align: center;padding: 0 0 0 0;">
+    <strong>提示：本站一些文章的超时空时间是乱写的，主要是为了排序，并不是真实写作时间。</strong>
+  </div>
+
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar" style="background-color: #000000;">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>新四青年</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/openlab/academic.html">
+                
+                FreeOpenLab
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/things/">
+                
+                作品
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/post.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2021-10-06 00:00">
+      October 6, 2021 am
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      890 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      11
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：June 30, 2023 pm
+                
+              </p>
+            
+            <article class="markdown-body">
+              <h2 id="关于-OHVM-Lang"><a href="#关于-OHVM-Lang" class="headerlink" title="关于 OHVM-Lang"></a>关于 OHVM-Lang</h2><p>这是我自己的另一个想法，前段时间写了个很简单的虚拟机（其实就是OHVM），但是没有一个高级语言作为APP开发工具，于是我绞尽脑汁在找一些脚本语言。其他的比如Lua，JS等都是成熟的语言，语法规则实在是太庞大了，我看到那些规范几乎亮眼黑，一点不利于新手学习。于是我找到了一个大佬写的博客，他这个是自己设计一个很简单的编程语言，很适合作为新手学习，于是我就给抄过来了。本项目主要目的是把高级程序 OHVM-Lang 编译成 OHVM 的字节码。</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>本人不懂编译技术，全靠谷歌，写出来的东西估计很垃圾，但是学习价值还是有。</p>
+<h2 id="OHVM-Lang-设计规范"><a href="#OHVM-Lang-设计规范" class="headerlink" title="OHVM-Lang 设计规范"></a>OHVM-Lang 设计规范</h2><h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><p>变量赋值使用符号 <code>:=</code> , 例如我要定义一个变量存储一个数，程序应该如下写：</p>
+<pre><code class="hljs BASIC">var0 := <span class="hljs-number">1</span>
+var1 := <span class="hljs-number">2</span>
+....
+</code></pre>
+<ul>
+<li>变量赋值不支持多行，一行一个，和 C 有区别！</li>
+</ul>
+<blockquote>
+<p>也许你会好奇为何变量预定义？其实这是上古时代的编程语言通用的做法，因为本设计参考了 BASIC，所以也继承了这种非常简单的变量形式,这个变量的具体实现形式是个数组:</p>
+</blockquote>
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><p>OHVM-Lang 使用 <code>##</code>注释，和 python，shell 不太一样，注意是两个<code>#</code>。</p>
+<h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><ul>
+<li><p>数学运算符</p>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>含义</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>+</td>
+<td>数学加法</td>
+<td>var0 := 1 + 1</td>
+</tr>
+<tr>
+<td>-</td>
+<td>数学减法</td>
+<td>var0 := 1 - 1</td>
+</tr>
+<tr>
+<td>*</td>
+<td>数学乘法</td>
+<td>var0 := 1 * 1</td>
+</tr>
+<tr>
+<td>^</td>
+<td>数学幂运算</td>
+<td>var0 := 1 ^ 1</td>
+</tr>
+<tr>
+<td>/</td>
+<td>数学整除法</td>
+<td>var0 := 1 / 1</td>
+</tr>
+<tr>
+<td>%</td>
+<td>数学模运算</td>
+<td>var0 := 1 % 1</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>数学大于</td>
+<td>var0 := 1 &gt; 1 ,## 逻辑运算返回 0，表示false</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>数学小于</td>
+<td>var0 := 1 &lt; 1 ,## 逻辑运算返回 0，表示false</td>
+</tr>
+<tr>
+<td>=</td>
+<td>数学等于</td>
+<td>var0 := 1 = 1 ,## 逻辑运算返回 1，表示true</td>
+</tr>
+<tr>
+<td>&gt;:</td>
+<td>IO输出</td>
+<td>&gt;: 1 + 1</td>
+</tr>
+<tr>
+<td>&lt;&lt;</td>
+<td>IO输入</td>
+<td>:&gt; var0</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>逻辑运算符</p>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>含义</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&amp;</td>
+<td>AND</td>
+<td>var0 := 1 &amp; 1</td>
+</tr>
+<tr>
+<td>|</td>
+<td>OR</td>
+<td>var0 := 1 | 1</td>
+</tr>
+<tr>
+<td>!</td>
+<td>NOT</td>
+<td>var0 := 1 ! 1</td>
+</tr>
+<tr>
+<td>^</td>
+<td>XOR</td>
+<td>var0 := 1 ^ 1</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>字符</p>
+<p>字符用<code>&quot;</code>起来的串表示，如下示例:</p>
+<pre><code class="hljs basic">var0 := <span class="hljs-string">&quot;hello world&quot;</span>
+&gt;: var0</code></pre>
+
+<p>其中 <code>$</code>前置的单个字符值会被直接转成 ASCII 码:</p>
+<pre><code class="hljs basic">var0 := $A
+var1 := $<span class="hljs-number">1</span></code></pre>
+
+<p>其中 var0 的值为 A 的 ASCII 码为 65；var1 的值为 49。</p>
+<h3 id="条件"><a href="#条件" class="headerlink" title="条件"></a>条件</h3></li>
+</ul>
+<p>条件语句的格式如下:</p>
+<pre><code class="hljs c"><span class="hljs-keyword">if</span>(boolean)&#123;
+  ##
+&#125;
+<span class="hljs-keyword">else</span>&#123;
+  ##
+&#125;</code></pre>
+
+<p>看起来是不是很简单，所以为了省事，目前只有这一种条件语句，来个 demo：</p>
+<pre><code class="hljs c">var0 := <span class="hljs-number">1</span>
+var1 := <span class="hljs-number">2</span>
+<span class="hljs-keyword">if</span>(var0 &gt; var1)&#123;
+    &gt;: var0
+&#125;
+<span class="hljs-keyword">else</span>&#123;
+    &gt;: var1
+&#125;</code></pre>
+
+
+<h3 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h3><p>循环语句的格式如下：</p>
+<pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-title">loop</span>(<span class="hljs-params">boolean</span>)</span>&#123;
+    ##
+    goout
+&#125;</code></pre>
+
+<ul>
+<li>跳出循环使用 <code>goout</code> , 这其实是汇编的 <code>POP</code> 命令。当到这里的时候，发生了退栈的行为。</li>
+</ul>
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><p>函数概念和任意一个其他编程语言的相同，其定义如下：</p>
+<pre><code class="hljs kotlin"><span class="hljs-function"><span class="hljs-keyword">fun</span> [名称]<span class="hljs-params">(参数表)</span></span> -&gt;
+   函数体
+end</code></pre>
+
+<p>例如定义一个计算两数之和的demo：</p>
+<ul>
+<li>有返回值<pre><code class="hljs kotlin"><span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">add</span><span class="hljs-params">(a, b)</span></span> -&gt;
+    <span class="hljs-keyword">return</span> a + b
+end</code></pre></li>
+<li>无返回值：<pre><code class="hljs kotlin"><span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">echo</span><span class="hljs-params">(a)</span></span> -&gt;
+    &gt;: a
+end</code></pre>
+
+</li>
+</ul>
+<h3 id="简单案例"><a href="#简单案例" class="headerlink" title="简单案例"></a>简单案例</h3><ol>
+<li><p>hello world</p>
+<pre><code class="hljs makefile">var0 := <span class="hljs-string">&quot;hello ohvm&quot;</span>
+<span class="hljs-section">&gt;: var0</span></code></pre></li>
+<li><p>计算两个数之和</p>
+<pre><code class="hljs makefile">var0 := 1
+var1 := 2
+<span class="hljs-section">&gt;: var0 + var1</span></code></pre></li>
+<li><p>比较两个数大小</p>
+<pre><code class="hljs stylus">var0 := <span class="hljs-number">1</span>
+var1 := <span class="hljs-number">2</span>
+<span class="hljs-function"><span class="hljs-title">if</span><span class="hljs-params">(var0 &gt; var1)</span></span>&#123;
+    &gt;: <span class="hljs-number">1</span>
+&#125;<span class="hljs-keyword">else</span>&#123;
+    &gt;: <span class="hljs-number">0</span>
+&#125;</code></pre>
+
+</li>
+</ol>
+<h3 id="其他-1"><a href="#其他-1" class="headerlink" title="其他"></a>其他</h3><h4 id="内置函数"><a href="#内置函数" class="headerlink" title="内置函数"></a>内置函数</h4><p>desining</p>
+<h4 id="绘图函数"><a href="#绘图函数" class="headerlink" title="绘图函数"></a>绘图函数</h4><p>desining</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li>[Turing Complete Languages] [<a target="_blank" rel="noopener" href="https://www.cs.drexel.edu/~kschmidt/CS360/Lectures/1.html]">https://www.cs.drexel.edu/~kschmidt/CS360/Lectures/1.html]</a></li>
+<li>[ Writing an Interpreter ] [<a target="_blank" rel="noopener" href="http://memphis.compilertools.net/interpreter.html]">http://memphis.compilertools.net/interpreter.html]</a></li>
+<li>[ BASIC Interpreter ] [<a target="_blank" rel="noopener" href="http://zzp.me/archive/basic%E8%A7%A3%E9%87%8A%E5%99%A8.html]">http://zzp.me/archive/basic%E8%A7%A3%E9%87%8A%E5%99%A8.html]</a></li>
+<li>[ C8C ] [<a target="_blank" rel="noopener" href="https://github.com/glouw/c8c.git]">https://github.com/glouw/c8c.git]</a></li>
+</ul>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/freeopenlab/">freeopenlab</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/freeopenlab/">freeopenlab</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/10/06/clmo9rlbz0003ogue9qvh8f2y.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Lora 网关设计思路</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2021/10/06/clmo9rlc4000boguebibl3r7j.html">
+                        <span class="hidden-mobile">一种假设的基于万有引力的通信模型</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                  <script src="https://utteranc.es/client.js"
+                    repo="wwhai/gitalk"
+                    issue-term="url"
+                    label="[Utterances]"
+                    theme="preferred-color-scheme"
+                    crossorigin="anonymous"
+                    async>
+                  </script>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "OHVM 编程语言设计思路&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "#"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>

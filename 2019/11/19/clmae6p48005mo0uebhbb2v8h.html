@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="新四青年 的技术分享">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>Qt5 Http简单应用 - 新四青年</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+
+  <!-- 顶部提示 -->
+  <div class="alert alert-warning" role="alert"
+    style="margin-top: 70px; background-color: black;color: rgb(156, 255, 25);text-align: center;padding: 0 0 0 0;">
+    <strong>提示：本站一些文章的超时空时间是乱写的，主要是为了排序，并不是真实写作时间。</strong>
+  </div>
+
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar" style="background-color: #000000;">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>新四青年</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/openlab/academic.html">
+                
+                FreeOpenLab
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/things/">
+                
+                作品
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/post.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2019-11-19 22:59">
+      November 19, 2019 pm
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      995 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      16
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：June 30, 2023 pm
+                
+              </p>
+            
+            <article class="markdown-body">
+              <p>本文作者：[wangwenhai] # 概要：本文主要讲Qt5如何通过HTTP协议获取数据</p>
+<span id="more"></span>
+<p>最近这几天，没项目做了，突然想起来，听同学说qt做软件也还是很好玩的，无奈我不会C++ ，只能摸索，本来很简单的一个APP,做了四天，算是基本功能实现了，BUG目前没有。</p>
+<p>总结：C++的学习成本是java的 3倍以上，想学习的可要做好心理准备。我默默的关了IDE，开始学习Java，我就不是一个学习C++的料。</p>
+<p>【里面用到的数据来自<a target="_blank" rel="noopener" href="http://www.showapi.com,想使用的，可以去注册申请】">www.showapi.com,想使用的，可以去注册申请】</a></p>
+<p>软件截图：</p>
+<p><img src="https://static.oschina.net/uploads/space/2017/0506/224909_ySNe_2702126.png" srcset="/img/loading.gif" alt=""></p>
+<p>这个简单的应用使用Qt5写的，目的为了学习QT的Http和JSON解析相关知识。</p>
+<p>项目结构：</p>
+<p><img src="https://static.oschina.net/uploads/space/2017/0506/225020_mQMw_2702126.png" srcset="/img/loading.gif" alt=""></p>
+<p>chartitem.h</p>
+<pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">ifndef</span> CHARTITEM_H</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> CHARTITEM_H</span>
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;QGraphicsItem&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;QString&gt;</span></span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ChartItem</span> :</span> <span class="hljs-keyword">public</span> QGraphicsItem
+&#123;
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-built_in">ChartItem</span>();
+    <span class="hljs-built_in">ChartItem</span>(QString title, <span class="hljs-keyword">double</span> level  );
+    <span class="hljs-function">QRectF <span class="hljs-title">boundingRect</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">paint</span><span class="hljs-params">(QPainter *painter,<span class="hljs-keyword">const</span> QStyleOptionGraphicsItem *option,</span></span>
+<span class="hljs-params"><span class="hljs-function">               QWidget *widget)</span></span>;
+
+<span class="hljs-keyword">private</span>:
+    QString title;
+    <span class="hljs-keyword">double</span> level ;
+    <span class="hljs-keyword">long</span> heat;
+    <span class="hljs-keyword">int</span> trend;
+    <span class="hljs-keyword">int</span> xPos, yPos;
+    <span class="hljs-keyword">int</span> r ;
+    <span class="hljs-keyword">int</span> g ;
+    <span class="hljs-keyword">int</span> b ;
+&#125;;
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span> <span class="hljs-comment">// CHARTITEM_H</span></span>
+</code></pre>
+
+<p>mainwindow.h</p>
+<pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">ifndef</span> MAINWINDOW_H</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> MAINWINDOW_H</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;QGraphicsScene&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;QMainWindow&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;QString&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;QtScript/QScriptEngine&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;QNetworkAccessManager&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;QTextCodec&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;QNetworkReply&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;QNetworkRequest&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;QUrl&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;QPaintEvent&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;QAction&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;QMenu&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;QMenuBar&gt;</span></span>
+
+<span class="hljs-keyword">namespace</span> Ui &#123;
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MainWindow</span>;</span>
+&#125;
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MainWindow</span> :</span> <span class="hljs-keyword">public</span> QMainWindow
+&#123;
+    Q_OBJECT
+
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">explicit</span> <span class="hljs-title">MainWindow</span><span class="hljs-params">(QWidget *parent = <span class="hljs-number">0</span>)</span></span>;
+    ~<span class="hljs-built_in">MainWindow</span>();
+<span class="hljs-keyword">private</span> slots:
+    <span class="hljs-function">QString <span class="hljs-title">replyFinished</span><span class="hljs-params">(QNetworkReply *reply)</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">getData</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">about</span><span class="hljs-params">()</span></span>;
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">help</span><span class="hljs-params">()</span></span>;
+
+
+<span class="hljs-keyword">private</span>:
+    QNetworkAccessManager *manager;
+    QString urlString=<span class="hljs-string">&quot;http://route.showapi.com/307-2?showapi_appid=showAPI APP ID&amp;showapi_sign=秘钥&amp;subjectId=%2&amp;branchId=%3&amp;showapi_timestamp=%4&quot;</span>;
+    Ui::MainWindow *ui;
+    QGraphicsScene *scene;
+    QString originId;
+    QString subjectId;
+    QString branchId;
+    QMenu *menu;
+    QAction *aboutAction;
+    QAction *helpAction;
+
+&#125;;
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span> <span class="hljs-comment">// MAINWINDOW_H</span></span>
+</code></pre>
+
+<p>chartitem.cpp</p>
+<pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;chartitem.h&quot;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;QPainter&gt;</span></span>
+ChartItem::<span class="hljs-built_in">ChartItem</span>()
+&#123;
+&#125;
+ChartItem::<span class="hljs-built_in">ChartItem</span>(QString title, <span class="hljs-keyword">double</span> level)&#123;
+     r=<span class="hljs-built_in">qrand</span>() % <span class="hljs-number">255</span>;
+     g=<span class="hljs-built_in">qrand</span>() % <span class="hljs-number">255</span>;
+     b=<span class="hljs-built_in">qrand</span>() % <span class="hljs-number">255</span>;
+    <span class="hljs-keyword">this</span>-&gt;title=title;
+    <span class="hljs-keyword">this</span>-&gt;level=level;
+
+&#125;
+<span class="hljs-function">QRectF <span class="hljs-title">ChartItem::boundingRect</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span></span>
+<span class="hljs-function"></span>&#123;
+   <span class="hljs-keyword">return</span> <span class="hljs-built_in">QRectF</span>(<span class="hljs-number">-5</span>,<span class="hljs-number">-5</span>, <span class="hljs-number">60</span>, <span class="hljs-number">20</span>+<span class="hljs-keyword">this</span>-&gt;level*<span class="hljs-number">2</span>);
+&#125;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">ChartItem::paint</span><span class="hljs-params">(QPainter *painter, <span class="hljs-keyword">const</span> QStyleOptionGraphicsItem *option, QWidget *widget)</span></span>
+<span class="hljs-function"></span>&#123;
+    painter-&gt;<span class="hljs-built_in">setBrush</span>(<span class="hljs-built_in">QColor</span>(r,g,b));
+    painter-&gt;<span class="hljs-built_in">drawText</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-keyword">this</span>-&gt;title);
+    painter-&gt;<span class="hljs-built_in">drawRect</span>(<span class="hljs-number">0</span>,<span class="hljs-number">10</span>,<span class="hljs-number">50</span>,<span class="hljs-keyword">this</span>-&gt;level*<span class="hljs-number">2</span>);
+    painter-&gt;<span class="hljs-built_in">drawText</span>(<span class="hljs-number">0</span>,<span class="hljs-number">20</span>+<span class="hljs-keyword">this</span>-&gt;level*<span class="hljs-number">2</span>, QString::<span class="hljs-built_in">number</span>( <span class="hljs-keyword">this</span>-&gt;level));
+
+&#125;
+</code></pre>
+
+<p>mainwindow.cpp</p>
+<pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;mainwindow.h&quot;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;ui_mainwindow.h&quot;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;QDebug&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;QUrl&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;QDateTime&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;QMessageBox&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;QJsonDocument&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;QJsonObject&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;QJsonArray&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;QJsonParseError&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;QPen&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;QPainter&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;chartitem.h&quot;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;chartdir.h&quot;</span></span>
+
+MainWindow::<span class="hljs-built_in">MainWindow</span>(QWidget *parent) :
+    <span class="hljs-built_in">QMainWindow</span>(parent),
+    <span class="hljs-built_in">ui</span>(<span class="hljs-keyword">new</span> Ui::MainWindow)
+&#123;
+    ui-&gt;<span class="hljs-built_in">setupUi</span>(<span class="hljs-keyword">this</span>);
+    ui-&gt;titleLabel-&gt;<span class="hljs-built_in">setAlignment</span>(Qt::AlignCenter);
+    <span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">setFixedSize</span>(<span class="hljs-number">684</span>,<span class="hljs-number">426</span>);
+    scene = <span class="hljs-keyword">new</span> QGraphicsScene;
+    helpAction=<span class="hljs-keyword">new</span> <span class="hljs-built_in">QAction</span>(<span class="hljs-built_in">tr</span>(<span class="hljs-string">&quot;操作帮助&quot;</span>), <span class="hljs-keyword">this</span>);
+    aboutAction=<span class="hljs-keyword">new</span> <span class="hljs-built_in">QAction</span>(<span class="hljs-built_in">tr</span>(<span class="hljs-string">&quot;作者信息&quot;</span>), <span class="hljs-keyword">this</span>);
+    <span class="hljs-built_in">connect</span>(helpAction, <span class="hljs-built_in">SIGNAL</span>(<span class="hljs-built_in">triggered</span>()), <span class="hljs-keyword">this</span>, <span class="hljs-built_in">SLOT</span>(<span class="hljs-built_in">help</span>()));
+    <span class="hljs-built_in">connect</span>(aboutAction, <span class="hljs-built_in">SIGNAL</span>(<span class="hljs-built_in">triggered</span>()), <span class="hljs-keyword">this</span>, <span class="hljs-built_in">SLOT</span>(<span class="hljs-built_in">about</span>()));
+    menu = <span class="hljs-keyword">this</span>-&gt;<span class="hljs-built_in">menuBar</span>()-&gt;<span class="hljs-built_in">addMenu</span>(<span class="hljs-built_in">tr</span>(<span class="hljs-string">&quot;菜单&quot;</span>));
+    menu-&gt;<span class="hljs-built_in">addAction</span>(helpAction);
+    menu-&gt;<span class="hljs-built_in">addAction</span>(aboutAction);
+    manager = <span class="hljs-keyword">new</span> <span class="hljs-built_in">QNetworkAccessManager</span>(<span class="hljs-keyword">this</span>);
+    <span class="hljs-built_in">connect</span>(ui-&gt;searchButton,<span class="hljs-built_in">SIGNAL</span>(<span class="hljs-built_in">clicked</span>()),<span class="hljs-keyword">this</span>,<span class="hljs-built_in">SLOT</span>(<span class="hljs-built_in">getData</span>()));
+    <span class="hljs-built_in">connect</span>(manager,<span class="hljs-built_in">SIGNAL</span>(<span class="hljs-built_in">finished</span>(QNetworkReply*)), <span class="hljs-keyword">this</span>,<span class="hljs-built_in">SLOT</span>(<span class="hljs-built_in">replyFinished</span>(QNetworkReply*)));
+&#125;
+
+MainWindow::~<span class="hljs-built_in">MainWindow</span>()
+&#123;
+    <span class="hljs-keyword">delete</span> ui;
+&#125;
+<span class="hljs-function">QString <span class="hljs-title">MainWindow::replyFinished</span><span class="hljs-params">(QNetworkReply *reply)</span></span>
+<span class="hljs-function"></span>&#123;
+    QJsonParseError error;
+    QJsonDocument jsonDocument = QJsonDocument::<span class="hljs-built_in">fromJson</span>(reply-&gt;<span class="hljs-built_in">readAll</span>(),&amp;error);
+    QJsonObject apiRootObj= jsonDocument.<span class="hljs-built_in">object</span>();
+    QJsonObject apiBodyObj= apiRootObj[<span class="hljs-string">&quot;showapi_res_body&quot;</span>].<span class="hljs-built_in">toObject</span>();
+    QJsonArray dataArray= apiBodyObj[<span class="hljs-string">&quot;list&quot;</span>].<span class="hljs-built_in">toArray</span>();
+    <span class="hljs-keyword">if</span>(!dataArray.<span class="hljs-built_in">isEmpty</span>())&#123;
+        scene-&gt;<span class="hljs-built_in">clear</span>();
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>;i&lt;dataArray.<span class="hljs-built_in">size</span>();i++)&#123;
+            QJsonObject obj = dataArray.<span class="hljs-built_in">at</span>(i).<span class="hljs-built_in">toObject</span>();
+            QString title=obj.<span class="hljs-built_in">value</span>(<span class="hljs-string">&quot;title&quot;</span>).<span class="hljs-built_in">toString</span>();
+            <span class="hljs-keyword">double</span> level =obj.<span class="hljs-built_in">value</span>(<span class="hljs-string">&quot;level&quot;</span>).<span class="hljs-built_in">toString</span>().<span class="hljs-built_in">toDouble</span>();
+            ChartItem *item=<span class="hljs-keyword">new</span> <span class="hljs-built_in">ChartItem</span>(title,  level );
+            item-&gt;<span class="hljs-built_in">setPos</span>( i*<span class="hljs-number">90</span>,<span class="hljs-number">20</span>);
+            scene-&gt;<span class="hljs-built_in">addItem</span>(item);
+        &#125;
+
+        ui-&gt;chartView-&gt;<span class="hljs-built_in">setScene</span>(scene);
+    &#125;<span class="hljs-keyword">else</span> &#123;
+        QMessageBox::<span class="hljs-built_in">information</span>(<span class="hljs-keyword">this</span>,<span class="hljs-string">&quot;提示！&quot;</span>,<span class="hljs-string">&quot;当前暂时没有数据\n请认真查看专业是否和科目对应!&quot;</span>);
+    &#125;
+&#125;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">MainWindow::getData</span><span class="hljs-params">()</span></span>&#123;
+    QString queryUrl=urlString.<span class="hljs-built_in">arg</span>(ui-&gt;originBox-&gt;<span class="hljs-built_in">currentText</span>())
+            .<span class="hljs-built_in">arg</span>(ui-&gt;subjectBox-&gt;<span class="hljs-built_in">currentText</span>())
+            .<span class="hljs-built_in">arg</span>(ui-&gt;branchBox-&gt;<span class="hljs-built_in">currentText</span>())
+            .<span class="hljs-built_in">arg</span>(QDateTime::<span class="hljs-built_in">currentDateTime</span>().<span class="hljs-built_in">toString</span>(<span class="hljs-string">&quot;yyyyMMddHHmmss&quot;</span>));
+    manager-&gt;<span class="hljs-built_in">get</span>(<span class="hljs-built_in">QNetworkRequest</span>(<span class="hljs-built_in">QUrl</span>(queryUrl)));
+&#125;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">MainWindow::help</span><span class="hljs-params">()</span></span>&#123;
+    QMessageBox::<span class="hljs-built_in">information</span>(<span class="hljs-keyword">this</span>,<span class="hljs-string">&quot;帮助信息！&quot;</span>,<span class="hljs-string">&quot;注意:\n1.软件所有数据来源于网络，仅仅具有参考性;\n2.文科、理科要选择正确，否则没有数据。\n3.软件作为学习交流使用，任何人都可以拿去玩。&quot;</span>);
+&#125;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">MainWindow::about</span><span class="hljs-params">()</span></span>&#123;
+    QMessageBox::<span class="hljs-built_in">information</span>(<span class="hljs-keyword">this</span>,<span class="hljs-string">&quot;关于软件！&quot;</span>,<span class="hljs-string">&quot;版本 1.0\n作者：gnik\n极光工作室出品\nwww.plstudio.xyz&quot;</span>);
+&#125;
+</code></pre>
+
+<p>最后是main.cpp</p>
+<pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;mainwindow.h&quot;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;QApplication&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> *argv[])</span></span>
+<span class="hljs-function"></span>&#123;
+    <span class="hljs-function">QApplication <span class="hljs-title">a</span><span class="hljs-params">(argc, argv)</span></span>;
+    MainWindow w;
+    w.<span class="hljs-built_in">show</span>();
+
+    <span class="hljs-keyword">return</span> a.<span class="hljs-built_in">exec</span>();
+&#125;
+</code></pre>
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/C/">C++</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/C/">C++</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Qt/">Qt</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/11/19/clmae6p4b0063o0ue0ifrhfvk.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Python科学计算库pandas的简单应用</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2019/11/19/clmae6p4a005vo0uehyzph86g.html">
+                        <span class="hidden-mobile">Java回调写法实践</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                  <script src="https://utteranc.es/client.js"
+                    repo="wwhai/gitalk"
+                    issue-term="url"
+                    label="[Utterances]"
+                    theme="preferred-color-scheme"
+                    crossorigin="anonymous"
+                    async>
+                  </script>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Qt5 Http简单应用&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "#"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>

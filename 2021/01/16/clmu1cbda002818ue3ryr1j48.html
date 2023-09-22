@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="新四青年 的技术分享">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>30分钟学Erlang (一) - 新四青年</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+
+  <!-- 顶部提示 -->
+  <div class="alert alert-warning" role="alert"
+    style="margin-top: 70px; background-color: black;color: rgb(156, 255, 25);text-align: center;padding: 0 0 0 0;">
+    <strong>提示：本站一些文章的超时空时间是乱写的，主要是为了排序，并不是真实写作时间。</strong>
+  </div>
+
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar" style="background-color: #000000;">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>新四青年</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/openlab/academic.html">
+                
+                FreeOpenLab
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/things/">
+                
+                作品
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/post.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2021-01-16 20:02">
+      January 16, 2021 pm
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      95
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：June 30, 2023 pm
+                
+              </p>
+            
+            <article class="markdown-body">
+              <p>作者：Shawn # 概要：使用 erlang:spawn/1,2,3,4 用来创建一个 erlang 进程。Erlang 进程不是操作系统的进程，而是类似其他语言里“协程”的概念，它由 Erlang 虚拟机调度。本文以后说“进程”，就是指 Erlang 进程。</p>
+<span id="more"></span>
+
+<blockquote>
+<p>本文来自我的同事Shawn大佬的总结，Shawn大佬是目前国内Erlang领域内的权威开发架构师，30分钟学erlang系列文章是Shawn的一线经验，对于新入门的朋友很有帮助。再次感谢Shawn花时间整理博客，和贡献文档供社区学习。</p>
+</blockquote>
+<h1 id="30分钟学Erlang-二"><a href="#30分钟学Erlang-二" class="headerlink" title="30分钟学Erlang (二)"></a>30分钟学Erlang (二)</h1><h2 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h2><h5 id="创建进程"><a href="#创建进程" class="headerlink" title="创建进程"></a>创建进程</h5><p>使用 erlang:spawn/1,2,3,4 用来创建一个 erlang 进程。Erlang 进程不是操作系统的进程，而是类似其他语言里“协程”的概念，它由 Erlang 虚拟机调度。本文以后说“进程”，就是指 Erlang 进程。</p>
+<p>进程之间是互相独立的，一个进程要想与另外一个进程通信，就必须通过消息传递。消息会被发送到对方进程的信箱存储起来，对方进程可以在合适的时间，按照自定的顺序读取信箱里的消息。</p>
+<p>Erlang 里进程非常轻量，启动速度很快，并且可以同时运行千千万万个，默认的进程个数上限是 262144 ，但可以在启动时使用 erl +P 修改这个配置。</p>
+<pre><code class="hljs shell"><span class="hljs-meta">1&gt;</span><span class="bash"> HelloParallel = fun() -&gt; io:format(<span class="hljs-string">&quot;hello parallel!~n&quot;</span>) end.</span>
+<span class="hljs-meta">#</span><span class="bash">Fun&lt;erl_eval.20.99386804&gt;</span>
+<span class="hljs-meta">2&gt;</span><span class="bash"> spawn(HelloParallel).  %% spawn/1 BIF 接受一个函数做为参数。</span>
+hello parallel!
+&lt;0.63.0&gt;
+<span class="hljs-meta">3&gt;</span><span class="bash"> PID = pid(0,63,0).   %% 使用 pid 来生成一个 PID</span>
+<span class="hljs-meta">4&gt;</span><span class="bash"> is_pid(PID).  %% 检查是否是 PID 类型</span>
+true
+<span class="hljs-meta">5&gt;</span><span class="bash"> is_process_alive(PID). %%  检查 Process 是否还活着。显示 <span class="hljs-literal">false</span> 是因为它已经运行完成终止了。</span>
+false</code></pre>
+<p>spawn 函数返回一个新进程的 pid，我们可以使用这个 pid 与其交互。</p>
+<p>erlang shell 也是有 pid 的。前面说到一个运行时错误会使得当前的shell 进程崩溃，并重新启动一个新的进程，我们验证一下：</p>
+<pre><code class="hljs shell"><span class="hljs-meta">1&gt;</span><span class="bash"> self().   %% self/1 返回当前进程的 pid</span>
+&lt;0.60.0&gt;
+<span class="hljs-meta">2&gt;</span><span class="bash"> 1 = 2.</span>
+** exception error: no match of right hand side value 2
+<span class="hljs-meta">3&gt;</span><span class="bash"> self().</span>
+&lt;0.63.0&gt;</code></pre>
+
+<h4 id="消息发送和接收"><a href="#消息发送和接收" class="headerlink" title="消息发送和接收"></a>消息发送和接收</h4><p>使用消息发送运算符 <code>!</code> 发送消息。</p>
+<pre><code class="hljs shell"><span class="hljs-meta">4&gt;</span><span class="bash"> self() ! <span class="hljs-string">&quot;hello&quot;</span>.    %% 向自己所在的进程发送一个 List 类型的 <span class="hljs-string">&quot;hello&quot;</span>. `!` 操作的返回值是消息内容, <span class="hljs-string">&quot;hello&quot;</span>.</span>
+&quot;hello&quot;
+<span class="hljs-meta">5&gt;</span><span class="bash"> flush().  %% flush() 将当前 process 的信箱里的所有消息清空并打印。</span>
+Shell got &quot;hello&quot;
+ok</code></pre>
+
+<p>receive … end 语句使用 pattern matching 来从自己进程的信箱里读取消息，可以使用 after 语句来设置等待超时时间：</p>
+<pre><code class="hljs shell"><span class="hljs-meta">1&gt;</span><span class="bash"> self() ! <span class="hljs-string">&quot;msg1&quot;</span>.</span>
+&quot;msg1&quot;
+<span class="hljs-meta">2&gt;</span><span class="bash"> self() ! <span class="hljs-string">&quot;msg2&quot;</span>.</span>
+&quot;msg2&quot;
+<span class="hljs-meta">3&gt;</span><span class="bash"> self() ! <span class="hljs-string">&quot;msg3&quot;</span>.</span>
+&quot;msg3&quot;
+<span class="hljs-meta">4&gt;</span><span class="bash"> receive Msg -&gt; Msg after 3000 -&gt; no_more end. %% 读取任意消息并返回这条消息，如果信箱里没有消息了，等待 3 秒后结束并返回 no_more.</span>
+&quot;msg1&quot;
+<span class="hljs-meta">5&gt;</span><span class="bash"> receive Msg -&gt; Msg after 3000 -&gt; no_more end.  %% 后面这两条为什么返回 no_more ? 不应该是 <span class="hljs-string">&quot;msg2&quot;</span>, <span class="hljs-string">&quot;msg3&quot;</span> 吗？</span>
+no_more
+<span class="hljs-meta">6&gt;</span><span class="bash"> receive Msg -&gt; Msg after 3000 -&gt; no_more end.</span>
+no_more</code></pre>
+
+<p>上面的第 4 行 <code>receive</code> 语句里，erlang shell 进程查看邮箱，查到第一个消息是 “msg1”, Msg 被绑定为 “msg1”。再次运行 receive 语句的时候，由于 Msg 的值已经为 “msg1”，与信箱里的 “msg2”, “msg3” 都不匹配，所以后面两条 <code>receive</code> 语句都没有从信箱里读取新消息，”msg2” 和 “msg3” 仍然存储在信箱里:</p>
+<pre><code class="hljs shell"><span class="hljs-meta">16&gt;</span><span class="bash"> flush().</span>
+Shell got &quot;msg2&quot;
+Shell got &quot;msg3&quot;
+ok</code></pre>
+<p>注意虽然后面两个 <code>receive</code> 语句都没有从信箱里读取消息，但在 receive 语句的执行过程中，它仍然是从头到尾遍历了整个邮箱，并尝试拿邮箱里的各个消息跟代码里的 <code>Msg</code> 进行匹配，这是消耗资源的，等后面消息堆积越多越麻烦。这个叫 <code>Selective Message Reception</code>. 消息的读取顺序是接收方决定的。</p>
+<p>所以一般情况下我们在读取信箱消息时，读到我们不感兴趣的消息也取出来，打个 error log 然后扔掉它，不要让它一直在信箱里耗费资源。</p>
+<p>在 Erlang shell 已经伸展不开拳脚了。让我们来写个复杂点的程序：<br>我们的程序实现一个 <strong>消息缓存</strong>，具体需求是：</p>
+<ul>
+<li>我们需要一个消息栈，用于存储用户发来的消息。</li>
+<li>考虑到用户发来的消息可能有很多，我们需要好几个这样的消息栈来分担负载。</li>
+<li>我们还想能够给消息栈命名，以便区分。</li>
+</ul>
+<pre><code class="hljs erlang"><span class="hljs-keyword">-module</span><span class="hljs-params">(msg_cache)</span>.
+
+<span class="hljs-comment">%% APIs</span>
+<span class="hljs-keyword">-export</span><span class="hljs-params">([start_one/<span class="hljs-number">1</span>])</span>.
+
+<span class="hljs-comment">%% for spawns</span>
+<span class="hljs-keyword">-export</span><span class="hljs-params">([loop/<span class="hljs-number">1</span>])</span>.
+
+<span class="hljs-comment">%% 定义进程的 state。</span>
+<span class="hljs-comment">%% 我们一般说，一个服务、或 “对象” 会维护自己内部的 &#x27;状态&#x27;</span>
+<span class="hljs-comment">%% 状态可能是一个字符串缓存，可能是某个资源的引用，这个跟业务相关。</span>
+<span class="hljs-comment">%% 状态存在于内存中，跟外界隔离，通过 API 接口与外界交互。</span>
+<span class="hljs-comment">%% 面向对象语言里用 类和对象来存储状态，Erlang 里我们用 process。</span>
+<span class="hljs-comment">%% 所以我们又说 Erlang 是 “面向Process 编程的”</span>
+<span class="hljs-keyword">-record</span><span class="hljs-params">(state, &#123;</span>
+<span class="hljs-params">            name,      <span class="hljs-comment">%% 消息栈的名字</span></span>
+<span class="hljs-params">            length = <span class="hljs-number">0</span>,  <span class="hljs-comment">%% 消息栈长度</span></span>
+<span class="hljs-params">            buff = []   <span class="hljs-comment">%% 消息栈的存储列表</span></span>
+<span class="hljs-params">         &#125;)</span>.
+
+<span class="hljs-function"><span class="hljs-title">loop</span><span class="hljs-params">(State = #state&#123;name = Name, length = Len, buff = Buff&#125;)</span> -&gt;</span>
+  <span class="hljs-keyword">receive</span>
+    &#123;get_name, From&#125;-&gt;
+      From ! &#123;ok, Name&#125;,
+      loop(State);
+    &#123;get_length, From&#125;-&gt;
+      From ! &#123;ok, Len&#125;,
+      loop(State);
+    &#123;set_name, NewName, From&#125; -&gt;
+      From ! ok,
+      loop(State#state&#123;name = NewName&#125;);
+    &#123;push, Msg, From&#125; -&gt;
+      From ! ok,
+      loop(State#state&#123;buff = [Msg | Buff], length = Len + <span class="hljs-number">1</span>&#125;);
+    &#123;pop, [], From&#125; -&gt;
+      From ! &#123;error, empty&#125;,
+      loop(State);
+    &#123;pop, [TopMsg | Msgs], From&#125; -&gt;
+      From ! &#123;ok, TopMsg&#125;,
+      loop(State#state&#123;buff = Msgs, length = Len - <span class="hljs-number">1</span>&#125;);
+    _Unsupported -&gt;
+      erlang:error(io_libs:format(<span class="hljs-string">&quot;unsupported msg: &quot;</span>, [_Unsupported]) )
+  <span class="hljs-keyword">end</span>.
+
+<span class="hljs-function"><span class="hljs-title">start_one</span><span class="hljs-params">(BuffName)</span> -&gt;</span>
+  <span class="hljs-comment">%% 启动一个消息栈，并返回其 PID</span>
+  Pid = spawn(msg_cache, loop, [#state&#123;name=BuffName&#125;]),
+  io:format(<span class="hljs-string">&quot;Buff ~s created! Pid = ~p~n&quot;</span>, [BuffName, Pid]),
+  Pid</code></pre>
+
+<p>其实除了 loop/1 长一点，其他的都挺容易理解的。<br>注意 loop/1 里的每个分支的最后一个语句都是尾递归，意味着只要不出错，loop/1 就一直循环下去，所以进程就不会停止。</p>
+<p><code>思考：如果把上面代码里 receive 语句的最后一个 _Unsupported -&gt; 分支删掉的话，会发生什么？</code></p>
+<p>receive 语句里，接受消息时，都要求消息发送方将自己的 Pid 带过来，放到 <code>From</code> 变量里，以便我们回复消息给对方。</p>
+<p>我们来试试：</p>
+<pre><code class="hljs shell"><span class="hljs-meta">1&gt;</span><span class="bash"> PID = msg_cache:start_one(<span class="hljs-string">&quot;cache2&quot;</span>).</span>
+Buff cache2 created! Pid = &lt;0.62.0&gt;
+&lt;0.62.0&gt;
+<span class="hljs-meta">2&gt;</span><span class="bash"> PID ! &#123;get_length, self()&#125;.</span>
+&#123;get_length,&lt;0.60.0&gt;&#125;
+<span class="hljs-meta">3&gt;</span><span class="bash"> flush().</span>
+Shell got &#123;ok,0&#125;
+ok
+<span class="hljs-meta"></span>
+<span class="hljs-meta">4&gt;</span><span class="bash"> PID ! &#123;pop, self()&#125;.</span>
+&#123;pop,&lt;0.60.0&gt;&#125;
+<span class="hljs-meta">5&gt;</span><span class="bash"> flush().</span>
+Shell got &#123;error,empty&#125;
+ok
+<span class="hljs-meta"></span>
+<span class="hljs-meta">6&gt;</span><span class="bash"> PID ! &#123;push, <span class="hljs-string">&quot;msg1&quot;</span>, self()&#125;.</span>
+&#123;push,&quot;msg1&quot;,&lt;0.60.0&gt;&#125;
+<span class="hljs-meta">7&gt;</span><span class="bash"> PID ! &#123;push, <span class="hljs-string">&quot;msg2&quot;</span>, self()&#125;.</span>
+&#123;push,&quot;msg2&quot;,&lt;0.60.0&gt;&#125;
+<span class="hljs-meta">8&gt;</span><span class="bash"> PID ! &#123;push, <span class="hljs-string">&quot;msg3&quot;</span>, self()&#125;.</span>
+&#123;push,&quot;msg3&quot;,&lt;0.60.0&gt;&#125;
+<span class="hljs-meta">9&gt;</span><span class="bash"> PID ! &#123;get_length, self()&#125;.</span>
+&#123;get_length,&lt;0.60.0&gt;&#125;
+<span class="hljs-meta">10&gt;</span><span class="bash"> flush().</span>
+Shell got ok
+Shell got ok
+Shell got ok
+Shell got &#123;ok,3&#125;
+ok
+<span class="hljs-meta"></span>
+<span class="hljs-meta">11&gt;</span><span class="bash"> PID ! &#123;pop, self()&#125;.</span>
+&#123;pop,&lt;0.60.0&gt;&#125;
+<span class="hljs-meta">12&gt;</span><span class="bash"> flush().</span>
+Shell got &#123;ok,&quot;msg3&quot;&#125;
+ok
+<span class="hljs-meta"></span>
+<span class="hljs-meta">13&gt;</span><span class="bash"> PID ! &#123;get_length, self()&#125;.</span>
+&#123;get_length,&lt;0.60.0&gt;&#125;
+<span class="hljs-meta">14&gt;</span><span class="bash"> flush().</span>
+Shell got &#123;ok,2&#125;
+ok</code></pre>
+<p><strong>继续往下阅读之前，仔细看一下这个例子，确保你完全理解了这段代码。</strong></p>
+<p>挺厉害的吧？但我们还有两个问题没有解决：</p>
+<ul>
+<li>没有一个易用易维护的 API。 PID ! {get_length, self()}. 这种调用方式实在有些反人类。</li>
+<li>没有管理进程。我们调用一次 msg_cache:start_one/1 就启动了一个msg_cache, 但是现在我不知道当前已经启动了几个 msg_cache.</li>
+</ul>
+<p>我们来解决这第一个问题，重新整理一下代码：</p>
+<pre><code class="hljs erlang"><span class="hljs-keyword">-module</span><span class="hljs-params">(msg_cache)</span>.
+
+<span class="hljs-comment">%% APIs</span>
+<span class="hljs-keyword">-export</span><span class="hljs-params">([start_one/<span class="hljs-number">1</span>,</span>
+<span class="hljs-params">         get_name/<span class="hljs-number">1</span>,</span>
+<span class="hljs-params">         get_length/<span class="hljs-number">1</span>,</span>
+<span class="hljs-params">         pop/<span class="hljs-number">1</span>,</span>
+<span class="hljs-params">         set_name/<span class="hljs-number">2</span>,</span>
+<span class="hljs-params">         push/<span class="hljs-number">2</span></span>
+<span class="hljs-params">        ])</span>.
+
+<span class="hljs-comment">%% for spawns</span>
+<span class="hljs-keyword">-export</span><span class="hljs-params">([loop/<span class="hljs-number">1</span>])</span>.
+
+<span class="hljs-keyword">-define</span><span class="hljs-params">(API_TIMEOUT, <span class="hljs-number">3000</span>)</span>.
+
+<span class="hljs-keyword">-record</span><span class="hljs-params">(state, &#123;</span>
+<span class="hljs-params">            name,</span>
+<span class="hljs-params">            length = <span class="hljs-number">0</span>,</span>
+<span class="hljs-params">            buff = []</span>
+<span class="hljs-params">         &#125;)</span>.
+
+<span class="hljs-function"><span class="hljs-title">start_one</span><span class="hljs-params">(BuffName)</span> -&gt;</span>
+  Pid = spawn(msg_cache, loop, [#state&#123;name=BuffName&#125;]),
+  io:format(<span class="hljs-string">&quot;Buff ~s created! Pid = ~p~n&quot;</span>, [BuffName, Pid]),
+  Pid.
+
+<span class="hljs-comment">%% 加了这几个 API</span>
+<span class="hljs-function"><span class="hljs-title">get_name</span><span class="hljs-params">(CacheID)</span> -&gt;</span>
+  call(CacheID, &#123;get_name, self()&#125;).
+<span class="hljs-function"><span class="hljs-title">get_length</span><span class="hljs-params">(CacheID)</span> -&gt;</span>
+  call(CacheID, &#123;get_length, self()&#125;).
+<span class="hljs-function"><span class="hljs-title">set_name</span><span class="hljs-params">(CacheID, NewName)</span> -&gt;</span>
+  call(CacheID, &#123;set_name, NewName, self()&#125;).
+<span class="hljs-function"><span class="hljs-title">pop</span><span class="hljs-params">(CacheID)</span> -&gt;</span>
+  call(CacheID, &#123;pop, self()&#125;).
+<span class="hljs-function"><span class="hljs-title">push</span><span class="hljs-params">(CacheID, Msg)</span> -&gt;</span>
+  call(CacheID, &#123;push, Msg, self()&#125;).
+
+<span class="hljs-comment">%% 由于发送和接受消息的处理方面，各个 API 都差不多，就提取出来专门写个 call 函数，提高代码复用。</span>
+<span class="hljs-function"><span class="hljs-title">call</span><span class="hljs-params">(Pid, Request)</span> -&gt;</span>
+  Pid ! Request,
+  <span class="hljs-keyword">receive</span>
+    Response -&gt; Response
+  <span class="hljs-keyword">after</span> ?API_TIMEOUT -&gt;
+    &#123;error, api_timeout&#125;
+  <span class="hljs-keyword">end</span>.
+
+<span class="hljs-comment">%% loop 这一部分我们没改动任何代码</span>
+<span class="hljs-function"><span class="hljs-title">loop</span><span class="hljs-params">(State = #state&#123;name = Name, length = Len, buff = Buff&#125;)</span> -&gt;</span>
+  <span class="hljs-keyword">receive</span>
+    &#123;get_name, From&#125;-&gt;
+      From ! &#123;ok, Name&#125;,
+      loop(State);
+    &#123;get_length, From&#125;-&gt;
+      From ! &#123;ok, Len&#125;,
+      loop(State);
+    &#123;set_name, NewName, From&#125; -&gt;
+      From ! ok,
+      loop(State#state&#123;name = NewName&#125;);
+    &#123;push, Msg, From&#125; -&gt;
+      From ! ok,
+      loop(State#state&#123;buff = [Msg | Buff], length = Len + <span class="hljs-number">1</span>&#125;);
+    &#123;pop, From&#125; -&gt;
+      <span class="hljs-keyword">case</span> Buff <span class="hljs-keyword">of</span>
+        [] -&gt;
+          From ! &#123;error, empty&#125;,
+          loop(State);
+        [TopMsg | Msgs] -&gt;
+          From ! &#123;ok, TopMsg&#125;,
+          loop(State#state&#123;buff = Msgs, length = Len - <span class="hljs-number">1</span>&#125;)
+      <span class="hljs-keyword">end</span>;
+    _Unsupported -&gt;
+      erlang:error(io_libs:format(<span class="hljs-string">&quot;unsupported msg: &quot;</span>, [_Unsupported]) )
+  <span class="hljs-keyword">end</span>.</code></pre>
+
+<p>再试一下：</p>
+<pre><code class="hljs shell"><span class="hljs-meta">1&gt;</span><span class="bash"> PID = msg_cache:start_one(<span class="hljs-string">&quot;cache_worker_1&quot;</span>).</span>
+Buff cache_worker_1 created! Pid = &lt;0.62.0&gt;
+&lt;0.62.0&gt;
+<span class="hljs-meta">2&gt;</span><span class="bash"> msg_cache:get_name(PID).</span>
+&#123;ok,&quot;cache_worker_1&quot;&#125;
+<span class="hljs-meta">3&gt;</span><span class="bash"> msg_cache:get_length(PID).</span>
+&#123;ok,0&#125;
+<span class="hljs-meta">4&gt;</span><span class="bash"> msg_cache:pop(PID).</span>
+&#123;error,empty&#125;
+<span class="hljs-meta">5&gt;</span><span class="bash"> msg_cache:push(PID, <span class="hljs-string">&quot;msg1&quot;</span>).</span>
+ok
+<span class="hljs-meta">6&gt;</span><span class="bash"> msg_cache:push(PID, <span class="hljs-string">&quot;msg2&quot;</span>).</span>
+ok
+<span class="hljs-meta">7&gt;</span><span class="bash"> msg_cache:get_length(PID).</span>
+&#123;ok,2&#125;
+<span class="hljs-meta">8&gt;</span><span class="bash"> msg_cache:pop(PID).</span>
+&#123;ok,&quot;msg2&quot;&#125;
+<span class="hljs-meta">9&gt;</span><span class="bash"> msg_cache:pop(PID).</span>
+&#123;ok,&quot;msg1&quot;&#125;
+<span class="hljs-meta">10&gt;</span><span class="bash"> msg_cache:pop(PID).</span>
+&#123;error,empty&#125;
+<span class="hljs-meta">11&gt;</span><span class="bash"> msg_cache:get_length(PID).</span>
+&#123;ok,0&#125;</code></pre>
+<p>还阔以吧？</p>
+<h5 id="留个作业"><a href="#留个作业" class="headerlink" title="留个作业"></a>留个作业</h5><p>上面那个 “管理进程” 我们没有实现。你来实现它。</p>
+<p>我想这么调用：</p>
+<pre><code class="hljs shell"><span class="hljs-meta">%</span><span class="bash">% 启动两个 worker：</span>
+<span class="hljs-meta">1&gt;</span><span class="bash"> msg_cache:start_cache_workers([<span class="hljs-string">&quot;c_worker_1&quot;</span>, <span class="hljs-string">&quot;c_worker_2&quot;</span>]).</span>
+[&lt;0.62.0&gt;, &lt;0.65.0&gt;]
+<span class="hljs-meta"></span>
+<span class="hljs-meta">%</span><span class="bash">% 列出所有 workers, 返回值是个 worker 列表, 元素展示了每个 worker 的 name, pid, 和 length 。</span>
+<span class="hljs-meta">2&gt;</span><span class="bash"> CachePidList = msg_cache:list_cache_workers().</span>
+[&#123;&quot;c_worker_1&quot;, &lt;0.62.0&gt;, 0&#125;, &#123;&quot;c_worker_2&quot;, &lt;0.65.0&gt;, 0&#125;]
+<span class="hljs-meta"></span>
+<span class="hljs-meta">%</span><span class="bash">% 负载均衡, 会往随机的一个 cache worker 里 push.</span>
+<span class="hljs-meta">%</span><span class="bash">% 注意我这里调用 msg_cache:push 的时候，没有提供某个 cache worker 的 PID</span>
+<span class="hljs-meta">3&gt;</span><span class="bash"> ok = msg_cache:push(<span class="hljs-string">&quot;msg1&quot;</span>).</span>
+ok
+<span class="hljs-meta">4&gt;</span><span class="bash"> ok = msg_cache:push(<span class="hljs-string">&quot;msg2&quot;</span>).</span>
+ok
+<span class="hljs-meta">5&gt;</span><span class="bash"> CachePidList = msg_cache:list_cache_workers().</span>
+[&#123;&quot;c_worker_1&quot;, &lt;0.62.0&gt;, 1&#125;, &#123;&quot;c_worker_2&quot;, &lt;0.65.0&gt;, 1&#125;]
+<span class="hljs-meta"></span>
+<span class="hljs-meta">%</span><span class="bash">% 至于 pop 不用管顺序了，有消息就随便 pop 出一个来。</span>
+<span class="hljs-meta">4&gt;</span><span class="bash"> msg_cache:pop().</span>
+&#123;ok, &quot;msg1&quot;&#125;</code></pre>
+<p>提示：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://erldocs.com/18.0/erts/erlang.html#register/2" title="here be a title. Enjoy">erlang:register/2</a> 可以给一个 PID 注册一个名字，以后使用这个 PID 就可以使用这个名字代替。比如<pre><code class="hljs erlang"><span class="hljs-function"><span class="hljs-title">register</span><span class="hljs-params">(msg_cache_manger, Pid)</span>.</span>
+<span class="hljs-function"></span>
+<span class="hljs-function"><span class="hljs-title">msg_cache</span>:<span class="hljs-title">list_cache_workers</span><span class="hljs-params">()</span> -&gt;</span>
+  msg_cache_manger ! get_all_workers.</code></pre>
+
+</li>
+</ul>
+<h5 id="课后必读文章"><a href="#课后必读文章" class="headerlink" title="课后必读文章"></a>课后必读文章</h5><p>Erlang 中的错误处理机制, Link、Monitor:<br><a target="_blank" rel="noopener" href="http://learnyousomeerlang.com/errors-and-processes">Errors and Processes</a></p>
+<h1 id="ETS"><a href="#ETS" class="headerlink" title="ETS"></a>ETS</h1><p>ETS (Erlang Term Storage) 是设计来存放大量的 Erlang 数据的。跟 ETS 打交道不用消息格式转换，可直接存放 Erlang 数据格式 (erlang 各种数据格式的统称叫做 erlang terms)。<br>ETS 非常快，访问时间是常数级的，自动帮你解决了多进程访问的各种竞态条件问题，让我们在 Erlang 中做并发编程一身轻松。ETS 是非常优秀的缓存系统，是我们开发中不可或缺的利器之一。这比起用某种流行语言来说，舒服太多<sup id="fnref:1" class="footnote-ref"><a href="#fn:1" rel="footnote"><span class="hint--top hint--rounded" aria-label="Golang 里你需要自己找多线程安全的 maps 库，写并发没有安全感。Golang 官方也没有下文要说到的 OTP 里提供的各种 Behavior，代码写起来天马行空最后一团糟。然后又不能支持函数式的 pattern matching 等写法… 总之用 golang 写代码从来不会给人愉快的感觉。流行是流行的，但那叫“普通”吧？第一次这么吐槽 golang，但这篇是 erlang 的教程，应该不算过分吧。等到写 go 的时候我再来吐槽 erlang 。我是不会写 go 的 …
+">[1]</span></a></sup>。<br>ETS 只将数据存储在内存里，如果想保存到磁盘，或者要在多个 Erlang Node 之间共享数据，OTP 基于 ETS 和 DETS 实现了 <a target="_blank" rel="noopener" href="http://learnyousomeerlang.com/mnesia">mnesia</a>.<br><code>NODE: mnesia 只适合用来做缓存，在多个 Node 之间共享少量数据，非常快速。但是并不适合当做数据库存储大量的数据，因为 mnesia 在启动时会加载所有数据到内存里，导致启动缓慢、新节点加入缓慢。并且 mnesia 是强一致性的数据库，其本身并不处理由于集群脑裂导致的不一致性，这可能不太符合你的预期。</code></p>
+<p>ETS 支持几种数据类型：</p>
+<ul>
+<li>set: set 是普通的 key - value 存储类型，一个 ETS table 里，两个数据的 key 不能相同。重复插入 key 相同的两条数据，后面的那条会覆盖前面的那条。</li>
+<li>ordered_set: 有序的 set 表。</li>
+<li>bag: bag 允许多个 key 相同的数据的存在，但 key, value 都完全相同的数据只能留一个。</li>
+<li>duplicate_bag: 允许多个 key, value 完全相同的数据的存在。</li>
+</ul>
+<p>我们来试试 set 类型的 table，这也是最常用的类型。我们创建一个命名表，叫 <code>users</code>, 然后插入两条数据：</p>
+<pre><code class="hljs shell"><span class="hljs-meta">1&gt;</span><span class="bash"> ets:new(users, [<span class="hljs-built_in">set</span>, named_table]).</span>
+users
+<span class="hljs-meta">2&gt;</span><span class="bash"> ets:info(users).   %% 注意默认的权限是 protected</span>
+[&#123;read_concurrency,false&#125;,
+ &#123;write_concurrency,false&#125;,
+ &#123;compressed,false&#125;,
+ &#123;memory,304&#125;,
+ &#123;owner,&lt;0.57.0&gt;&#125;,
+ &#123;heir,none&#125;,
+ &#123;name,users&#125;,
+ &#123;size,0&#125;,
+ &#123;node,nonode@nohost&#125;,
+ &#123;named_table,true&#125;,
+ &#123;type,set&#125;,
+ &#123;keypos,1&#125;,
+ &#123;protection,protected&#125;]
+<span class="hljs-meta">3&gt;</span><span class="bash"> ets:insert(users, &#123;1, &lt;&lt;<span class="hljs-string">&quot;Shawn&quot;</span>&gt;&gt;, 27&#125;).</span>
+true
+<span class="hljs-meta">4&gt;</span><span class="bash"> ets:insert(users, &#123;2, &lt;&lt;<span class="hljs-string">&quot;Scarlett&quot;</span>&gt;&gt;, 25&#125;).</span>
+true
+<span class="hljs-meta">5&gt;</span><span class="bash"> ets:lookup(users, 1).</span>
+[&#123;1,&lt;&lt;&quot;Shawn&quot;&gt;&gt;,27&#125;]
+<span class="hljs-meta">6&gt;</span><span class="bash"> ets:lookup(users, 2).</span>
+[&#123;2,&lt;&lt;&quot;Scarlett&quot;&gt;&gt;,25&#125;]
+<span class="hljs-meta">7&gt;</span><span class="bash"> ets:info(users).</span>
+[&#123;read_concurrency,false&#125;,
+ &#123;write_concurrency,false&#125;,
+ &#123;compressed,false&#125;,
+ &#123;memory,332&#125;,
+ &#123;owner,&lt;0.57.0&gt;&#125;,
+ &#123;heir,none&#125;,
+ &#123;name,users&#125;,
+ &#123;size,2&#125;,
+ &#123;node,nonode@nohost&#125;,
+ &#123;named_table,true&#125;,
+ &#123;type,set&#125;,
+ &#123;keypos,1&#125;,
+ &#123;protection,protected&#125;]
+<span class="hljs-meta">8&gt;</span></code></pre>
+<p>注意上边的示例里：</p>
+<ul>
+<li>创建 ETS table 时给了两个 Options 参数：[set, named_table]。set 是指定创建 set 类型的表，named_table 是创建命名表，命名为 <code>users</code>，后面可以用这个表名来引用。</li>
+<li>插入数据 <code>&#123;1, &lt;&lt;&quot;Shawn&quot;&gt;&gt;, 27&#125;</code> 和 <code>&#123;2, &lt;&lt;&quot;Scarlett&quot;&gt;&gt;, 25&#125;</code> 时，两个 tuple 的第一项就是默认的 key，tuple 里其他项都是 values。如果你想用其他的项作为 key，可以在  ets:new 的时候，指定 <code>&#123;keypos, Pos&#125;</code> 参数，设置 key 在 tuple 中的位置。</li>
+</ul>
+<p>ETS 表的其他类型你可以自己试验一下。</p>
+<p><strong>需要注意的是：</strong></p>
+<ul>
+<li>ETS 表里的任何数据都不参加 GC</li>
+<li>ETS 表有自己的 <code>owner</code> 进程，默认情况下，创建表的那个进程就是 ETS table 的 owner。如果 owner 进程挂了，ETS 表也就被释放了。我们上边的例子里，erlang shell 进程就是 <code>user</code> table 的 owner。</li>
+<li>ETS 表也是有访问权限的，默认是 <code>protected</code>:<ul>
+<li>public：任何人可以读写这张表。</li>
+<li>protected: owner 可以读写，但其他进程只能读。</li>
+<li>private：只有 owner 可以读写。别的进程无法访问。</li>
+</ul>
+</li>
+</ul>
+<p>由于 ETS 表非常高效，一般情况下我们都直接使用 <code>public</code>，然后设置 <code>&#123;read_concurrency, true&#125;</code> 或 <code>&#123;write_concurrency,true&#125;</code> 选项来提高并发读或写的效率，在写一个管理模块来直接访问 ets 表，让什么封装什么设计模式都去 shi。</p>
+<h1 id="OTP"><a href="#OTP" class="headerlink" title="OTP"></a>OTP</h1><p>OTP 已经失去了字面意思，基本上指的就是 Erlang 生态环境的官方部分。Erlang 世界的组成是这样的：</p>
+<ul>
+<li>Erlang 以及 Elixir 等语言。</li>
+<li>工具和函数库，包括 erlang runtime，kernel，stdlib(像 lists 这种的官方库), sasl, 还有像 ETS，dbg 之类的很多。</li>
+<li>系统设计原则, 包括本章要讲的一众 Behaviors。是一堆应用于并发世界的设计模式，他们包含了解决通用问题的通用代码。</li>
+<li>开源社区生态环境，包括各种开源软件和社区。</li>
+</ul>
+<p>OTP 指的是前三个，Elixir 的话还不大算。</p>
+<p>Erlang 的逻辑是，架构的设计应该由有经验的人负责，由专家做好基础代码框架，解决好最困难的问题。而使用者只需要写自己的逻辑代码。这就是 OTP behaviors，他们已经在通信、互联网领域，经历了几十年的战火考验。</p>
+<p>本文要讲的有三个：</p>
+<ul>
+<li>gen_server</li>
+<li>application</li>
+<li>supervisor</li>
+</ul>
+<p>本章只讲解 gen_server。 application 和 supervisor 放到后面 Hello World 工程里讲解。</p>
+<p><strong>gen_server</strong> 要解决的问题，就是我们上面那个 msg_cache 面临的问题：怎样做一个服务来响应用户的请求。</p>
+<p>我们之前写的代码很短，可以工作，但是很多东西都没有考虑。比如请求者如果同时收到来自服务端的两个 Response 的话，不知道是对应哪个请求的：</p>
+<pre><code class="hljs erlang"><span class="hljs-comment">%% 服务端：</span>
+    &#123;get_name, From&#125;-&gt;
+      From ! &#123;ok, Name&#125;,
+      loop(State);
+    &#123;get_length, From&#125;-&gt;
+      From ! &#123;ok, Len&#125;,
+      loop(State);
+
+<span class="hljs-comment">%% 客户端：</span>
+    ServerPID ! &#123;get_length, self()&#125;,   <span class="hljs-comment">%% 客户端连续调用了两次</span>
+    ServerPID ! &#123;get_length, self()&#125;,  
+    <span class="hljs-keyword">receive</span>
+      &#123;ok, Len&#125; -&gt;  <span class="hljs-comment">%% 你知道这次匹配到的消息，是上面哪次调用的回复吗？</span>
+         success;
+      _ -&gt;
+         failed
+    <span class="hljs-keyword">end</span>.</code></pre>
+<p>上面代码里连续调用了两次 {get_length}, 但是由于发送消息是异步的，消息通过网络回来，你并不能确定第一次收到的回复就是第一次调用产生的。</p>
+<p>这个问题可以加一个随机生成的 RequestID 的字段来解决，客户端发送请求消息的时候带 RequestID 过去，服务端返回的时候再传回来。客户端通过匹配 RequestID，就能知道当前的回复是对应的哪个请求。</p>
+<p>但这种需求其实是通用的，你现在写 msg_cache 用得到，改天写其他代码也一样用得到。另外我们也没有过多考虑异常的情况：如果程序崩溃了怎么办？发送消息怎么知道对方是不是还活着？</p>
+<p>诸如此类的问题应该由专家来解决，所以我们有了 <code>gen_server</code>.<br>gen_server 的模板是这样的：</p>
+<pre><code class="hljs erlang"><span class="hljs-keyword">-module</span><span class="hljs-params">(gen_server_demo)</span>.
+<span class="hljs-keyword">-behaviour</span><span class="hljs-params">(gen_server)</span>.
+
+<span class="hljs-comment">%% API functions</span>
+<span class="hljs-keyword">-export</span><span class="hljs-params">([start_link/<span class="hljs-number">0</span>])</span>.
+
+<span class="hljs-comment">%% gen_server callbacks</span>
+<span class="hljs-keyword">-export</span><span class="hljs-params">([init/<span class="hljs-number">1</span>,</span>
+<span class="hljs-params">         handle_call/<span class="hljs-number">3</span>,</span>
+<span class="hljs-params">         handle_cast/<span class="hljs-number">2</span>,</span>
+<span class="hljs-params">         handle_info/<span class="hljs-number">2</span>,</span>
+<span class="hljs-params">         terminate/<span class="hljs-number">2</span>,</span>
+<span class="hljs-params">         code_change/<span class="hljs-number">3</span>])</span>.
+
+<span class="hljs-keyword">-record</span><span class="hljs-params">(state, &#123;&#125;)</span>.
+<span class="hljs-comment">%%%% %%%% %%%% %%%% %%%% </span>
+<span class="hljs-comment">%%%% 这是给客户端调用的接口部分</span>
+<span class="hljs-comment">%%%% %%%% %%%% %%%% %%%% </span>
+<span class="hljs-comment">%% 启动一个服务，后台会启动一个 erlang process, 并进入 loop 函数, 回想一下我们实现 msg_cache 时写的那个 loop/1.</span>
+<span class="hljs-comment">%% 但是这个 loop 函数属于通用部分的代码，是由 OTP 官方实现的，所以代码不在这里，在 OTP 代码的 lib/stdlib/src/gen_server.erl 里。</span>
+<span class="hljs-function"><span class="hljs-title">start_link</span><span class="hljs-params">()</span> -&gt;</span>
+    <span class="hljs-comment">%% gen_server:start_link 启动 process, 然后将 process 注册在当前</span>
+    <span class="hljs-comment">%% node 上，注册名字就是当前 Module 名：gen_server_demo</span>
+    gen_server:start_link(&#123;local, ?MODULE&#125;, ?MODULE, [], []).
+
+<span class="hljs-comment">%%%% %%%% %%%% %%%% %%%% </span>
+<span class="hljs-comment">%%%% 这是 gen_server 发生某事件时的回调函数部分</span>
+<span class="hljs-comment">%%%% %%%% %%%% %%%% %%%%</span>
+
+<span class="hljs-comment">%% gen_server:start_link 被调用，服务启动时，回调 init/1</span>
+<span class="hljs-function"><span class="hljs-title">init</span><span class="hljs-params">([])</span> -&gt;</span>
+    &#123;ok, #state&#123;&#125;&#125;.
+
+<span class="hljs-comment">%% gen_server:call 被调用。gen_server:call 是“同步”调用，调用方可以设置一个超时时间。</span>
+<span class="hljs-comment">%% 返回值里的 Reply 是返回给调用者的内容。</span>
+<span class="hljs-function"><span class="hljs-title">handle_call</span><span class="hljs-params">(_Request, _From, State)</span> -&gt;</span>
+    Reply = ok,
+    &#123;reply, Reply, State&#125;.
+
+<span class="hljs-comment">%% gen_server:cast 被调用。gen_server:cast 是“异步”调用。</span>
+<span class="hljs-comment">%% 调用者一般是想发一个消息给我们的 gen_server，然后继续做自己的事情，他不想收到来自 gen_server 的回复。</span>
+<span class="hljs-function"><span class="hljs-title">handle_cast</span><span class="hljs-params">(_Msg, State)</span> -&gt;</span>
+    &#123;noreply, State&#125;.
+
+<span class="hljs-comment">%% gen_server 进程收到一个普通 erlang 消息：一个不是通过 gen_server:call 和 gen_server:cast 发来的消息。</span>
+<span class="hljs-function"><span class="hljs-title">handle_info</span><span class="hljs-params">(_Info, State)</span> -&gt;</span>
+    &#123;noreply, State&#125;.
+
+<span class="hljs-comment">%% 上面的三个函数 handle_call, handle_cast, handle_info</span>
+<span class="hljs-comment">%%   都可以返回一个 &#123;stop, Reason, State&#125;，这样的话 gen_server 会退出。</span>
+<span class="hljs-comment">%%   但退出之前，可能会回调 terminate(_Reason, _State)。</span>
+
+
+<span class="hljs-comment">%% gen_server 将要退出时，回调 terminate/2.</span>
+<span class="hljs-comment">%% 注意</span>
+<span class="hljs-comment">%% 1) 要想 terminate 在 gen_server 退出前被回调，gen_server 必须捕获退出信号：</span>
+<span class="hljs-comment">%%    需要在 init 回调里，加这么一行：process_flag(trap_exit, true).</span>
+<span class="hljs-comment">%% 2) 有几个特定的 Reason 被认为是正常退出：normal, shutdown, or &#123;shutdown,Term&#125;，</span>
+<span class="hljs-comment">%%    其他的 Reason，sasl 是会报错打日志的。</span>
+<span class="hljs-function"><span class="hljs-title">terminate</span><span class="hljs-params">(_Reason, _State)</span> -&gt;</span>
+    ok.
+
+<span class="hljs-function"><span class="hljs-title">code_change</span><span class="hljs-params">(_OldVsn, State, _Extra)</span> -&gt;</span>
+    &#123;ok, State&#125;.</code></pre>
+<p>gen_server 真正的进程代码在 OTP 库里，运行 start_link()，gen_server 就在后台跑起来了。你需要实现的只是这个模板里的各个回调函数，将你的业务逻辑放到这些回调里。</p>
+<p><strong>仔细看一下上面的 gen_server 模板和注释，确保你能完全理解。</strong></p>
+<p>我不想重新实现之前的 msg_cache，一点都不酷。我们重新写个其他的，让你对 Erlang 程序的基本设计理念有更深的印象。</p>
+<p>我们要实现一个多用户聊天的程序：</p>
+<ul>
+<li>用户能够查询在线的其他用户。</li>
+<li>用户之间能够聊天。</li>
+<li>要容易扩展，因为后面我们的 Client 会通过TCP、WebSocket 等连接上来，不会是 Erlang 写的 Client。</li>
+<li>要容易伸缩，因为我们业务发展很快，用户量会越来越大，我们希望程序能很容易的部署在多台服务器上。</li>
+</ul>
+<p>先来设计我们程序的架构：<br><img src="https://upload-images.jianshu.io/upload_images/2997299-7100392cb582c4ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/img/loading.gif" alt="chat_server-2.png"></p>
+<ul>
+<li>每个 client 连接上来，都会启动一个新的 Process，叫做 ChatServer.</li>
+<li>ChatServer 负责维护这个 Client 的 TCP 连接。</li>
+<li>Route 是一个Module，它提供了数据库的管理，数据库里维护了从 User 到其 ChatServer 的 PID 的映射关系。</li>
+</ul>
+<p>注意我们的设计思想：</p>
+<ul>
+<li>为每一个连接上来的请求启动一个 Erlang 进程 “ChatServer”，不要担心进程个数，百万也没问题。</li>
+<li>两个用户之间的消息传递，体现在服务端就是两个 “ChatServer” 之间的 Erlang 消息传递。</li>
+<li>Route 部分只是一个 Module，不是进程。每一个 ChatServer 调用 Route 里的代码的时候，执行过程其实是在每个 ChatServer 进程内部的。这样我们就避免了集中向一个进程发送消息带来的瓶颈。我们把这种瓶颈的处理留给了 ETS 来解决。</li>
+<li>如何伸缩？ChatServer 在不在同一个服务器上没什么关系。<code>ChatServerPID ！&#123;send, Msg&#125;</code> 会将消息发送到ChatServerPID，即使 ChatServerPID 在远端的服务器上。分布式部署的时候，这行代码根本不用改，你要做的仅仅是添加一个新的 Erlang Node。分布式 Erlang 后面还要讲。</li>
+<li>如何扩展？ETS 使用 Route Module 管理，为的就是当以后换用其他的缓存数据库的时候简单一些。我们设想后面为了做分布式集群，要用 mnesia 替代 ETS，只需要写一个新的 Route Module，内部改用 mnesia 存储，然后替换线上已经加载的老的 Route Module。线上系统都不用停止，客户端的连接一个都不会断！</li>
+</ul>
+<p><code>你现在能否体会到 Erlang 的实用主义呢？完全没废话，就是解决问题！</code></p>
+<p>Client 部分我们现在不做，让前端的同学帮我们实现。但假设我们的前端程序员还没到岗，所以我们可以先放着 WebSocket 部分后面再做。但有两个过程必须现在实现：</p>
+<ul>
+<li>当 Client 登录时，我们需要使用 Route 注册 user 所在的 ChatServer 的 PID。</li>
+<li>当 Client 发消息时，我们需要使用 Route 查找对方的 ChatServer 的 PID。</li>
+</ul>
+<p>首先我们来定义我们的消息协议。我们的消息体内包含几部分，发送者ID，接收者ID，以及消息内容：</p>
+<pre><code class="hljs erlang"><span class="hljs-keyword">-record</span><span class="hljs-params">(msg, &#123;</span>
+<span class="hljs-params">  from_userid,</span>
+<span class="hljs-params">  to_userid,</span>
+<span class="hljs-params">  payload</span>
+<span class="hljs-params">&#125;)</span>.</code></pre>
+
+<p>接下来让我们来实现 Route 模块，实现数据库创建，注册，查找与注销功能：</p>
+<pre><code class="hljs erlang"><span class="hljs-keyword">-module</span><span class="hljs-params">(route)</span>.
+<span class="hljs-keyword">-export</span><span class="hljs-params">([ensure_db/<span class="hljs-number">0</span>,</span>
+<span class="hljs-params">         lookup_server/<span class="hljs-number">1</span>,</span>
+<span class="hljs-params">         register_server/<span class="hljs-number">2</span>,</span>
+<span class="hljs-params">         unregister_server/<span class="hljs-number">1</span>])</span>.
+
+<span class="hljs-function"><span class="hljs-title">ensure_db</span><span class="hljs-params">()</span> -&gt;</span>
+  <span class="hljs-keyword">case</span> ets:info(servers) <span class="hljs-keyword">of</span>
+    undefined -&gt;
+      <span class="hljs-comment">%% 为了演示方便，我们启动一个临时进程来创建 ETS 表，</span>
+      <span class="hljs-comment">%% 如果直接在 erlang shell 里创建ETS的话，出错时 shell 的崩溃连带着我们的ETS也丢了。</span>
+      <span class="hljs-comment">%% 当然线上系统不会这么做。</span>
+      spawn(<span class="hljs-keyword">fun</span>() -&gt; ets:new(servers, [named_table, public]), <span class="hljs-keyword">receive</span> <span class="hljs-keyword">after</span> infinity-&gt;ok <span class="hljs-keyword">end</span> <span class="hljs-keyword">end</span>);
+    _ -&gt; ok
+  <span class="hljs-keyword">end</span>.
+
+<span class="hljs-function"><span class="hljs-title">lookup_server</span><span class="hljs-params">(UserID)</span> -&gt;</span>
+  <span class="hljs-keyword">case</span> ets:lookup(servers, UserID) <span class="hljs-keyword">of</span>
+    [&#123;UserID, ServerID&#125;] -&gt; &#123;ok, ServerID&#125;;
+    _ -&gt; &#123;error, no_server&#125;
+  <span class="hljs-keyword">end</span>.
+
+<span class="hljs-function"><span class="hljs-title">register_server</span><span class="hljs-params">(UserID, ServerID)</span> -&gt;</span>
+  ets:insert(servers, &#123;UserID, ServerID&#125;).
+
+<span class="hljs-function"><span class="hljs-title">unregister_server</span><span class="hljs-params">(UserID)</span> -&gt;</span>
+  ets:delete(servers, UserID).</code></pre>
+
+<p>接下来实现我们的 ChatServer:</p>
+<pre><code class="hljs erlang"><span class="hljs-keyword">-module</span><span class="hljs-params">(chat_server)</span>.
+<span class="hljs-keyword">-behaviour</span><span class="hljs-params">(gen_server)</span>.
+<span class="hljs-comment">%% state 保存用户的 userid，以及 client 端连上来的 socket.</span>
+<span class="hljs-keyword">-record</span><span class="hljs-params">(state, &#123;</span>
+<span class="hljs-params">  userid,</span>
+<span class="hljs-params">  socket</span>
+<span class="hljs-params">&#125;)</span>.
+
+<span class="hljs-comment">%% 后面当一个新连接连接到服务器的时候，我们会调用 start_link 启动一个新的 ChatServer 为之服务。</span>
+<span class="hljs-comment">%% 注意这里使用的是 gen_server:start_link/3，没有注册进程名，我们直接使用 PID. 因为我们要启动很多个 ChatServer。</span>
+<span class="hljs-function"><span class="hljs-title">start_link</span><span class="hljs-params">(UserID, Socket)</span> -&gt;</span>
+  &#123;ok, ServerID&#125;  = gen_server:start_link(?MODULE, [UserID, Socket], []),
+  ServerID.
+
+<span class="hljs-comment">%% 在 init 回调里注册用户的 ChatServer。</span>
+<span class="hljs-comment">%% 注意我们捕获了 exit signal, 以便程序退出的时候回调 terminate/2. </span>
+<span class="hljs-comment">%% 我们在 terminate/2 里取消注册。</span>
+<span class="hljs-function"><span class="hljs-title">init</span><span class="hljs-params">([UserID, Socket])</span> -&gt;</span>
+    process_flag(trap_exit, true),
+    route:register_server(UserID, self()),
+    &#123;ok, #state&#123;userid=UserID, socket=Socket&#125;&#125;.
+
+<span class="hljs-comment">%% 如果我们的 ChatServer 收到一条来自 Socket 的消息，它会收到一条类似 &#123;tcp, Sock, Data&#125; 的普通消息。</span>
+<span class="hljs-comment">%% 我们需要在 handle_info 里处理，转发给对方的 ChatServer。</span>
+<span class="hljs-function"><span class="hljs-title">handle_info</span><span class="hljs-params">(&#123;tcp, #msg&#123;to_userid = ToUserID, payload = Payload&#125; = Msg&#125;, State)</span> -&gt;</span>
+  io:format(<span class="hljs-string">&quot;Chat Server(User: ~p) - received msg from tcp client, Msg: ~p~n&quot;</span>,[State#state.userid, Msg]),
+  <span class="hljs-keyword">case</span> route:lookup_server(ToUserID) <span class="hljs-keyword">of</span>
+    &#123;error, Reason&#125; -&gt;
+      io:format(<span class="hljs-string">&quot;Chat Server(User: ~p) - cannot forward to Chat Server(User: ~p): ~p~n&quot;</span>,
+          [State#state.userid, ToUserID, Reason]);
+    &#123;ok, TargetServerID&#125; -&gt;
+      io:format(<span class="hljs-string">&quot;Chat Server(User: ~p) - forward msg to Chat Server(User: ~p), Payload: ~p~n&quot;</span>,
+        [State#state.userid, ToUserID, Payload]),
+      ok = gen_server:call(TargetServerID, &#123;send, Msg&#125;)
+  <span class="hljs-keyword">end</span>,
+  &#123;noreply, State&#125;;
+
+<span class="hljs-comment">%% 我们的 ChatServer 收到一条来自对端 ChatServer 的转发请求</span>
+<span class="hljs-function"><span class="hljs-title">handle_call</span><span class="hljs-params">(&#123;send, #msg&#123;payload = Payload&#125;&#125;, _From, State)</span> -&gt;</span>
+  io:format(<span class="hljs-string">&quot;Chat Server(User: ~p) - deliver msg to tcp client, Payload: ~p~n&quot;</span>,
+    [State#state.userid, Payload]),
+  send_to_client_via_tcp(State#state.socket, Payload),
+  &#123;reply, ok, State&#125;;
+
+<span class="hljs-comment">%% Socket 部分我们没有实现，暂时就简单打印一下</span>
+<span class="hljs-function"><span class="hljs-title">send_to_client_via_tcp</span><span class="hljs-params">(_Socket, Payload)</span> -&gt;</span>
+  <span class="hljs-comment">%gen_tcp:send(_Socket, Payload),</span>
+  io:format(<span class="hljs-string">&quot;Sent To Client: ~p~n&quot;</span>,[Payload]).</code></pre>
+<p>完工了！我们测试一下：</p>
+<pre><code class="hljs shell"><span class="hljs-meta">1&gt;</span><span class="bash"> c(chat_server).</span>
+&#123;ok,chat_server&#125;
+<span class="hljs-meta">2&gt;</span><span class="bash"> c(route).</span>
+&#123;ok,route&#125;
+<span class="hljs-meta"></span>
+<span class="hljs-meta">%</span><span class="bash">% 现在模拟系统启动时，初始化 DB 的过程。</span>
+<span class="hljs-meta">%</span><span class="bash">% 后续这个会在启动代码里写。</span>
+<span class="hljs-meta">3&gt;</span><span class="bash"> route:ensure_db().</span>
+&lt;0.73.0&gt;
+<span class="hljs-meta"></span>
+<span class="hljs-meta">%</span><span class="bash">% 现在我们模拟一个新的用户登录上来，启动新的 ChatServer 的过程。</span>
+<span class="hljs-meta">%</span><span class="bash">% 后续这个过程当然是由 WebSocket 模块调用。</span>
+<span class="hljs-meta">4&gt;</span><span class="bash"> ServerIDUser1 = chat_server:start_link(&lt;&lt;<span class="hljs-string">&quot;user1&quot;</span>&gt;&gt;, fake_socket).</span>
+&lt;0.75.0&gt;
+<span class="hljs-meta">5&gt;</span><span class="bash"> ServerIDUser2 = chat_server:start_link(&lt;&lt;<span class="hljs-string">&quot;user2&quot;</span>&gt;&gt;, fake_socket).</span>
+&lt;0.77.0&gt;
+<span class="hljs-meta"></span>
+<span class="hljs-meta">%</span><span class="bash">% 我们来做一个 <span class="hljs-comment">#msg&#123;&#125; 消息体。</span></span>
+<span class="hljs-meta">%</span><span class="bash">% 后续我们应该在收到 socket 上来的消息解析成功之后，打包一个 <span class="hljs-comment">#msg&#123;&#125; 消息体。</span></span>
+<span class="hljs-meta">6&gt;</span><span class="bash"> rr(<span class="hljs-string">&quot;chat_protocol.hrl&quot;</span>).</span>
+[msg]
+<span class="hljs-meta">7&gt;</span><span class="bash"> Msg = <span class="hljs-comment">#msg&#123;from_userid= &lt;&lt;&quot;user1&quot;&gt;&gt;, to_userid = &lt;&lt;&quot;user2&quot;&gt;&gt;, payload = &lt;&lt;&quot;hello?&quot;&gt;&gt;&#125;.</span></span>
+<span class="hljs-meta">#</span><span class="bash">msg&#123;from_userid = &lt;&lt;<span class="hljs-string">&quot;user1&quot;</span>&gt;&gt;,to_userid = &lt;&lt;<span class="hljs-string">&quot;user2&quot;</span>&gt;&gt;,</span>
+     payload = &lt;&lt;&quot;hello?&quot;&gt;&gt;&#125;
+<span class="hljs-meta"></span>
+<span class="hljs-meta"></span>
+<span class="hljs-meta">%</span><span class="bash">% 模拟从 socket 收到消息的过程。</span>
+<span class="hljs-meta">8&gt;</span><span class="bash"> ServerIDUser1 ! &#123;tcp, Msg&#125;.</span>
+Chat Server(User: &lt;&lt;&quot;user1&quot;&gt;&gt;) - received msg from tcp client, Msg: &#123;msg,
+                                                                     &lt;&lt;&quot;user1&quot;&gt;&gt;,
+                                                                     &lt;&lt;&quot;user2&quot;&gt;&gt;,
+                                                                     &lt;&lt;&quot;hello?&quot;&gt;&gt;&#125;
+&#123;tcp,#msg&#123;from_userid = &lt;&lt;&quot;user1&quot;&gt;&gt;,to_userid = &lt;&lt;&quot;user2&quot;&gt;&gt;,
+          payload = &lt;&lt;&quot;hello?&quot;&gt;&gt;&#125;&#125;
+Chat Server(User: &lt;&lt;&quot;user1&quot;&gt;&gt;) - forward msg to Chat Server(User: &lt;&lt;&quot;user2&quot;&gt;&gt;), Payload: &lt;&lt;&quot;hello?&quot;&gt;&gt;
+Chat Server(User: &lt;&lt;&quot;user2&quot;&gt;&gt;) - deliver msg to tcp client, Payload: &lt;&lt;&quot;hello?&quot;&gt;&gt;
+Sent To Client: &lt;&lt;&quot;hello?&quot;&gt;&gt;
+<span class="hljs-meta">9&gt;</span></code></pre>
+<p>我们看到服务端的路由已经走通了，接下来只要写一个 web socket 模块，listen 在某个端口，当有连接请求时，像上面第 4、第 5 行一样调用 chat_server:start_link/2 就行了。当然 send_to_client_via_tcp 也要改为真正往 socket 发送消息。</p>
+<p>完整代码：<br><a target="_blank" rel="noopener" href="https://github.com/terry-xiaoyu/learn-erlang-in-30-mins/tree/master/chat">https://github.com/terry-xiaoyu/learn-erlang-in-30-mins/tree/master/chat</a></p>
+<p>一个完整的线上演示：<br>(即将上线)</p>
+<p><strong>书接下文</strong>：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/bbaf695ec167">30 分钟学 Erlang (三)</a></p>
+<section class="footnotes">批注<div class="footnote-list"><ol><li><span id="fn:1" class="footnote-text"><span>Golang 里你需要自己找多线程安全的 maps 库，写并发没有安全感。Golang 官方也没有下文要说到的 OTP 里提供的各种 Behavior，代码写起来天马行空最后一团糟。然后又不能支持函数式的 pattern matching 等写法… 总之用 golang 写代码从来不会给人愉快的感觉。流行是流行的，但那叫“普通”吧？第一次这么吐槽 golang，但这篇是 erlang 的教程，应该不算过分吧。等到写 go 的时候我再来吐槽 erlang 。我是不会写 go 的 …
+<a href="#fnref:1" rev="footnote" class="footnote-backref"> ↩</a></span></span></li></ol></div></section>
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Erlang%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/">Erlang程序设计</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Erlang/">Erlang</a>
+                    
+                      <a class="hover-with-bg" href="/tags/OTP/">OTP</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/01/16/clmu1cbda002618ue3li36dxs.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">30分钟学Erlang (二)</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/12/06/clmu1cbcr000b18ue0p7v5f9i.html">
+                        <span class="hidden-mobile">一种对于当前宇宙模型的假设</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                  <script src="https://utteranc.es/client.js"
+                    repo="wwhai/gitalk"
+                    issue-term="url"
+                    label="[Utterances]"
+                    theme="preferred-color-scheme"
+                    crossorigin="anonymous"
+                    async>
+                  </script>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "30分钟学Erlang (一)&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "#"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>

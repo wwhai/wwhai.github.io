@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="新四青年 的技术分享">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>新四青年</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+
+  <!-- 顶部提示 -->
+  <div class="alert alert-warning" role="alert"
+    style="margin-top: 70px; background-color: black;color: rgb(156, 255, 25);text-align: center;padding: 0 0 0 0;">
+    <strong>提示：本站一些文章的超时空时间是乱写的，主要是为了排序，并不是真实写作时间。</strong>
+  </div>
+
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar" style="background-color: #000000;">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>新四青年</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/openlab/academic.html">
+                
+                FreeOpenLab
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/things/">
+                
+                作品
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/index.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.4)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+
+      <div class="container nopadding-md">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board"
+          >
+          <!--  -->
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/11/06/clmu1cbdo003x18ueexx62x9d.html" target="_self">
+          <img src="/static/22.jpg" srcset="/img/loading.gif" alt="Spring webflux使用websocket实现单播和广播">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/11/06/clmu1cbdo003x18ueexx62x9d.html">Spring webflux使用websocket实现单播和广播</a>
+
+      <a href="/2019/11/06/clmu1cbdo003x18ueexx62x9d.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>本文作者：[gerry] # 概要：先前搜了一些关于reactive websocket的示例都是单个session收到消息后又发送给自己，例如：session.send(session.receive())，这种形式和单次http的作用无差别，</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-11-06 11:12:13
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Springboot/">Springboot</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Springboot/">Springboot</a>
+            
+              <a href="/tags/java/">java</a>
+            
+              <a href="/tags/websocket/">websocket</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/11/06/clmu1cbdn003w18ue9vj43xq1.html" target="_self">
+          <img src="/static/3.jpg" srcset="/img/loading.gif" alt="DeepLearning4j的StackVertex实现参数共享">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/11/06/clmu1cbdn003w18ue9vj43xq1.html">DeepLearning4j的StackVertex实现参数共享</a>
+
+      <a href="/2019/11/06/clmu1cbdn003w18ue9vj43xq1.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>本文作者：[gerry] # 概要：设input1和input2是shape为(M,I)的张量，权重W是shape为(I,O)的张量,设对应的两个输出值为output1和output2，其shape是(M,O)，设损失函数对输出值的导数为epsilon1和epsilon2，损失函数对线性部分的导数为delta1和delta2，shape也都是(M,O)：</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-11-06 11:11:36
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Springboot/">Springboot</a>
+            
+              <a href="/tags/java/">java</a>
+            
+              <a href="/tags/Neo4J/">Neo4J</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/11/06/clmu1cbe6005z18ueczi4hlds.html" target="_self">
+          <img src="/static/8.jpg" srcset="/img/loading.gif" alt="关于编程范式的思考">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/11/06/clmu1cbe6005z18ueczi4hlds.html">关于编程范式的思考</a>
+
+      <a href="/2019/11/06/clmu1cbe6005z18ueczi4hlds.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>本文作者：[wangwenhai] # 概要：关于编程范式的思考</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-11-06 09:08:43
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%9D%82%E8%B0%88/">杂谈</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91%E6%8A%80%E6%9C%AF/">物联网技术</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/11/06/clmu1cbe7006118uedenrbt5b.html" target="_self">
+          <img src="/static/8.jpg" srcset="/img/loading.gif" alt="C语言家族的一些历史遗留和困惑">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/11/06/clmu1cbe7006118uedenrbt5b.html">C语言家族的一些历史遗留和困惑</a>
+
+      <a href="/2019/11/06/clmu1cbe7006118uedenrbt5b.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>本文作者：[wangwenhai] # 概要：C语言家族的一些历史遗留和困惑</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-11-06 09:08:43
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%9D%82%E8%B0%88/">杂谈</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91%E6%8A%80%E6%9C%AF/">物联网技术</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/11/06/clmu1cbew009o18ue7baw4p7e.html" target="_self">
+          <img src="/static/18.jpg" srcset="/img/loading.gif" alt="物联网系统开发杂谈">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/11/06/clmu1cbew009o18ue7baw4p7e.html">物联网系统开发杂谈</a>
+
+      <a href="/2019/11/06/clmu1cbew009o18ue7baw4p7e.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>本文作者：[wangwenhai] # 概要：本文主要讲一下物联网业务系统和中间件的使用以及技术选型</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-11-06 09:08:43
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%9D%82%E8%B0%88/">杂谈</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91%E6%8A%80%E6%9C%AF/">物联网技术</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/11/06/clmu1cbf300aj18uehv8h0kk0.html" target="_self">
+          <img src="/static/16.jpg" srcset="/img/loading.gif" alt="云函数回调">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/11/06/clmu1cbf300aj18uehv8h0kk0.html">云函数回调</a>
+
+      <a href="/2019/11/06/clmu1cbf300aj18uehv8h0kk0.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>本文作者：[wangwenhai] # 概要：本文主要讲一下云函数回调</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-11-06 09:08:43
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%9D%82%E8%B0%88/">杂谈</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91%E6%8A%80%E6%9C%AF/">物联网技术</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/10/31/clmu1cbd6001q18uedl63glcf.html" target="_self">
+          <img src="/static/12.jpg" srcset="/img/loading.gif" alt="Trap协议-简单TCP通信协议设计">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/10/31/clmu1cbd6001q18uedl63glcf.html">Trap协议-简单TCP通信协议设计</a>
+
+      <a href="/2019/10/31/clmu1cbd6001q18uedl63glcf.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>本文作者：[wangwenhai] # 概要：本文主要讲如何从协议涉及到代码，再到实现一个简单的基于TCP的物联网服务器的过程。</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-10-31 21:26:28
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Erlang/">Erlang</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>
+            
+              <a href="/tags/Erlang/">Erlang</a>
+            
+              <a href="/tags/TCP/">TCP</a>
+            
+              <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/10/25/clmu1cbd1001618uea0bvcl7o.html" target="_self">
+          <img src="/uploads/image-20191025092017692.png" srcset="/img/loading.gif" alt="EMQX插件开发基础">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/10/25/clmu1cbd1001618uea0bvcl7o.html">EMQX插件开发基础</a>
+
+      <a href="/2019/10/25/clmu1cbd1001618uea0bvcl7o.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>本文作者：[wangwenhai] # 概要：本文主要讲EMQX插件开发入门基础</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-10-25 09:18:46
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/EMQX%E9%AB%98%E7%BA%A7%E5%BC%80%E5%8F%91%E6%95%99%E7%A8%8B/">EMQX高级开发教程</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Erlang/">Erlang</a>
+            
+              <a href="/tags/EMQX/">EMQX</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/10/22/clmu1cbdg002y18ue5lsrf04j.html" target="_self">
+          <img src="/static/15.jpg" srcset="/img/loading.gif" alt="ErlangCowboy基础教程">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/10/22/clmu1cbdg002y18ue5lsrf04j.html">ErlangCowboy基础教程</a>
+
+      <a href="/2019/10/22/clmu1cbdg002y18ue5lsrf04j.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>本文作者：[wangwenhai] # 概要：本文主要讲解Erlang的Web框架Cowboy的基础使用</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-10-22 11:04:22
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/erlang/">erlang</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/erlang/">erlang</a>
+            
+              <a href="/tags/cowboy/">cowboy</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card" style="border-color: black;border-style: dashed;border-width: 1px;padding-top: 18px;padding-bottom: 18px;">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2019/10/15/clmu1cbdf002v18ue1xz9hoi4.html" target="_self">
+          <img src="/static/19.jpg" srcset="/img/loading.gif" alt="Rebar3的基础使用教程">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a class="index-header" href="/2019/10/15/clmu1cbdf002v18ue1xz9hoi4.html">Rebar3的基础使用教程</a>
+
+      <a href="/2019/10/15/clmu1cbdf002v18ue1xz9hoi4.html" class="index-excerpt">
+        
+        
+          
+        
+        <div>作者：wangwenhai # 概要： 本文主要讲Erlang的构建工具Rebar3的基础使用，同时演示一个完整的项目构建过程.</div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>&nbsp;2019-10-15 17:02:57
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/erlang/">erlang</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/erlang/">erlang</a>
+            
+              <a href="/tags/rebar3/">rebar3</a>
+            
+          </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/page/11/"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/13/"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
+  
+  <script>
+    for (ele of document.getElementById("pagination").getElementsByTagName("a")) {
+      ele.href += '#board';
+    }
+  </script>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "愿无岁月可回首，愿忙碌取得成就&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>

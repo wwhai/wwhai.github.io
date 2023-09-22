@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="新四青年 的技术分享">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>1.3基础语法 - 新四青年</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+
+  <!-- 顶部提示 -->
+  <div class="alert alert-warning" role="alert"
+    style="margin-top: 70px; background-color: black;color: rgb(156, 255, 25);text-align: center;padding: 0 0 0 0;">
+    <strong>提示：本站一些文章的超时空时间是乱写的，主要是为了排序，并不是真实写作时间。</strong>
+  </div>
+
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar" style="background-color: #000000;">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>新四青年</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/openlab/academic.html">
+                
+                FreeOpenLab
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/things/">
+                
+                作品
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/post.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2020-05-26 22:05">
+      May 26, 2020 pm
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      26
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：June 30, 2023 pm
+                
+              </p>
+            
+            <article class="markdown-body">
+              <p>概要：Erlang程序设计基础知识讲解</p>
+<span id="more"></span>
+<p>申明:此系列文章来源于【<a target="_blank" rel="noopener" href="https://gitee.com/yujian1018/erlang.git】,经过本人搬运整理，并非原作，希望作者收到我的邮件以后联系本人。如有侵权会及时删除。">https://gitee.com/yujian1018/erlang.git】,经过本人搬运整理，并非原作，希望作者收到我的邮件以后联系本人。如有侵权会及时删除。</a></p>
+<hr>
+
+<h2 id="1-变量、模式匹配"><a href="#1-变量、模式匹配" class="headerlink" title="1. 变量、模式匹配"></a>1. 变量、模式匹配</h2><hr>
+<p>Shell命令行常见操作</p>
+<ol>
+<li>%:注释;</li>
+<li>变量首字母大写，单一赋值;</li>
+<li>模式匹配;</li>
+<li>原子：hello, ‘an atom with’;</li>
+<li>元组tuple：元组嵌套{person,{a,1},{b,2}}；</li>
+<li>提取元组字段值Point = {point, 10, 45}  {point, X, Y} = Point；</li>
+<li>列表list:  定义列表ThingsToBuy1 = [{oranges,4}, {newspaper,1}|{ThingsToBuy}]</li>
+<li>提取元素[Buy1|ThingsToBuy2] = ThingsToBuy1.</li>
+<li>字符串：”hello”，注意：Erlang吗，没有字符串的说法，只有List，请看相关文章</li>
+<li>q()退出shll</li>
+<li>f()释放shell中的变量</li>
+</ol>
+<h2 id="2-函数"><a href="#2-函数" class="headerlink" title="2. 函数"></a>2. 函数</h2><hr>
+<p>面向函数编程：函数可以作为参数，也可以作为返回值，可以使用列表解析、断言、case/if、二进制、比特位、进制、ASCII码</p>
+<ol>
+<li><p>函数<br>函数类似于其他语言的函数定义</p>
+</li>
+<li><p>匿名函数</p>
+<pre><code class="hljs kotlin"><span class="hljs-built_in">Double</span> = <span class="hljs-function"><span class="hljs-title">fun</span><span class="hljs-params">(X)</span></span> -&gt; <span class="hljs-number">2</span>*X end.
+<span class="hljs-built_in">Double</span>(<span class="hljs-number">2</span>).
+Hypot = <span class="hljs-function"><span class="hljs-title">fun</span><span class="hljs-params">(X, Y)</span></span> -&gt; math:sqrt(X*X+Y*Y) end.
+    TempConvert = <span class="hljs-function"><span class="hljs-title">fun</span><span class="hljs-params">(&#123;c,C&#125;)</span></span> -&gt; &#123;f, <span class="hljs-number">32</span>+C*<span class="hljs-number">9</span>/<span class="hljs-number">5</span>&#125;;
+    (&#123;f,F&#125;) -&gt; &#123;c, (F-<span class="hljs-number">32</span>)*<span class="hljs-number">5</span>/<span class="hljs-number">9</span>&#125;
+end.</code></pre>
+</li>
+<li><p>函数作为函数参数</p>
+<pre><code class="hljs erlang">映射：lists:map(Double, [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>]).
+    返回[<span class="hljs-number">2</span>,<span class="hljs-number">4</span>,<span class="hljs-number">6</span>,<span class="hljs-number">8</span>].
+过滤：lists:filter(Even, [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>]).
+    Even = <span class="hljs-keyword">fun</span>(X) -&gt; (X <span class="hljs-keyword">rem</span> <span class="hljs-number">2</span>) =:= <span class="hljs-number">0</span> <span class="hljs-keyword">end</span>.</code></pre>
+</li>
+<li><p>返回函数的函数</p>
+<pre><code class="hljs kotlin">Fruit = [apple,pear,orange].
+MakeTest = <span class="hljs-function"><span class="hljs-title">fun</span><span class="hljs-params">(L)</span></span> -&gt; (<span class="hljs-function"><span class="hljs-title">fun</span><span class="hljs-params">(X)</span></span> -&gt; lists:member(X,L) end) end.
+IsFruit = MakeTest(Fruit).
+IsFruit = <span class="hljs-function"><span class="hljs-title">fun</span><span class="hljs-params">(X)</span></span> -&gt; lists:member(X,[apple,pear,orange]) end.</code></pre>
+</li>
+<li><p>循环</p>
+<pre><code class="hljs mathematica"><span class="hljs-variable">for</span><span class="hljs-punctuation">(</span><span class="hljs-built_in">Max</span><span class="hljs-operator">,</span><span class="hljs-built_in">Max</span><span class="hljs-operator">,</span><span class="hljs-variable">F</span><span class="hljs-punctuation">)</span> <span class="hljs-operator">-&gt;</span> <span class="hljs-punctuation">[</span><span class="hljs-variable">F</span><span class="hljs-punctuation">(</span><span class="hljs-built_in">Max</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">]</span><span class="hljs-operator">;</span>
+<span class="hljs-variable">for</span><span class="hljs-punctuation">(</span><span class="hljs-built_in">I</span><span class="hljs-operator">,</span><span class="hljs-built_in">Max</span><span class="hljs-operator">,</span><span class="hljs-variable">F</span><span class="hljs-punctuation">)</span>   <span class="hljs-operator">-&gt;</span> <span class="hljs-punctuation">[</span><span class="hljs-variable">F</span><span class="hljs-punctuation">(</span><span class="hljs-built_in">I</span><span class="hljs-punctuation">)</span><span class="hljs-operator">|</span><span class="hljs-variable">for</span><span class="hljs-punctuation">(</span><span class="hljs-built_in">I</span><span class="hljs-operator">+</span><span class="hljs-number">1</span><span class="hljs-operator">,</span><span class="hljs-built_in">Max</span><span class="hljs-operator">,</span><span class="hljs-variable">F</span><span class="hljs-punctuation">)</span><span class="hljs-punctuation">]</span></code></pre>
+</li>
+<li><p>列表解析</p>
+<pre><code class="hljs prolog">[<span class="hljs-number">2</span>*<span class="hljs-symbol">X</span> || <span class="hljs-symbol">X</span> &lt;- <span class="hljs-symbol">L</span>].
+定义：<span class="hljs-symbol">Buy</span> = [&#123;oranges,<span class="hljs-number">4</span>&#125;,&#123;newspaper,<span class="hljs-number">1</span>&#125;,&#123;apples,<span class="hljs-number">10</span>&#125;,&#123;pears,<span class="hljs-number">6</span>&#125;,&#123;milk,<span class="hljs-number">3</span>&#125;].
+乘积：[shop:cost(<span class="hljs-symbol">A</span>)*<span class="hljs-symbol">B</span> || &#123;<span class="hljs-symbol">A</span>,<span class="hljs-symbol">B</span>&#125; &lt;- <span class="hljs-symbol">Buy</span>]
+求和：libs:sum([shop:cost(<span class="hljs-symbol">A</span>)*<span class="hljs-symbol">B</span> || &#123;<span class="hljs-symbol">A</span>,<span class="hljs-symbol">B</span>&#125; &lt;- <span class="hljs-symbol">Buy</span>]).
+(<span class="hljs-number">1</span>)快速排序：<span class="hljs-symbol">L</span>=[<span class="hljs-number">12</span>,<span class="hljs-number">6</span>,<span class="hljs-number">2</span>,<span class="hljs-number">13</span>,<span class="hljs-number">2</span>,<span class="hljs-number">8</span>,<span class="hljs-number">9</span>,<span class="hljs-number">10</span>]. qsort(<span class="hljs-symbol">L</span>).
+(<span class="hljs-number">2</span>)毕达哥拉斯三元组：libs:pythag(<span class="hljs-number">16</span>).
+(<span class="hljs-number">3</span>)变位词：libs:perms(<span class="hljs-string">&quot;123&quot;</span>).
+          [<span class="hljs-string">&quot;123&quot;</span>,<span class="hljs-string">&quot;132&quot;</span>,<span class="hljs-string">&quot;213&quot;</span>,<span class="hljs-string">&quot;231&quot;</span>,<span class="hljs-string">&quot;312&quot;</span>,<span class="hljs-string">&quot;321&quot;</span>]</code></pre></li>
+<li><p>算术表达式</p>
+<pre><code class="hljs apache"><span class="hljs-attribute">1</span>+<span class="hljs-number">2</span>.
+<span class="hljs-attribute">1</span>/<span class="hljs-number">1</span>.
+<span class="hljs-attribute">10</span>*<span class="hljs-number">4</span>.</code></pre></li>
+<li><p>断言：</p>
+<pre><code class="hljs tp">max(<span class="hljs-keyword">X</span>,<span class="hljs-keyword">Y</span>) when <span class="hljs-keyword">X</span> &gt; <span class="hljs-keyword">Y</span> -&gt; <span class="hljs-keyword">X</span>;
+max(<span class="hljs-keyword">X</span>,<span class="hljs-keyword">Y</span>) -&gt; <span class="hljs-keyword">Y</span>.
+断言函数：
+f(<span class="hljs-keyword">X</span>,<span class="hljs-keyword">Y</span>) when is_integer(<span class="hljs-keyword">X</span>), <span class="hljs-keyword">X</span> &gt; <span class="hljs-keyword">Y</span>, <span class="hljs-keyword">Y</span> &lt; <span class="hljs-number">6</span> -&gt; <span class="hljs-keyword">X</span>;</code></pre></li>
+<li><p>记录：record<br>结构化数据，类似于MAP的结构。</p>
+</li>
+<li><p>case表达式：</p>
+</li>
+</ol>
+<pre><code class="hljs css"><span class="hljs-attribute">filter</span>(<span class="hljs-selector-tag">P</span>, <span class="hljs-selector-attr">[P|T]</span>) -&gt;
+    case <span class="hljs-selector-tag">P</span>(H) of
+        true -&gt; <span class="hljs-selector-attr">[H|filter(P,T&#125;]</span>;
+ false -&gt;<span class="hljs-attribute">filter</span>(<span class="hljs-selector-tag">P</span>,T)
+     end;
+<span class="hljs-attribute">filter</span>(<span class="hljs-selector-tag">P</span>, <span class="hljs-selector-attr">[]</span>) -&gt; <span class="hljs-selector-attr">[]</span>.</code></pre>
+<ol start="11">
+<li>if表达式：</li>
+</ol>
+<pre><code class="hljs livescript">test_if<span class="hljs-function"><span class="hljs-params">(Num)</span> -&gt;</span>
+	<span class="hljs-keyword">if</span>
+		Num&gt;=<span class="hljs-number">5</span> -&gt;
+			<span class="hljs-number">10</span>;
+		<span class="hljs-function"><span class="hljs-params">(Num&gt;=<span class="hljs-number">0</span>)</span> <span class="hljs-title">and</span> <span class="hljs-params">(Num&lt;<span class="hljs-number">5</span>)</span> -&gt;</span>
+			<span class="hljs-number">0</span>;
+		Num&lt;<span class="hljs-number">0</span> -&gt;
+			pass
+end.</code></pre>
+
+<ol start="12">
+<li><p>内建函数BIF<br>内置函数是指那些出于某种需求而内置到 Erlang 虚拟机中的函数。内置函数常常实现那些在 Erlang 中不容易实现或者在 Erlang 中实现效率不高的函数。某些内置函数也可以只用函数名就调用，因为这些函数是由于默认属于 erlang 模块。可理解为标准库。</p>
+</li>
+<li><p>二进制数据</p>
+<pre><code class="hljs gherkin"><span class="hljs-variable">&lt;&lt;&gt;</span>&gt;
+<span class="hljs-variable">&lt;&lt;E1,...,En&gt;</span>&gt;
+Ei = Value |<span class="hljs-string"></span>
+<span class="hljs-string">       Value:Size </span>|
+       Value/TypeSpecifierList |<span class="hljs-string"></span>
+<span class="hljs-string">       Value:Size/TypeSpecifierList</span>
+<span class="hljs-string">Type= integer </span>|<span class="hljs-string"> float </span>|<span class="hljs-string"> binary </span>|<span class="hljs-string"> bytes </span>|<span class="hljs-string"> bitstring </span>|<span class="hljs-string"> bits </span>|<span class="hljs-string"> utf8 </span>|<span class="hljs-string"> utf16 </span>|<span class="hljs-string"> utf32</span>
+<span class="hljs-string">Signedness= signed </span>|<span class="hljs-string"> unsigned  (整型值时有意义，默认是unsigned)</span>
+<span class="hljs-string">Endianness= big </span>|<span class="hljs-string"> little </span>|<span class="hljs-string"> native 默认是big</span>
+<span class="hljs-string">Unit= unit:IntegerLiteral</span>
+<span class="hljs-string">  unit是每个数据段的size,允许的取值范围是1..256</span>
+<span class="hljs-string">  size和unit的乘积是数据占用的二进制位数,且必须可以被8整除</span>
+<span class="hljs-string">  unit 通常用来保证字节对齐.</span></code></pre>
+</li>
+<li><p>动态调用</p>
+<pre><code class="hljs coq"><span class="hljs-built_in">apply</span>(libs, <span class="hljs-built_in">sum</span>, [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>]).注意：尽量避免过多的<span class="hljs-built_in">apply</span>。</code></pre>
+</li>
+<li><p>指令</p>
+<pre><code class="hljs erlang">模块：-module(modname).
+引入：-import(modname, [<span class="hljs-keyword">fun</span>/<span class="hljs-number">1</span>]). 可以不写模块名直接引用函数名
+导出：-export([name1/<span class="hljs-number">1</span>, name2/<span class="hljs-number">2</span>]).
+编译属性：-compile(options).
+模块版本：-vsn(Version).
+用户定义属性：-SomeTag(Value).
+输出属性：attr:module_info().
+          attr:module_info(attributes).
+引用函数：<span class="hljs-keyword">fun</span> Mod:RemoteFunc/Arity
+包含文件：-include(Filename).
+         -include_lib(Name).
+列表操作符：[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]++[<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>]
+            [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]--[<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]
+进制：K#<span class="hljs-number">123</span>
+$语法：$C 表示ASCII
+字典：erase(), put(x, <span class="hljs-number">20</span>),get(x), erase(x)
+短路表达式：Epr1 <span class="hljs-keyword">orelse</span> Epr2.  Epr1 andalse Epr2.</code></pre>
+
+
+
+</li>
+</ol>
+<h2 id="3-编译运行"><a href="#3-编译运行" class="headerlink" title="3. 编译运行"></a>3. 编译运行</h2><hr>
+<ol>
+<li>退出：halt().导致数据库要恢复  q().安全退出，等价于init:stop().</li>
+<li>取得加载路径：code:get_path().<br>取得主目录：init:get_argument(home).</li>
+<li>外部运行：D:/erl&gt;erl.exe -noshell -s hello start -s init stop</li>
+<li>帮助：help().</li>
+</ol>
+<h2 id="4-并发"><a href="#4-并发" class="headerlink" title="4. 并发"></a>4. 并发</h2><hr>
+<ol>
+<li><p>创建进程</p>
+<pre><code class="hljs sqf">Pid = <span class="hljs-built_in">spawn</span>(Fun)
+<span class="hljs-built_in">spawn</span>(<span class="hljs-built_in">Mod</span>, FuncName, Args).</code></pre>
+</li>
+<li><p>erlang消息机制</p>
+<pre><code class="hljs erlang-repl">发送消息：Pid!Message
+群发消息：Pid1!Pid2!Pid3...!Pidn!Message
+接收消息：receive ... end.
+例如：Pid = spawn(fun area_server0:loop/<span class="hljs-number">0</span>).
+     Pid!&#123;rectangle, <span class="hljs-number">6</span>, <span class="hljs-number">10</span>&#125;.</code></pre>
+</li>
+<li><p>进程相关</p>
+<pre><code class="hljs kotlin">自身ID：self().
+Pid!&#123;self(), Message&#125;.
+例如：Pid = spawn(<span class="hljs-function"><span class="hljs-keyword">fun</span> area_server1:loop/0).</span>
+     area_server1:rpc(Pid, &#123;rectangle, <span class="hljs-number">6</span>, <span class="hljs-number">10</span>&#125;).</code></pre>
+</li>
+<li><p>设置进程数</p>
+<pre><code class="hljs livescript">D:/erl&gt;erl +P <span class="hljs-number">500000</span>
+测试启动时间：process:max(<span class="hljs-number">400000</span>).
+register(AnAtom, Pid).  注册进程别名
+unregister(AnAtom).   溢出注册进程
+whereis<span class="hljs-function"><span class="hljs-params">(AnAtom)</span> -&gt;</span> Pid | <span class="hljs-literal">undefined</span> 判断是否注册
+registered<span class="hljs-function"><span class="hljs-params">()</span> -&gt;</span> [AnAtom::atom()] 取得所有注册进程
+注册时钟：clock:start<span class="hljs-function"><span class="hljs-params">(<span class="hljs-number">5000</span>, fun() -&gt; io:format(<span class="hljs-string">&quot;TICK ~p~n&quot;</span>, [erlang:now()]) end)</span>.</span>
+<span class="hljs-function">停止时钟：<span class="hljs-title">clock</span>:<span class="hljs-title">stop</span><span class="hljs-params">()</span>.</span></code></pre>
+
+</li>
+</ol>
+<h2 id="5-分布式"><a href="#5-分布式" class="headerlink" title="5. 分布式"></a>5. 分布式</h2><hr>
+<ol>
+<li><p>单节点测试<br>启动服务器：kvs.start().<br>存储： kvs:store({location, joe}, “Stockholm”).<br>kvs:store(weather, raining).<br>查找： kvs:lookup(weather).<br>kvs:lookup({location, joe}).</p>
+</li>
+<li><p>双节点测试<br>启动服务器节点：<br>D:/erl&gt;erl -sname gandalf<br>Eshell V5.7  (abort with ^G)<br>(gandalf@zhongbingliu)1&gt; kvs:start().<br>true<br>(gandalf@zhongbingliu)2&gt;</p>
+</li>
+<li><p>调用者节点：</p>
+</li>
+</ol>
+<pre><code class="hljs autoit">D:/erl&gt;erl -sname bilbo
+Eshell V5<span class="hljs-number">.7</span>  (abort <span class="hljs-keyword">with</span> ^G)
+(bilbo<span class="hljs-symbol">@zhongbingliu</span>)<span class="hljs-number">1</span>&gt; rpc:<span class="hljs-built_in">call</span>(gandalf<span class="hljs-symbol">@zhongbingliu</span>, kvs, store, [weather, fine]).
+<span class="hljs-literal">true</span>
+(bilbo<span class="hljs-symbol">@zhongbingliu</span>)<span class="hljs-number">2</span>&gt; rpc:<span class="hljs-built_in">call</span>(gandalf<span class="hljs-symbol">@zhongbingliu</span>, kvs, lookup, [weather]).
+&#123;ok,fine&#125;
+</code></pre>
+
+<ol start="4">
+<li>客户机和服务器位于同一局域网的不同机器上</li>
+<li>客户机和服务器位于因特网的不同机器上：确保4396端口通信正常，epmd会使用这个端口</li>
+</ol>
+<h2 id="6-文件"><a href="#6-文件" class="headerlink" title="6. 文件"></a>6. 文件</h2><hr>
+<ol>
+<li>读取文件<pre><code class="hljs applescript"><span class="hljs-built_in">file</span>:consult(<span class="hljs-string">&quot;data1.data&quot;</span>).</code></pre></li>
+<li>读取<pre><code class="hljs lua">&#123;ok, S&#125; = file:<span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;data1.data&quot;</span>, <span class="hljs-built_in">read</span>). 
+ <span class="hljs-built_in">io</span>:<span class="hljs-built_in">read</span>(S, <span class="hljs-string">&#x27;&#x27;</span>). 
+ <span class="hljs-built_in">io</span>:get_line(S, <span class="hljs-string">&#x27;&#x27;</span>). 
+ file:<span class="hljs-built_in">close</span>(S).</code></pre></li>
+<li>查找代码库位置 <pre><code class="hljs gradle">code:which(<span class="hljs-keyword">file</span>).
+d:<span class="hljs-regexp">/erl5.7/</span>lib<span class="hljs-regexp">/kernel-2.13/</span>ebin/<span class="hljs-keyword">file</span>.beam</code></pre></li>
+<li>读取二进制数据<pre><code class="hljs tcl"><span class="hljs-keyword">file</span>:read_file(<span class="hljs-string">&quot;data1.data&quot;</span>).
+&#123;ok, S&#125; = <span class="hljs-keyword">file</span>:<span class="hljs-keyword">open</span>(<span class="hljs-string">&quot;data1.data&quot;</span>, [<span class="hljs-keyword">read</span>,<span class="hljs-keyword">binary</span>,raw]).
+<span class="hljs-keyword">file</span>:pread(S, <span class="hljs-number">22</span>, <span class="hljs-number">46</span>).</code></pre></li>
+<li>查找文件<pre><code class="hljs avrasm"><span class="hljs-symbol">lib_find:</span>files</code></pre></li>
+<li>写入文件<pre><code class="hljs lua">&#123;ok, S&#125; = file:<span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;data2.data&quot;</span>, <span class="hljs-built_in">write</span>).
+ <span class="hljs-built_in">io</span>:<span class="hljs-built_in">format</span>(S, <span class="hljs-string">&quot;~s~n&quot;</span>, [<span class="hljs-string">&quot;Hello readers&quot;</span>]). 
+ file:<span class="hljs-built_in">close</span>(S).</code></pre></li>
+<li>随机写入 <pre><code class="hljs tcl">&#123;ok, S&#125; = <span class="hljs-keyword">file</span>:<span class="hljs-keyword">open</span>(<span class="hljs-string">&quot;data3.data&quot;</span>, [raw,write,<span class="hljs-keyword">binary</span>]).
+<span class="hljs-keyword">file</span>:pwrite(S, <span class="hljs-number">10</span>, &lt;&lt;<span class="hljs-string">&quot;new&quot;</span>&gt;&gt;).</code></pre></li>
+<li>目录操作<pre><code class="hljs applescript"><span class="hljs-built_in">file</span>:list_dir(<span class="hljs-string">&quot;/&quot;</span>).
+  <span class="hljs-built_in">file</span>:make_dir(<span class="hljs-string">&quot;abc&quot;</span>).
+  <span class="hljs-built_in">file</span>:del_dir(<span class="hljs-string">&quot;abc&quot;</span>).</code></pre></li>
+<li>文件属性 <pre><code class="hljs applescript"><span class="hljs-built_in">file</span>:read_file_info(<span class="hljs-string">&quot;data1.data&quot;</span>).</code></pre></li>
+<li>文件操作 <pre><code class="hljs gradle"><span class="hljs-keyword">file</span>:<span class="hljs-keyword">copy</span>(<span class="hljs-string">&quot;data1,data&quot;</span>, <span class="hljs-string">&quot;/&quot;</span>).
+        <span class="hljs-keyword">file</span>:<span class="hljs-keyword">delete</span>(<span class="hljs-string">&quot;data1&quot;</span>).</code></pre>
+
+
+</li>
+</ol>
+<h2 id="7-套接字"><a href="#7-套接字" class="headerlink" title="7. 套接字"></a>7. 套接字</h2><hr>
+<ol>
+<li>Socket连接www:socket:nano_get_url().</li>
+<li>启动服务器：server:start_nano_server().</li>
+<li>编写客户端：client:nano_client_eval(“list_to_tuple([2+3*4,10+20])”).</li>
+</ol>
+<ul>
+<li>主动型：非阻塞 服务器接收消息的速度必须快于客户端发送的速度，否则服务器会因为消息缓冲-区塞满被消息淹没</li>
+<li>被动型：阻塞</li>
+<li>混合型：半阻塞</li>
+</ul>
+<h2 id="8-数据库"><a href="#8-数据库" class="headerlink" title="8. 数据库"></a>8. 数据库</h2><hr>
+<ol>
+<li>ETS是内存存储，速度快</li>
+<li>DETS是磁盘存储，可备份</li>
+<li>创建表：ets:new </li>
+<li>插入：insert(table, X)</li>
+<li>查找：lookup(table, Key)</li>
+<li>释放：dets:close(tableid) etd:delete(tableid)</li>
+<li>Mnesia数据库：<pre><code class="hljs isbl">创建表：-<span class="hljs-variable">record</span>...
+选取所有数据：<span class="hljs-function"><span class="hljs-title">do</span>(<span class="hljs-title">qlc</span>())...</span>
+<span class="hljs-function">选取部分列：</span>
+<span class="hljs-function">按条件选取：</span>
+<span class="hljs-function">关连查询：</span>
+<span class="hljs-function">增加数据：<span class="hljs-variable">mnesia</span>:<span class="hljs-title">write</span>()</span>
+删除数据：<span class="hljs-variable">mnesia</span>:<span class="hljs-function"><span class="hljs-title">delete</span>()</span>
+事务管理：<span class="hljs-variable">mnesia</span>:<span class="hljs-function"><span class="hljs-title">transaction</span>(<span class="hljs-variable">F</span>)</span>
+取消事务：<span class="hljs-variable">mnesia</span>:<span class="hljs-function"><span class="hljs-title">abort</span>()</span>
+启动表查看器：<span class="hljs-variable">tv</span>:<span class="hljs-function"><span class="hljs-title">start</span>().</span></code></pre>
+
+
+</li>
+</ol>
+<h2 id="9-OTP"><a href="#9-OTP" class="headerlink" title="9. OTP"></a>9. OTP</h2><hr>
+<ol>
+<li>支持事务：使用异常捕捉进行回滚</li>
+<li>支持热代码替换</li>
+<li>错误日志</li>
+<li>警报管理</li>
+<li>应用程序监视器：appmon:start().</li>
+</ol>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Erlang%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/">Erlang程序设计</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Erlang/">Erlang</a>
+                    
+                      <a class="hover-with-bg" href="/tags/OTP/">OTP</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/05/26/clla6zkt20026icuebqsahzp8.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">1.2基础操作</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/05/19/clla6zkuy00aficue2vbv84c2.html">
+                        <span class="hidden-mobile">Erlang基于TCP协议的服务器开发</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                  <script src="https://utteranc.es/client.js"
+                    repo="wwhai/gitalk"
+                    issue-term="url"
+                    label="[Utterances]"
+                    theme="preferred-color-scheme"
+                    crossorigin="anonymous"
+                    async>
+                  </script>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "1.3基础语法&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "#"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>

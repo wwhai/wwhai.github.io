@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="新四青年 的技术分享">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>FREE-OPEN-LAB:最新研究论文展示 - 新四青年</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+
+  <!-- 顶部提示 -->
+  <div class="alert alert-warning" role="alert"
+    style="margin-top: 70px; background-color: black;color: rgb(156, 255, 25);text-align: center;padding: 0 0 0 0;">
+    <strong>提示：本站一些文章的超时空时间是乱写的，主要是为了排序，并不是真实写作时间。</strong>
+  </div>
+
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar" style="background-color: #000000;">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>新四青年</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/openlab/academic.html">
+                
+                FreeOpenLab
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/things/">
+                
+                作品
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/index.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.4)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+
+      <div class="container nopadding-md">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board"
+          >
+          <!--  -->
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                <!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FREE-OPEN-LAB</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div class="container" style="width: 100%;margin-top: 8px;">
+        <div class="alert alert-success" role="alert">
+    <marquee behavior="behavior" loop="10">
+        🔴 🟠 🟡 🟢 🔵 🟣 ⚫️ ⚪️ 🟤 ('_>')自由开放知识实验室欢迎大家投稿 ~~~~~~~
+    </marquee>
+</div>
+<nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">
+        <img src="/img/open-lab-logo.png" srcset="/img/loading.gif" width="200" height="30" class="d-inline-block align-top" alt=""
+            loading="lazy">
+    </a>
+
+    <ul class="nav justify-content-end">
+        <li class="nav-item">
+            <a class="nav-link" href="/openlab/academic.html">开放论文</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/openlab/project.html">开放项目</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/openlab/openrule.html">收录规则</a>
+        </li>
+
+    </ul>
+</nav>
+
+<div class="row-fluid">
+    <div class="span12">
+        <div class="jumbotron">
+            <h1>
+                FREE-OPEN-LAB
+            </h1>
+            <h2>
+                <a href="#">自由开放知识实验室</a>
+            </h2>
+            <p>
+                <strong>这个项目旨在组织各位在工作的朋友做学术或者工程类的课题研究。</strong>
+            </p>
+            <p>
+                相信大部分在职的朋友都是要么无聊或者要么工作比较枯燥单一，找不到自己的兴趣点。为了让在某个领域内有兴趣的职场人，在业余时间发挥自己的专业技能价值，我和朋友发起这个LAB计划，如果你对某一件事情感兴趣或者有自己的深入研究，都可以加入我们一起写一些小论文。
+            </p>
+            <p>
+                领域不做限制，只要是具有学术价值，但是不违反社会主义核心价值观的研究，我们都会做收录。
+            </p>
+        </div>
+    </div>
+</div>
+        <h2>最新研究</h2>
+        <hr>
+        <ul class="list-unstyled">
+            <!-- for 拿文章列表 -->
+            
+            
+            <!-- 只有特殊分类才显示出来 -->
+            
+            <li class="media">
+                <div class="card" style="width: 100%;margin-top: 2px;">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <span class="badge badge-pill badge-secondary">0</span>
+                            <span><a href="/2021/10/06/clmu1cbcm000318ue7uhygs6d.html" >Lora 网关设计思路</a></span>
+                            <span class="badge badge-info">理论研究</span>
+                        </h4>
+                         <h5>研究团队</h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">参与人员</th>
+                                    <th scope="col">研究内容</th>
+                                    <th scope="col">发表时间</th>
+                                    <th scope="col">进度</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <tr>
+                                    <td>wwhai</td>
+                                    <td>CPU虚拟指令集</td>
+                                    <td>1633449600000</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%"
+                                                aria-valuenow="80" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>LiuZY</td>
+                                    <td>浏览器渲染技术</td>
+                                    <td>1633449600000</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%"
+                                                aria-valuenow="80" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+
+                            </tbody>
+                        </table>
+                        <hr>
+
+                        <h5>资源</h5>
+                        <div
+                            style="border-color: rgb(199, 192, 184);border-style:solid;border-width: 1px;padding-top: 2px; padding-bottom: 2px;padding-left: 2px;">
+
+                            
+                            <a href="#"><button type="button"
+                                    class="btn btn-outline-info">PCB电路图</button>
+                            </a>
+                            
+                            <a href="#"><button type="button"
+                                    class="btn btn-outline-info">设计架构图</button>
+                            </a>
+                            
+
+                        </div>
+
+                        <hr>
+                        <h5>内容概述</h5>
+                        <div class="card">
+                            <div class="card-body">
+                                <p>本文主要讲了Lora 网关设计思路 </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            
+            <!-- if结束 -->
+            
+            <!-- 只有特殊分类才显示出来 -->
+            
+            <li class="media">
+                <div class="card" style="width: 100%;margin-top: 2px;">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <span class="badge badge-pill badge-secondary">1</span>
+                            <span><a href="/2021/10/06/clmu1cbcp000718uefczv1ul5.html" >OHVM 编程语言设计思路</a></span>
+                            <span class="badge badge-info">理论研究</span>
+                        </h4>
+                         <h5>研究团队</h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">参与人员</th>
+                                    <th scope="col">研究内容</th>
+                                    <th scope="col">发表时间</th>
+                                    <th scope="col">进度</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <tr>
+                                    <td>wwhai</td>
+                                    <td>CPU虚拟指令集</td>
+                                    <td>1633449600000</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%"
+                                                aria-valuenow="80" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>LiuZY</td>
+                                    <td>浏览器渲染技术</td>
+                                    <td>1633449600000</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%"
+                                                aria-valuenow="80" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+
+                            </tbody>
+                        </table>
+                        <hr>
+
+                        <h5>资源</h5>
+                        <div
+                            style="border-color: rgb(199, 192, 184);border-style:solid;border-width: 1px;padding-top: 2px; padding-bottom: 2px;padding-left: 2px;">
+
+                            
+                            <a href="#"><button type="button"
+                                    class="btn btn-outline-info">PCB电路图</button>
+                            </a>
+                            
+                            <a href="#"><button type="button"
+                                    class="btn btn-outline-info">设计架构图</button>
+                            </a>
+                            
+
+                        </div>
+
+                        <hr>
+                        <h5>内容概述</h5>
+                        <div class="card">
+                            <div class="card-body">
+                                <p>本文主要讲了如何设计OHVM 编程语言 </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            
+            <!-- if结束 -->
+            
+            <!-- 只有特殊分类才显示出来 -->
+            
+            <li class="media">
+                <div class="card" style="width: 100%;margin-top: 2px;">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <span class="badge badge-pill badge-secondary">2</span>
+                            <span><a href="/2021/10/06/clmu1cbcr000918ue1oooasdf.html" >一种假设的基于万有引力的通信模型</a></span>
+                            <span class="badge badge-info">理论研究</span>
+                        </h4>
+                         <h5>研究团队</h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">参与人员</th>
+                                    <th scope="col">研究内容</th>
+                                    <th scope="col">发表时间</th>
+                                    <th scope="col">进度</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <tr>
+                                    <td>wwhai</td>
+                                    <td>物理学量子力学基础研究</td>
+                                    <td>1633449600000</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%"
+                                                aria-valuenow="80" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+
+                            </tbody>
+                        </table>
+                        <hr>
+
+                        <h5>资源</h5>
+                        <div
+                            style="border-color: rgb(199, 192, 184);border-style:solid;border-width: 1px;padding-top: 2px; padding-bottom: 2px;padding-left: 2px;">
+
+                            
+                            <a href="#"><button type="button"
+                                    class="btn btn-outline-info">大学物理教程</button>
+                            </a>
+                            
+                            <a href="#"><button type="button"
+                                    class="btn btn-outline-info">架构设计思路</button>
+                            </a>
+                            
+
+                        </div>
+
+                        <hr>
+                        <h5>内容概述</h5>
+                        <div class="card">
+                            <div class="card-body">
+                                <p>本文主要讲了一种假设的基于万有引力的通信模型 </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            
+            <!-- if结束 -->
+            
+            <!-- 只有特殊分类才显示出来 -->
+            
+            <li class="media">
+                <div class="card" style="width: 100%;margin-top: 2px;">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <span class="badge badge-pill badge-secondary">3</span>
+                            <span><a href="/2020/12/06/clmu1cbcr000b18ue0p7v5f9i.html" >一种对于当前宇宙模型的假设</a></span>
+                            <span class="badge badge-info">理论研究</span>
+                        </h4>
+                         <h5>研究团队</h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">参与人员</th>
+                                    <th scope="col">研究内容</th>
+                                    <th scope="col">发表时间</th>
+                                    <th scope="col">进度</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <tr>
+                                    <td>wwhai</td>
+                                    <td>一种对于当前宇宙模型的假设</td>
+                                    <td>1607184000000</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%"
+                                                aria-valuenow="80" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+
+                            </tbody>
+                        </table>
+                        <hr>
+
+                        <h5>资源</h5>
+                        <div
+                            style="border-color: rgb(199, 192, 184);border-style:solid;border-width: 1px;padding-top: 2px; padding-bottom: 2px;padding-left: 2px;">
+
+                            
+                            <a href="#"><button type="button"
+                                    class="btn btn-outline-info">一种对于当前宇宙模型的假设</button>
+                            </a>
+                            
+
+                        </div>
+
+                        <hr>
+                        <h5>内容概述</h5>
+                        <div class="card">
+                            <div class="card-body">
+                                <p>一种对于当前宇宙模型的假设 </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            
+            <!-- if结束 -->
+            
+            <!-- 只有特殊分类才显示出来 -->
+            
+            <li class="media">
+                <div class="card" style="width: 100%;margin-top: 2px;">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <span class="badge badge-pill badge-secondary">4</span>
+                            <span><a href="/2020/12/06/clmu1cbct000g18ue2u9tdo51.html" >物联网所需技术总结</a></span>
+                            <span class="badge badge-info">理论研究</span>
+                        </h4>
+                         <h5>研究团队</h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">参与人员</th>
+                                    <th scope="col">研究内容</th>
+                                    <th scope="col">发表时间</th>
+                                    <th scope="col">进度</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <tr>
+                                    <td>wwhai</td>
+                                    <td>物联网所需技术总结</td>
+                                    <td>1607184000000</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%"
+                                                aria-valuenow="80" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+
+                            </tbody>
+                        </table>
+                        <hr>
+
+                        <h5>资源</h5>
+                        <div
+                            style="border-color: rgb(199, 192, 184);border-style:solid;border-width: 1px;padding-top: 2px; padding-bottom: 2px;padding-left: 2px;">
+
+                            
+                            <a href="#"><button type="button"
+                                    class="btn btn-outline-info">物联网所需技术总结</button>
+                            </a>
+                            
+
+                        </div>
+
+                        <hr>
+                        <h5>内容概述</h5>
+                        <div class="card">
+                            <div class="card-body">
+                                <p>本文主要讲了物联网所需技术总结 </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            
+            <!-- if结束 -->
+            
+            <!-- 只有特殊分类才显示出来 -->
+            
+            <li class="media">
+                <div class="card" style="width: 100%;margin-top: 2px;">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <span class="badge badge-pill badge-secondary">5</span>
+                            <span><a href="/2021/10/06/clmu1cbcu000i18ue14s00t4x.html" >设计一个简单的虚拟机</a></span>
+                            <span class="badge badge-info">理论研究</span>
+                        </h4>
+                         <h5>研究团队</h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">参与人员</th>
+                                    <th scope="col">研究内容</th>
+                                    <th scope="col">发表时间</th>
+                                    <th scope="col">进度</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <tr>
+                                    <td>wwhai</td>
+                                    <td>CPU虚拟指令集</td>
+                                    <td>1633449600000</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%"
+                                                aria-valuenow="80" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>LiuZY</td>
+                                    <td>浏览器渲染技术</td>
+                                    <td>1633449600000</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%"
+                                                aria-valuenow="80" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+
+                            </tbody>
+                        </table>
+                        <hr>
+
+                        <h5>资源</h5>
+                        <div
+                            style="border-color: rgb(199, 192, 184);border-style:solid;border-width: 1px;padding-top: 2px; padding-bottom: 2px;padding-left: 2px;">
+
+                            
+                            <a href="#"><button type="button"
+                                    class="btn btn-outline-info">PCB电路图</button>
+                            </a>
+                            
+                            <a href="#"><button type="button"
+                                    class="btn btn-outline-info">设计架构图</button>
+                            </a>
+                            
+
+                        </div>
+
+                        <hr>
+                        <h5>内容概述</h5>
+                        <div class="card">
+                            <div class="card-body">
+                                <p>本文主要讲了如何设计一个简单的虚拟机 </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            
+            <!-- if结束 -->
+            
+            <!-- 只有特殊分类才显示出来 -->
+            
+            <li class="media">
+                <div class="card" style="width: 100%;margin-top: 2px;">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <span class="badge badge-pill badge-secondary">6</span>
+                            <span><a href="/2021/10/06/clmu1cbcw000o18ued3uka9pb.html" >轻量级规则引擎设计</a></span>
+                            <span class="badge badge-info">理论研究</span>
+                        </h4>
+                         <h5>研究团队</h5>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">参与人员</th>
+                                    <th scope="col">研究内容</th>
+                                    <th scope="col">发表时间</th>
+                                    <th scope="col">进度</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <tr>
+                                    <td>wwhai</td>
+                                    <td>轻量级规则引擎设计</td>
+                                    <td>1633449600000</td>
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar" role="progressbar" style="width: 25%"
+                                                aria-valuenow="100%" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+
+                            </tbody>
+                        </table>
+                        <hr>
+
+                        <h5>资源</h5>
+                        <div
+                            style="border-color: rgb(199, 192, 184);border-style:solid;border-width: 1px;padding-top: 2px; padding-bottom: 2px;padding-left: 2px;">
+
+                            
+
+                        </div>
+
+                        <hr>
+                        <h5>内容概述</h5>
+                        <div class="card">
+                            <div class="card-body">
+                                <p>本文主要讲了轻量级规则引擎设计过程 </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            
+            <!-- if结束 -->
+            
+            <!-- for 循环结束 -->
+        </ul>
+
+        <div class="alert alert-primary" role="alert">
+            本站点所有文章除特别声明外，均采用 CC BY-SA 4.0 协议 ，转载请注明出处！
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
+        integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "FREE-OPEN-LAB:最新研究论文展示&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "#"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="新四青年 的技术分享">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>日常操作记录 - 新四青年</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+
+  <!-- 顶部提示 -->
+  <div class="alert alert-warning" role="alert"
+    style="margin-top: 70px; background-color: black;color: rgb(156, 255, 25);text-align: center;padding: 0 0 0 0;">
+    <strong>提示：本站一些文章的超时空时间是乱写的，主要是为了排序，并不是真实写作时间。</strong>
+  </div>
+
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar" style="background-color: #000000;">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>新四青年</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/openlab/academic.html">
+                
+                FreeOpenLab
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/things/">
+                
+                作品
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/post.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2020-05-16 16:20">
+      May 16, 2020 pm
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      630 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      10
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：June 30, 2023 pm
+                
+              </p>
+            
+            <article class="markdown-body">
+              <p>本文作者：[wangwenhai] # 概要：记录近期工作中的一些常见操作.</p>
+<span id="more"></span>
+
+
+
+<h1 id="1-Docker相关"><a href="#1-Docker相关" class="headerlink" title="1.Docker相关"></a>1.Docker相关</h1><h2 id="1-1-Windows下"><a href="#1-1-Windows下" class="headerlink" title="1.1 Windows下"></a>1.1 Windows下</h2><p>windows安装Docker首先要启用Hyper-V：</p>
+<ol>
+<li><p>可以通过【程序和功能】=》【打开或关闭 Windows 功能】=》勾选【Hyper-V】来启用Hyper-V，</p>
+<p><img src="/uploads/image-20200516160810446.png" srcset="/img/loading.gif" alt="image-20200516160810446"></p>
+<p><img src="/uploads/image-20200516160854773.png" srcset="/img/loading.gif" alt="image-20200516160854773"></p>
+</li>
+</ol>
+<ol start="2">
+<li><p>也可以通过管理员执行以下Powershell脚本：</p>
+<p><code>Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V -All</code></p>
+</li>
+</ol>
+<h2 id="1-2-Linux下"><a href="#1-2-Linux下" class="headerlink" title="1.2 Linux下"></a>1.2 Linux下</h2><ol>
+<li><p>Ubuntu - server 安装Docker</p>
+<pre><code class="hljs shell">sudo apt-get install apt-transport-https  ca-certificates curl gnupg-agent software-properties-common -y
+sudo add-apt-repository  &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu   $(lsb_release -cs)   stable&quot;
+sudo apt-get update  -y
+sudo apt-get install docker-ce docker-ce-cli containerd.io -y</code></pre>
+</li>
+<li><p>Docker强制删除容器</p>
+<pre><code class="hljs shell">
+1. 删除所有容器
+<span class="hljs-meta">#</span><span class="bash"> 先停止所有容器</span> 
+<span class="hljs-meta">$</span><span class="bash"> docker stop $(docker ps -a -q)</span> 
+<span class="hljs-meta">#</span><span class="bash"> 删除</span> 
+<span class="hljs-meta">$</span><span class="bash"> docker rm $(docker ps -a -q)</span>
+2. 批量删除部分容器
+<span class="hljs-meta">#</span><span class="bash"> 先停止所有容器</span> 
+<span class="hljs-meta">$</span><span class="bash"> docker stop $(docker ps | grep rock | awk <span class="hljs-string">&#x27;&#123;print $1&#125;&#x27;</span>)</span> 
+<span class="hljs-meta">#</span><span class="bash"> 删除</span> 
+<span class="hljs-meta">$</span><span class="bash"> docker rm $(docker ps -a| grep rock | awk <span class="hljs-string">&#x27;&#123;print $1&#125;&#x27;</span>)</span></code></pre>
+
+
+
+</li>
+</ol>
+<ol start="3">
+<li><p>UbuntuServer安装MINIKUBE</p>
+<pre><code class="hljs shell">curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+chmod +x minikube
+sudo mkdir -p /usr/local/bin/
+sudo install minikube /usr/local/bin/
+minikube start --registry-mirror=https://registry.docker-cn.com --memory=4096 --image-repository=registry.cn-hangzhou.aliyuncs.com/google_containers</code></pre>
+</li>
+<li><p>DockerMysql8认证问题</p>
+<p>Navicat连接失败的时候：</p>
+<pre><code class="hljs sql"><span class="hljs-keyword">alter</span> <span class="hljs-keyword">user</span> root<span class="hljs-variable">@localhost</span> identified <span class="hljs-keyword">by</span> <span class="hljs-string">&#x27;password&#x27;</span> password expire never;
+<span class="hljs-keyword">alter</span> <span class="hljs-keyword">user</span> root<span class="hljs-variable">@localhost</span> identified <span class="hljs-keyword">with</span> mysql_native_password <span class="hljs-keyword">by</span> <span class="hljs-string">&#x27;password&#x27;</span>;
+flush privileges;</code></pre>
+<h1 id="2-环境搭建"><a href="#2-环境搭建" class="headerlink" title="2. 环境搭建"></a>2. 环境搭建</h1></li>
+</ol>
+<p>我们有时候需要快速搭建开发环境，比如数据库之类的，我这里总结了一个ComposeFile，直接即可搭建Mongo，Mysql，Redis开发环境。</p>
+<pre><code class="hljs yaml"><span class="hljs-attr">version:</span> <span class="hljs-string">&#x27;3.1&#x27;</span>
+<span class="hljs-comment"># 定义网络</span>
+<span class="hljs-comment"># 节点	IP</span>
+<span class="hljs-comment"># Mysql	      192.168.1.100/24</span>
+<span class="hljs-comment"># Mongodb	  192.168.1.101/24</span>
+<span class="hljs-comment"># Redis	      192.168.1.102/24</span>
+<span class="hljs-attr">networks:</span>
+  <span class="hljs-attr">ezlinker_net:</span>
+    <span class="hljs-attr">driver:</span> <span class="hljs-string">bridge</span>
+    <span class="hljs-attr">ipam:</span>
+      <span class="hljs-attr">config:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">subnet:</span> <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.0</span><span class="hljs-string">/24</span>
+<span class="hljs-comment"># 定义服务</span>
+<span class="hljs-attr">services:</span>
+  <span class="hljs-comment"># Mysql</span>
+  <span class="hljs-attr">mysql:</span>
+    <span class="hljs-comment"># 使用最新版Mysql</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">mysql</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">&quot;ezlinker_mysql&quot;</span>
+    <span class="hljs-comment"># 环境变量</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-attr">TZ:</span> <span class="hljs-string">Asia/Shanghai</span>
+      <span class="hljs-attr">MYSQL_ROOT_PASSWORD:</span> <span class="hljs-string">&quot;root&quot;</span>
+      <span class="hljs-attr">MYSQL_USER:</span> <span class="hljs-string">&#x27;root&#x27;</span>
+      <span class="hljs-attr">MYSQL_PASS:</span> <span class="hljs-string">&#x27;root&#x27;</span>
+    <span class="hljs-comment"># 映射数据卷</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">~/docker/ezlinker/mysql8/data:/var/lib/mysql</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">~/docker/ezlinker/mysql8/log:/var/log/mysql</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">~/docker/ezlinker/mysql8/mysql-files:/var/lib/mysql-files</span>
+    <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span>
+    <span class="hljs-comment"># 对外断口</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-number">3306</span><span class="hljs-string">:3306</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-number">33060</span><span class="hljs-string">:33060</span>
+    <span class="hljs-comment"># 启动后执行命令</span>
+    <span class="hljs-attr">command:</span>
+      <span class="hljs-string">--default-authentication-plugin=mysql_native_password</span>
+      <span class="hljs-string">--character-set-server=utf8mb4</span>
+      <span class="hljs-string">--collation-server=utf8mb4_general_ci</span>
+      <span class="hljs-string">--explicit_defaults_for_timestamp=true</span>
+      <span class="hljs-string">--lower_case_table_names=1</span>
+      <span class="hljs-string">--max_allowed_packet=128M;</span>
+    <span class="hljs-comment"># 日志限制</span>
+    <span class="hljs-attr">logging:</span>
+      <span class="hljs-attr">driver:</span> <span class="hljs-string">&quot;json-file&quot;</span>
+      <span class="hljs-attr">options:</span>
+        <span class="hljs-attr">max-size:</span> <span class="hljs-string">&quot;200k&quot;</span>
+        <span class="hljs-attr">max-file:</span> <span class="hljs-string">&quot;10&quot;</span>
+    <span class="hljs-comment"># 网络</span>
+    <span class="hljs-attr">networks:</span>
+      <span class="hljs-attr">ezlinker_net:</span>
+        <span class="hljs-attr">ipv4_address:</span> <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.100</span>
+  <span class="hljs-comment"># Mongodb</span>
+  <span class="hljs-attr">mongo:</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">mongo</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">ezlinker_mongo</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">~/docker/ezlinker/mongodb/db:/data/db</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">~/docker/ezlinker/mongodb/configdb/:/data/configdb</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;27017:27017&quot;</span>
+    <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span>
+    <span class="hljs-attr">command:</span>
+      <span class="hljs-string">--bind_ip</span> <span class="hljs-number">0.0</span><span class="hljs-number">.0</span><span class="hljs-number">.0</span>
+    <span class="hljs-attr">environment:</span>
+      <span class="hljs-attr">MONGO_INITDB_ROOT_USERNAME:</span> <span class="hljs-string">root</span>
+      <span class="hljs-attr">MONGO_INITDB_ROOT_PASSWORD:</span> <span class="hljs-string">ezlinker_mongo</span>
+    <span class="hljs-attr">networks:</span>
+      <span class="hljs-attr">ezlinker_net:</span>
+        <span class="hljs-attr">ipv4_address:</span> <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.101</span>
+  <span class="hljs-comment"># Redis</span>
+  <span class="hljs-attr">redis:</span>
+    <span class="hljs-attr">image:</span> <span class="hljs-string">redis</span>
+    <span class="hljs-attr">container_name:</span> <span class="hljs-string">ezlinker_redis</span>
+    <span class="hljs-attr">command:</span> <span class="hljs-string">redis-server</span> <span class="hljs-string">--requirepass</span> <span class="hljs-string">ezlinker_redis</span> <span class="hljs-string">--appendonly</span> <span class="hljs-literal">yes</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;56379:6379&quot;</span>
+    <span class="hljs-attr">volumes:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">~/docker/ezlinker/redis/data:/data</span>
+    <span class="hljs-attr">restart:</span> <span class="hljs-string">always</span>
+    <span class="hljs-attr">networks:</span>
+      <span class="hljs-attr">ezlinker_net:</span>
+        <span class="hljs-attr">ipv4_address:</span> <span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.102</span></code></pre>
+
+<p>直接用docker compose来构建即可：</p>
+<pre><code class="hljs ebnf"><span class="hljs-attribute">docker-compose up -d</span></code></pre>
+
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Linux/">Linux</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Docker/">Docker</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/05/19/clmu1cbf000a618ue8hz26bvu.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Erlang基于TCP协议的服务器开发</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/05/16/clmu1cbej007w18ueb5b82shb.html">
+                        <span class="hidden-mobile">选择</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                  <script src="https://utteranc.es/client.js"
+                    repo="wwhai/gitalk"
+                    issue-term="url"
+                    label="[Utterances]"
+                    theme="preferred-color-scheme"
+                    crossorigin="anonymous"
+                    async>
+                  </script>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "日常操作记录&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "#"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="新四青年 的技术分享">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>Mosquitto 二次开发 (三)：Mosquitto Broker部分源码解析 - 新四青年</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+
+  <!-- 顶部提示 -->
+  <div class="alert alert-warning" role="alert"
+    style="margin-top: 70px; background-color: black;color: rgb(156, 255, 25);text-align: center;padding: 0 0 0 0;">
+    <strong>提示：本站一些文章的超时空时间是乱写的，主要是为了排序，并不是真实写作时间。</strong>
+  </div>
+
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar" style="background-color: #000000;">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>新四青年</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/openlab/academic.html">
+                
+                FreeOpenLab
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/things/">
+                
+                作品
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/post.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2023-03-25 08:32">
+      March 25, 2023 am
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      24
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：June 30, 2023 pm
+                
+              </p>
+            
+            <article class="markdown-body">
+              <p>本文作者：[wwhai] # 概要：本文主要讲解一下 Eclipse Mosquitto Broker 的插件开发技巧。</p>
+<span id="more"></span>
+
+<blockquote>
+<p>今天是2023年3月25日，深圳下起了瓢泼大雨，每当在这种潮湿的雨天，我的心态就开始低落起来。为了避免无限陷入这种精神折磨，挣扎着从沙发上起来，写一篇文章来转移一下注意力。</p>
+</blockquote>
+<h2 id="Mosquitto-二次开发-三-：Mosquitto-Broker部分源码解析"><a href="#Mosquitto-二次开发-三-：Mosquitto-Broker部分源码解析" class="headerlink" title="Mosquitto 二次开发 (三)：Mosquitto Broker部分源码解析"></a>Mosquitto 二次开发 (三)：Mosquitto Broker部分源码解析</h2><p>本文主要分析一下Mosquitto的导出头文件里面的关键字段。Mosquitto的导出头文件是给用户开发者使用的，因此掌握关键数据结构还是很有必要。<br>Mosquitto包含了针对客户端开发的头文件<code>mosquitto.h</code>和针对服务端开发<code>mosquitto_broker.h</code>的头文件，前者一般用来开发本地客户端，后者用来开发服务器插件。我们常用的客户端源代码大多来自<code>mosquitto.h</code>。该源码可移植性强，甚至你能在嵌入式设备看到这个头文件,与之有同样功能的库是paho-mqtt:<a target="_blank" rel="noopener" href="https://github.com/eclipse/paho.mqtt.c">https://github.com/eclipse/paho.mqtt.c</a>，可能后者用的更多点。在本文中不做全面解析，仅仅对用户角度而言常用的有些结构做个简要介绍。</p>
+<h3 id="mosquitto-h-头文件"><a href="#mosquitto-h-头文件" class="headerlink" title="mosquitto.h 头文件"></a>mosquitto.h 头文件</h3><p>头文件源文件可以参考此处：<a target="_blank" rel="noopener" href="https://github.com/wwhai/mosquitto/blob/master/include/mosquitto.h">https://github.com/wwhai/mosquitto/blob/master/include/mosquitto.h</a>。</p>
+<p>我们首先来看看MQTT消息体结构体：</p>
+<pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">mosquitto_message</span>&#123;</span>
+	<span class="hljs-keyword">int</span> mid;
+	<span class="hljs-keyword">char</span> *topic;
+	<span class="hljs-keyword">void</span> *payload;
+	<span class="hljs-keyword">int</span> payloadlen;
+	<span class="hljs-keyword">int</span> qos;
+	<span class="hljs-keyword">bool</span> retain;
+&#125;;</code></pre>
+<p>mosquitto_message 结构体是MQTT消息的结构化封装，包含了基本的MQTT属性，这些对于熟悉MQTT消息的人来说应该很熟悉，值得特别关注的是，<code>mid</code> 字段实际上是消息ID，这个ID在MQTT报文QOS为1和2的时候有效，0的时候无效，可以参考一下MQTT规范: <a target="_blank" rel="noopener" href="http://stanford-clark.com/MQTT/#msg-id">http://stanford-clark.com/MQTT/#msg-id</a>。其他的字段就是比较常用的，不做赘述。</p>
+<p>接下来分析客户端编程接口。我们在用Mosquitto库开发客户端的时候，会涉及到创建客户端，设置认证信息，订阅发布等，下面用一个官方案例<a target="_blank" rel="noopener" href="https://github.com/wwhai/mosquitto/blob/master/examples/subscribe/basic-1.c">https://github.com/wwhai/mosquitto/blob/master/examples/subscribe/basic-1.c</a> 来分析一下客户端开发接口函数。</p>
+<pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;mosquitto.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unistd.h&gt;</span></span>
+
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">on_connect</span><span class="hljs-params">(struct mosquitto *mosq, <span class="hljs-keyword">void</span> *obj, <span class="hljs-keyword">int</span> reason_code)</span></span>
+<span class="hljs-function"></span>&#123;
+	<span class="hljs-keyword">int</span> rc;
+
+	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;on_connect: %s\n&quot;</span>, mosquitto_connack_string(reason_code));
+	<span class="hljs-keyword">if</span>(reason_code != <span class="hljs-number">0</span>)&#123;
+		mosquitto_disconnect(mosq);
+	&#125;
+	rc = mosquitto_subscribe(mosq, <span class="hljs-literal">NULL</span>, <span class="hljs-string">&quot;example/temperature&quot;</span>, <span class="hljs-number">1</span>);
+	<span class="hljs-keyword">if</span>(rc != MOSQ_ERR_SUCCESS)&#123;
+		<span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Error subscribing: %s\n&quot;</span>, mosquitto_strerror(rc));
+		mosquitto_disconnect(mosq);
+	&#125;
+&#125;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">on_subscribe</span><span class="hljs-params">(struct mosquitto *mosq, <span class="hljs-keyword">void</span> *obj, <span class="hljs-keyword">int</span> mid, <span class="hljs-keyword">int</span> qos_count, <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> *granted_qos)</span></span>
+<span class="hljs-function"></span>&#123;
+	<span class="hljs-keyword">int</span> i;
+	<span class="hljs-keyword">bool</span> have_subscription = <span class="hljs-literal">false</span>;
+	<span class="hljs-keyword">for</span>(i=<span class="hljs-number">0</span>; i&lt;qos_count; i++)&#123;
+		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;on_subscribe: %d:granted qos = %d\n&quot;</span>, i, granted_qos[i]);
+		<span class="hljs-keyword">if</span>(granted_qos[i] &lt;= <span class="hljs-number">2</span>)&#123;
+			have_subscription = <span class="hljs-literal">true</span>;
+		&#125;
+	&#125;
+	<span class="hljs-keyword">if</span>(have_subscription == <span class="hljs-literal">false</span>)&#123;
+		<span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Error: All subscriptions rejected.\n&quot;</span>);
+		mosquitto_disconnect(mosq);
+	&#125;
+&#125;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">on_message</span><span class="hljs-params">(struct mosquitto *mosq, <span class="hljs-keyword">void</span> *obj, <span class="hljs-keyword">const</span> struct mosquitto_message *msg)</span></span>
+<span class="hljs-function"></span>&#123;
+	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s %d %s\n&quot;</span>, msg-&gt;topic, msg-&gt;qos, (<span class="hljs-keyword">char</span> *)msg-&gt;payload);
+&#125;
+
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> *argv[])</span></span>
+<span class="hljs-function"></span>&#123;
+	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">mosquitto</span> *<span class="hljs-title">mosq</span>;</span>
+	<span class="hljs-keyword">int</span> rc;
+	mosquitto_lib_init();
+	mosq = mosquitto_new(<span class="hljs-literal">NULL</span>, <span class="hljs-literal">true</span>, <span class="hljs-literal">NULL</span>);
+	<span class="hljs-keyword">if</span>(mosq == <span class="hljs-literal">NULL</span>)&#123;
+		<span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Error: Out of memory.\n&quot;</span>);
+		<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+	&#125;
+	mosquitto_connect_callback_set(mosq, on_connect);
+	mosquitto_subscribe_callback_set(mosq, on_subscribe);
+	mosquitto_message_callback_set(mosq, on_message);
+	rc = mosquitto_connect(mosq, <span class="hljs-string">&quot;test.mosquitto.org&quot;</span>, <span class="hljs-number">1883</span>, <span class="hljs-number">60</span>);
+	<span class="hljs-keyword">if</span>(rc != MOSQ_ERR_SUCCESS)&#123;
+		mosquitto_destroy(mosq);
+		<span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Error: %s\n&quot;</span>, mosquitto_strerror(rc));
+		<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+	&#125;
+	mosquitto_loop_forever(mosq, <span class="hljs-number">-1</span>, <span class="hljs-number">1</span>);
+	mosquitto_lib_cleanup();
+	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+&#125;
+</code></pre>
+<p>首先就是<code>#include &lt;mosquitto.h&gt;</code>, 我们前面提到的客户端开发必须要包含该头文件。我们先从main开始看起，<code>mosquitto_lib_init()</code>是用来初始化Mosquitto的环境，这个是必须调用的。<code>mosquitto_new</code> 函数是用来生成一个客户端实例，需要注意一点：其返回值是一个指针。而    <code>mosquitto_connect_callback_set</code>、<code>mosquitto_subscribe_callback_set</code>、<code>mosquitto_message_callback_set</code> 三个函数就比较好识别，主要用来设置连接回调、订阅回调、消息到达回调。<code>mosquitto_connect</code> 函数用来和服务器建立连接，同时会用连接结果来回调 <code>mosquitto_connect_callback_set</code> 指定的函数，上面的案例中回调函数是<code>on_connect</code>。为了防止客户端退出，Mosquitto给出一个挂起函数 <code>mosquitto_loop_forever</code>，表示将进程挂起，防止退出。<br><code>mosquitto_destroy</code> 用来释放 mosquitto 客户端实例，<code>mosquitto_lib_cleanup</code> 用来释放系统库资源，其二者虽然都是释放资源，但是作用对象不同。</p>
+<p>其他省下的回调函数理解起来就比较简单了,订阅某个Topic的时候会回调 <code>on_subscribe</code> , 第一个参数 <code>struct mosquitto *mosq</code> 便是客户端实例指针。</p>
+<div class="note note-success">
+            <p>实际上对于上面的示例能理解，基本上就可以玩转 mosquitto客户端了，更多的细节可以参考其官方示例。</p>
+          </div>
+
+
+<h3 id="mosquitto-plugin-h-头文件"><a href="#mosquitto-plugin-h-头文件" class="headerlink" title="mosquitto_plugin.h 头文件"></a>mosquitto_plugin.h 头文件</h3><p>mosquitto_plugin.h 头文件定义了插件的用户侧开发接口。在此之前我们说倒mosquitto支持两个版本的插件，但是目前我们只关注V5，因此此节只分析V5的插件接口。<br>一个插件有3个基本函数回调：</p>
+<pre><code class="hljs c"><span class="hljs-keyword">int</span> mosquitto_plugin_version
+<span class="hljs-keyword">int</span> mosquitto_plugin_init
+<span class="hljs-keyword">int</span> mosquitto_plugin_cleanup</code></pre>
+<p>在第二节我们已经给出了其使用流程，再次不赘述，接下来我们关注回调如何注册。mosquitto 使用 <code>mosquitto_callback_register</code> 来注册回调，例如我们注册一个消息到达处理函数可以这么做：</p>
+<pre><code class="hljs c">
+<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">callback_message</span><span class="hljs-params">(<span class="hljs-keyword">int</span> event, <span class="hljs-keyword">void</span> *event_data, <span class="hljs-keyword">void</span> *userdata)</span></span>
+<span class="hljs-function"></span>&#123;
+	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">mosquitto_evt_message</span> *<span class="hljs-title">ed</span> =</span> event_data;
+&#125;
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">mosquitto_plugin_init</span><span class="hljs-params">(<span class="hljs-keyword">mosquitto_plugin_id_t</span> *identifier, <span class="hljs-keyword">void</span> **user_data, struct mosquitto_opt *opts, <span class="hljs-keyword">int</span> opt_count)</span></span>
+<span class="hljs-function"></span>&#123;
+	<span class="hljs-keyword">return</span> mosquitto_callback_register(mosq_pid, MOSQ_EVT_MESSAGE, callback_message, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>);
+&#125;</code></pre>
+
+<p>当注册成功后，mosquitto收到消息会直接调用 <code>callback_message</code> 函数，我们可以在里面做一些操作，比如打印出来、或者保存到Mysql等。<br>函数原型可以参考此处：<a target="_blank" rel="noopener" href="https://mosquitto.org/api/files/mosquitto_broker-h.html#mosquitto_callback_register">https://mosquitto.org/api/files/mosquitto_broker-h.html#mosquitto_callback_register</a>;<br>与之对应的卸载回调用 <code>mosquitto_callback_unregister</code> 函数，函数原型可以参考此处：<a target="_blank" rel="noopener" href="https://mosquitto.org/api/files/mosquitto_broker-h.html#mosquitto_callback_unregister">https://mosquitto.org/api/files/mosquitto_broker-h.html#mosquitto_callback_register</a>。</p>
+<h3 id="mosquitto-broker-h-头文件"><a href="#mosquitto-broker-h-头文件" class="headerlink" title="mosquitto_broker.h 头文件"></a>mosquitto_broker.h 头文件</h3><p>上面的 mosquitto.h 是给客户端使用的，与此相反 mosquitto_plugin.h 、mosquitto_broker.h 是 mosquitto 的内部接口，提供了 mosquitto broker 的一些核心结构，<strong>这些接口都不是给客户端使用的，而是为了开发服务端插件</strong>。 该头文件内部定义了用户可操作的范畴，也就是说用户能进行二次开发的建议修改接口，其他的不建议去修改，比如 src 目录下的源码等。不过也有特例就是一些集群组件是要深度定制。<br>我们注册函数回调以后，发现其回调数据是一个void指针（如果学过go，这里可以理解为interface{}，虽然完全不是一回事），这个指针到底是什么含义？Mosquitto用了一系列结构体族来表示,其格式如下所示：</p>
+<pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">mosquitto_evt_</span>* &#123;</span>
+    <span class="hljs-comment">// 一些字段</span>
+&#125;;</code></pre>
+<p>上面的这个结构体实际上就是插件回调带进来的数据，比如你想针对客户端的publish消息做个处理，那么就需注册一个回调到 mosquitto 里面，当有消息来时，mosquitto会给你的接口传一个参数，这个参数就是 <code>mosquitto_evt_message</code> 结构体，以此类推，头文件里面那些结构体都实际上是回调数据。<br>mosquitto_broker.h 最核心的就是这些结构体族，剩下的都是一些辅助函数，比如申请内存，释放内存，获取客户端的一些属性等，可以通过查看其文档来熟练其操作。</p>
+<div class="note note-warning">
+            <p>在开发过程中建议多参考其源码注释和官方文档：<a target="_blank" rel="noopener" href="https://mosquitto.org/api/files/mosquitto-h.html">https://mosquitto.org/api/files/mosquitto-h.html</a>，其实注释已经很完善了。</p>
+          </div>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文对插件的一些关键数据做了个引导指南，方便开发者快速上手。需要注意几个关键点：</p>
+<ul>
+<li>mosquitto.h 是专门针对客户端的接口</li>
+<li>mosquitto_plugin.h mosquitto_broker.h 是专门针对插件开发的接口</li>
+<li>mosquitto_plugin.h 是插件开发过程中用户侧的约束</li>
+<li>mosquitto_broker.h 是插件开发过程中Broker侧的约束</li>
+<li>mosquitto_evt_* 结构体族用来区分不同的回调消息体</li>
+</ul>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Mosquitto%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91/">Mosquitto二次开发</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Mosquitto%E4%BA%8C%E6%AC%A1%E5%BC%80%E5%8F%91/">Mosquitto二次开发</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/03/25/clmae6p3q003io0ue12s6b384.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Mosquitto 二次开发 (四)：Mosquitto Broker源码级二次开发指导</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2023/03/25/clmae6p3u003vo0ue6ta715gf.html">
+                        <span class="hidden-mobile">Mosquitto 二次开发 (二)：Mosquitto Broker插件机制</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                  <script src="https://utteranc.es/client.js"
+                    repo="wwhai/gitalk"
+                    issue-term="url"
+                    label="[Utterances]"
+                    theme="preferred-color-scheme"
+                    crossorigin="anonymous"
+                    async>
+                  </script>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Mosquitto 二次开发 (三)：Mosquitto Broker部分源码解析&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "#"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="新四青年 的技术分享">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>ErlangTCP服务器实践 - 新四青年</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+
+  <!-- 顶部提示 -->
+  <div class="alert alert-warning" role="alert"
+    style="margin-top: 70px; background-color: black;color: rgb(156, 255, 25);text-align: center;padding: 0 0 0 0;">
+    <strong>提示：本站一些文章的超时空时间是乱写的，主要是为了排序，并不是真实写作时间。</strong>
+  </div>
+
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar" style="background-color: #000000;">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>新四青年</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/openlab/academic.html">
+                
+                FreeOpenLab
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/things/">
+                
+                作品
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/post.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2019-10-15 16:55">
+      October 15, 2019 pm
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      12
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：June 30, 2023 pm
+                
+              </p>
+            
+            <article class="markdown-body">
+              <p>本文着重讲解ErlangTCP服务器从简单到复杂的集中构建形式，深入理解Erlang的TCP机制。</p>
+<span id="more"></span>
+
+<h2 id="Erlang-TCP基础知识"><a href="#Erlang-TCP基础知识" class="headerlink" title="Erlang TCP基础知识"></a>Erlang TCP基础知识</h2><h6 id="Erlang对TCP支持非常完善，有很多同步和异步库使用。Erlang提供了一个精巧的模块：gen-tcp，来完成基础的Socket通信操作-详情见文档：http-erlang-org-doc-man-gen-tcp-html"><a href="#Erlang对TCP支持非常完善，有很多同步和异步库使用。Erlang提供了一个精巧的模块：gen-tcp，来完成基础的Socket通信操作-详情见文档：http-erlang-org-doc-man-gen-tcp-html" class="headerlink" title="Erlang对TCP支持非常完善，有很多同步和异步库使用。Erlang提供了一个精巧的模块：gen_tcp，来完成基础的Socket通信操作.详情见文档：http://erlang.org/doc/man/gen_tcp.html"></a>Erlang对TCP支持非常完善，有很多同步和异步库使用。Erlang提供了一个精巧的模块：gen_tcp，来完成基础的Socket通信操作.详情见文档：<a target="_blank" rel="noopener" href="http://erlang.org/doc/man/gen_tcp.html">http://erlang.org/doc/man/gen_tcp.html</a></h6><h2 id="ErlangTCP的模式"><a href="#ErlangTCP的模式" class="headerlink" title="ErlangTCP的模式"></a>ErlangTCP的模式</h2><p><strong>主动模式{active, true}</strong>，非阻塞方式接收消息，但在系统无法应对超大流量请求时，客户端发送的数据过快，而且超过服务器可以处理的速度，那么，系统就可能会造成消息缓冲区被塞满，出现持续繁忙的流量的极端情况，系统因请求过多而溢出，造成Erlang虚拟机内存不足而崩溃。</p>
+<p><strong>被动模式{active, false}</strong>，阻塞方式接收消息，底层的TCP缓冲区可用于抑制请求，并拒绝客户端的消息，在接收数据的地方都会调用gen_tcp:recv，造成阻塞（单进程模式下就只能消极等待某一个具体的客户端Socket ，很危险）。需要注意的是，操作系统可能还会做一些缓存允许客户端机器继续发送少量数据，然后才将其阻塞，但这个时候Erlang还没有调用recv函数。</p>
+<p><strong>混合型模式（半阻塞，{active, once}）</strong>，主动套接字仅针对一条消息，在控制进程发送完一个消息数据后，必须显式地调用inet:setopts(Socket, [{active, once}]) 重新激活以便接受下一个消息（在此之前，系统处于阻塞状态）。可见，混合型模式综合了主动模式和被动模式的两者优势，可实现流量控制，防止服务器被过多消息淹没。</p>
+<p>Joe老爷子在书中建议: 混合型模式是最合适的。</p>
+<h2 id="一个最简单的TCP服务"><a href="#一个最简单的TCP服务" class="headerlink" title="一个最简单的TCP服务"></a>一个最简单的TCP服务</h2><pre><code class="hljs erlang"><span class="hljs-function"><span class="hljs-title">server</span><span class="hljs-params">()</span> -&gt;</span>
+    &#123;ok, LSock&#125; = gen_tcp:listen(<span class="hljs-number">8080</span>, [binary, &#123;packet, <span class="hljs-number">0</span>&#125;, &#123;active, false&#125;]),
+    &#123;ok, Sock&#125; = gen_tcp:accept(LSock),
+    &#123;ok, Bin&#125; = do_recv(Sock, []),
+    ok = gen_tcp:close(Sock),
+    ok = gen_tcp:close(LSock),
+    Bin.
+
+<span class="hljs-function"><span class="hljs-title">do_recv</span><span class="hljs-params">(Sock, Bs)</span> -&gt;</span>
+    <span class="hljs-keyword">case</span> gen_tcp:recv(Sock, <span class="hljs-number">0</span>) <span class="hljs-keyword">of</span>
+        &#123;ok, B&#125; -&gt;
+            do_recv(Sock, [Bs, B]);
+        &#123;error, closed&#125; -&gt;
+            &#123;ok, list_to_binary(Bs)&#125;
+    <span class="hljs-keyword">end</span>.</code></pre>
+
+<p>代码解读：</p>
+<pre><code class="hljs erlang">&#123;ok, LSock&#125; = gen_tcp:listen(<span class="hljs-number">8080</span>, [binary, &#123;packet, <span class="hljs-number">0</span>&#125;,  &#123;active, false&#125;]),</code></pre>
+<p>第2行<code>gen_tcp:listen</code>函数会在本地打开一个端口进行监听，这里我们打开8080；后面的列表是具体的选项：<code>[binary, &#123;packet, 0&#125;,  &#123;active, false&#125;]</code>,binary表示是二进制类型的数据，packet表示数据包头，这里0字节，后期会详细讲。{active, false}表示是一个被动套接字。</p>
+<pre><code class="hljs erlang">&#123;ok, Sock&#125; = gen_tcp:accept(LSock),</code></pre>
+
+<p>第三行代码表示开始监听这个socket，也就是我们本地的8080端口，类似于我们开了一个tomcat一样，可以对外提供服务。</p>
+<pre><code class="hljs erlang"><span class="hljs-function"><span class="hljs-title">do_recv</span><span class="hljs-params">(Sock, Bs)</span> -&gt;</span>
+<span class="hljs-keyword">case</span> gen_tcp:recv(Sock, <span class="hljs-number">0</span>) <span class="hljs-keyword">of</span>
+    &#123;ok, B&#125; -&gt;
+        do_recv(Sock, [Bs, B]);
+    &#123;error, closed&#125; -&gt;
+        &#123;ok, list_to_binary(Bs)&#125;
+<span class="hljs-keyword">end</span>.</code></pre>
+<p>第四行是一个自定义函数，我们通过<code>gen_tcp:recv(Sock, 0)</code> 来接受Socket的数据，如果成功，则返回{ok, B},元组，其中B是数据(binary),其中12行很重要，这里涉及到了Erlang的尾递归，如果在其他语言，比如Java、C里面，无限递归会消耗栈，导致内存泄漏，但是erlang的尾递归是经过优化的，就和正常循环一样去使用即可。</p>
+<p>13行则是出错以后的处理，直接返回一个信息即可。</p>
+<p>上面是最基础的一个TCP服务模式，我们运行以后就可以在本地起一个服务器，接下来我们看一个最简单的客户端。</p>
+<h2 id="TCP客户端"><a href="#TCP客户端" class="headerlink" title="TCP客户端"></a>TCP客户端</h2><p>客户端相对来讲比较简单：</p>
+<pre><code class="hljs erlang"><span class="hljs-function"><span class="hljs-title">client</span><span class="hljs-params">()</span> -&gt;</span>
+    &#123;ok, Sock&#125; = gen_tcp:connect(<span class="hljs-string">&quot;localhost&quot;</span>, <span class="hljs-number">8080</span>,  [binary, &#123;packet, <span class="hljs-number">0</span>&#125;]),
+    ok = gen_tcp:send(Sock, <span class="hljs-string">&quot;Some Data&quot;</span>),
+    ok = gen_tcp:close(Sock).</code></pre>
+
+<p>通过 <code>gen_tcp:connect</code>连接到我们刚打开的服务端，然后发送数据，到服务端那边会直接打印出来。如果在Windows下，可以通过werl来测试:</p>
+<p>CMD运行：``werl`,然后输入ErlangTCP客户端代码：</p>
+<p><img src="/uploads/1571135439867.png" srcset="/img/loading.gif" alt="1571135439867"></p>
+<p>就可以直接可视化进行调试了。</p>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/erlang/">erlang</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/erlang/">erlang</a>
+                    
+                      <a class="hover-with-bg" href="/tags/otp/">otp</a>
+                    
+                      <a class="hover-with-bg" href="/tags/tcp/">tcp</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/10/15/clmae6p3d0029o0ue66t18jbc.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Rebar3的基础使用教程</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2019/10/12/clmae6p3g002ko0ue1z3z2s51.html">
+                        <span class="hidden-mobile">辅助工具使用教程</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                  <script src="https://utteranc.es/client.js"
+                    repo="wwhai/gitalk"
+                    issue-term="url"
+                    label="[Utterances]"
+                    theme="preferred-color-scheme"
+                    crossorigin="anonymous"
+                    async>
+                  </script>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "ErlangTCP服务器实践&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "#"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="新四青年 的技术分享">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>我做过的一些荒诞的梦 - 新四青年</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+
+  <!-- 顶部提示 -->
+  <div class="alert alert-warning" role="alert"
+    style="margin-top: 70px; background-color: black;color: rgb(156, 255, 25);text-align: center;padding: 0 0 0 0;">
+    <strong>提示：本站一些文章的超时空时间是乱写的，主要是为了排序，并不是真实写作时间。</strong>
+  </div>
+
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar" style="background-color: #000000;">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>新四青年</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/openlab/academic.html">
+                
+                FreeOpenLab
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/things/">
+                
+                作品
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/post.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2022-10-05 16:32">
+      October 5, 2022 pm
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      38
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：June 30, 2023 pm
+                
+              </p>
+            
+            <article class="markdown-body">
+              <p>本文作者：[wangwenhai] # 概要：我老是做一些奇奇怪怪的梦。</p>
+<span id="more"></span>
+
+
+<p><strong>在杭州那段时间我老是做一些奇奇怪怪的梦。有时候甚至会做噩梦，从梦中吓醒，大喊大叫。到现在基本上很少做了，所以我老是在想那段时间是不是被PUA压力太大，导致我的精神出现了紧张。</strong></p>
+<p><img src="/uploads/2022-0000/1.jpg" srcset="/img/loading.gif" alt="1570850340262"></p>
+<hr>
+<h2 id="2020年12月18日"><a href="#2020年12月18日" class="headerlink" title="2020年12月18日"></a>2020年12月18日</h2><h3 id="谍战"><a href="#谍战" class="headerlink" title="谍战"></a>谍战</h3><p>这个梦是一个电影情节。我梦见自己被关到了一个监狱里面。以第一人称视角再看一个故事的发生。首先这个主角是个女的。然后同时监狱里面有7个来自中国的犯人。然后大家掌握了一个贩毒集团的秘密。大家策划从这个监狱里面逃跑。一路上遇到了各种困难。走到半路发现这个女人是敌人派来的间谍。然后被套路最终暴露。然后杀死这个女的。其他人全部逃生。</p>
+<h2 id="2020年12月19日"><a href="#2020年12月19日" class="headerlink" title="2020年12月19日"></a>2020年12月19日</h2><h3 id="道士跟修女"><a href="#道士跟修女" class="headerlink" title="道士跟修女"></a>道士跟修女</h3><p>有一个道士，他下山后在社会上面闯荡。结果社会非常黑暗，他经历了各种磨难，最后遇到了一个信仰基督教的修女。在这个修女的感化下他最终信了基督教。（话说这个梦就真的有点奇葩了）。</p>
+<h2 id="2021年7月2日凌晨3-25"><a href="#2021年7月2日凌晨3-25" class="headerlink" title="2021年7月2日凌晨3:25"></a>2021年7月2日凌晨3:25</h2><h3 id="一个怪诞的梦"><a href="#一个怪诞的梦" class="headerlink" title="一个怪诞的梦"></a>一个怪诞的梦</h3><p>晚上，一条路，好像是我们村去陈庄的。我骑着摩托车走在路上，突然有个人超车了，他的尾灯特别亮，亮到如同白昼，看不清前面的路，然后我的车就骑进了沟里，等我看清楚的时候，是在一条河边，老远我居然看到了表弟大宝，他和我们儿时的小伙伴一起在玩，奇怪的是他没有叫我文宝哥。我跟大宝说刚才有个傻子骑车亮尾灯把我带沟里了，帮我教训一顿，结果大宝带我去的路上，看到了那个人，他突然用一个网子把我抓了，然后把我逮到了一个地方，这个地方很神奇，里面有我很多亲人，还有村里的人，居然还有我二十多年在村里几乎没打过招呼的八队那边的几个老汉。有我爷爷奶奶，还有我姑姑，但是他们的样子都很奇怪，表情木然，把我名字叫错的，还有我姑姑说我是徐寨人，要送我去徐寨，爷爷的头发是卷的，他们和我说的话每一句都对不上号。我认真看奶奶居然有四只脚。但是在人群里貌似看到一个人，他不断暗示我要赶紧跑。我知道此时已经进了幻境，里面的奇怪的人不让我出去，一直跟我说话，此时奶奶的四只脚突然抓住我的右脚，一群人要带着我下一个很高的楼梯，这个楼梯看起来有几百层。我一想凉了，我要被困在幻境了，满脑子在想如何逃出去，此时仿佛我意识到自己在梦里，然后被困住了，潜意识告诉我你要赶紧醒来，不然你要去可怕的地方。我努力挣脱，但是被这一群人围住了，跑不出去，突然我的耳边想起了刚才偷偷暗示我那个人的一句话：你不是要赶紧醒来吗。在这一瞬间我就醒了。脑子无比清醒，一点困意都没有，外面空调的声音，还有旁边老婆的呼吸声告诉我回到现实了。但是我的心跳加速，砰砰砰的，房间不冷但是我冷的发抖。现在想起来这个梦背后一阵凉。</p>
+<h2 id="2020年11月5日凌晨5-00"><a href="#2020年11月5日凌晨5-00" class="headerlink" title="2020年11月5日凌晨5:00"></a>2020年11月5日凌晨5:00</h2><blockquote>
+<p>连续做了两个梦。</p>
+</blockquote>
+<h3 id="三个夫人复仇记"><a href="#三个夫人复仇记" class="headerlink" title="三个夫人复仇记"></a>三个夫人复仇记</h3><p>大户人家官老爷经常纳妾但是一直都不见夫人，原来他玩腻了就杀害，这些夫人的魂魄在第三个 还是第几个来着的夫人带领下。最后在道士的帮助下复仇。</p>
+<h3 id="梦里的梦和一只小猫"><a href="#梦里的梦和一只小猫" class="headerlink" title="梦里的梦和一只小猫"></a>梦里的梦和一只小猫</h3><p>梦里有个人，在某个地方抛弃了一只小猫，这只小猫很可怜，大家都想领养，但是最后死了，愤怒的人们开始寻找那个人，结果牵车扯出来一个动物贩卖黑社会，这个黑社会专门用小动物做一些违法犯罪的事情，虐待或者是杀死。于是我带领一群人开始反抗这个黑社会，查出问题的时候。黑社会集团和我带的人开始打架，大家打的很激烈的时候，一切都消失了，一下子就剩下我一个人，原来我在做梦。我在一个大厅里睡着了，我看到梦里出现的人们都在忙碌工作或者做别的，场景一下子切换了，我很疑惑的问：你们怎么不打了，他们说你是不是神经病？打什么？原来一切都在另一个梦里，梦里那只小猫就在地下乱跑。而桌子上有两个小孩子正在玩一个游戏，游戏的角色是一只小猫。</p>
+<h2 id="2021年7月13日"><a href="#2021年7月13日" class="headerlink" title="2021年7月13日"></a>2021年7月13日</h2><h3 id="宇宙航行"><a href="#宇宙航行" class="headerlink" title="宇宙航行"></a>宇宙航行</h3><p>我坐着宇宙飞船飞到了某个星球上空，然后从里面跳下来，然后不断的进行自由落体。在这个过程中感觉到呼吸困难，胸口很闷，感觉头快要炸了，然后就在一瞬间被惊醒，发现以后我的右手放在胸口，这个感觉应该是我的手的压迫感。</p>
+<h2 id="2021年7月20日"><a href="#2021年7月20日" class="headerlink" title="2021年7月20日"></a>2021年7月20日</h2><blockquote>
+<p>连续做了三个梦。</p>
+</blockquote>
+<h3 id="送外卖"><a href="#送外卖" class="headerlink" title="送外卖"></a>送外卖</h3><p>梦见我是一个外卖小哥。然后给一个房间里面送外卖。这个房间里面有很多铁架子床。床上挤满了人。</p>
+<h3 id="中世纪"><a href="#中世纪" class="headerlink" title="中世纪"></a>中世纪</h3><p>故事发生在中世纪。我看到了一个城堡，城堡里面有个黑箱子，里面有一把剑。有旁白告诉我，这把剑是为了镇压吸血鬼。于是我就把这把剑拿走了，一路上我看到了很多老家熟悉的场景。老家村里面的场景，还有有些人家的院子。</p>
+<h3 id="战争"><a href="#战争" class="headerlink" title="战争"></a>战争</h3><p>做梦参加了一场战争。我们这边打赢了，然后对面接受投降。他们双手举着枪。排队从一个山坡上面下来。</p>
+<h2 id="2021年11月21日"><a href="#2021年11月21日" class="headerlink" title="2021年11月21日"></a>2021年11月21日</h2><h3 id="被拐卖"><a href="#被拐卖" class="headerlink" title="被拐卖"></a>被拐卖</h3><p>梦见我被别人拐到了中东地区，然后历经千难万险，终于回到了中国，最后追查这件事情的时候，发现当年把我卖到中东的人是一个卖保险的。</p>
+<h2 id="Man-food"><a href="#Man-food" class="headerlink" title="Man food"></a>Man food</h2><p>女朋友做了一个梦，说给自己开了个店，这个店主要的面向群体是男人，里面主要销售男人喜欢的食品，所以说他给这个店起了个名字叫 <strong>Man Food</strong>.</p>
+<h2 id="2022年2月10日"><a href="#2022年2月10日" class="headerlink" title="2022年2月10日"></a>2022年2月10日</h2><h3 id="世界末日"><a href="#世界末日" class="headerlink" title="世界末日"></a>世界末日</h3><p>故事发生的背景是世界末日,当时发生了一件事情，海平面上升,我们开着车来逃跑,一路上经过了一个中国式的古建筑,看到建筑物在倒塌。</p>
+<h2 id="2022年01月01日-凌晨3-00"><a href="#2022年01月01日-凌晨3-00" class="headerlink" title="2022年01月01日(凌晨3.00)"></a>2022年01月01日(凌晨3.00)</h2><h3 id="心灵控制"><a href="#心灵控制" class="headerlink" title="心灵控制"></a>心灵控制</h3><p>故事发生在一个类似于咖啡馆的地方。有一些人可以控制人的心灵,你被控制以后就会服从他们的管控,他们伪装自己 开咖啡店物色人 一旦发现就会控制他们,让他们变得胆怯而不反抗,有很多人被控制。<br>我也被控制了，见到他们以后吓得浑身发抖，但是我心里是清楚的，我看到很多人被控制后麻木的坐着面无表情，于是我想把他们救出来。<br>潜意识里告诉我，我自己在梦里，只需要醒来就可以，于是我尝试叫醒自己，我想努力挣脱控制以后 把别人也拉出来。<br>梦里有人告诉我 只需要赶快醒来。</p>
+<p>就在两点五十的时候我大声喊了一嗓子，然后整个世界消失。瞬间就清醒了。醒了以后吓得浑身出冷汗瑟瑟发抖，不知道这是一个什么梦。</p>
+<h2 id="2022年06月06日"><a href="#2022年06月06日" class="headerlink" title="2022年06月06日"></a>2022年06月06日</h2><h3 id="和网红打架"><a href="#和网红打架" class="headerlink" title="和网红打架"></a>和网红打架</h3><p>这是个爽文 有点歪嘴龙王的味道。我是个公司职员，到某个地方出差去了，结果被因为某一事和本地网红产生了矛盾，网红带着他的兄弟把我打了一顿，把我打的都叫他们爷爷了（梦里被打了）。 最后忍辱负重跑了出来。一个电话表弟（二舅儿子）带着公司同事们穿着西装出来 几十个人开车到这个网红的村里。表弟问打多久？我说一分钟。然后一群人上去把这个网红打了一分钟，最后网红还给我赔了钱。然后我带着一群西装暴徒就走了。</p>
+<h2 id="2022年06月15日"><a href="#2022年06月15日" class="headerlink" title="2022年06月15日"></a>2022年06月15日</h2><h3 id="抗日战争时期卧底"><a href="#抗日战争时期卧底" class="headerlink" title="抗日战争时期卧底"></a>抗日战争时期卧底</h3><p>我是个地下党员，偷偷卧底到日本人里面获取情报。场景和看到的抗日神剧有点像，一队又一队的日本兵走来走去的。</p>
+<h2 id="2022年06月27日"><a href="#2022年06月27日" class="headerlink" title="2022年06月27日"></a>2022年06月27日</h2><h3 id="去美国"><a href="#去美国" class="headerlink" title="去美国"></a>去美国</h3><p>当时比较混乱，每个人都在乱跑。我跟着一辆车跑到了美国曼哈顿（梦里这个城市就叫曼哈顿)，之后在一个叫第五（Fifth）的珠宝店打工，后来开了一批人让我扫码，统计偷渡的人口。我趁机跑了，然后看到路边的高楼大厦，路边一群人给我推荐外卖，我看到他们有人手里还拿着盒饭。</p>
+<blockquote>
+<p>做核酸后遗症吧。</p>
+</blockquote>
+<h2 id="2022年08月29日"><a href="#2022年08月29日" class="headerlink" title="2022年08月29日"></a>2022年08月29日</h2><h3 id="一群孤寡老人骗子"><a href="#一群孤寡老人骗子" class="headerlink" title="一群孤寡老人骗子"></a>一群孤寡老人骗子</h3><p>遇到一群孤寡老人，他们生活很艰难，很可怜，到处游走乞讨。当大家都伸出援助的手以后，剧情反转了：警察说这些老人是诈骗集团，全国各地骗钱。</p>
+<h2 id="2022年09月2日"><a href="#2022年09月2日" class="headerlink" title="2022年09月2日"></a>2022年09月2日</h2><h3 id="穿越"><a href="#穿越" class="headerlink" title="穿越"></a>穿越</h3><p>和别人打游戏突然就晕倒了， 醒来后一群人围着我， 一丝不挂躺在大庭广众之下， 周边的人都在笑 ，结果被别人抓起来， 路上看到了火车站是福州 ，乱七八糟的人跟我说我5年前从深圳消失不见了， 怎么突然出现在福州。原来我被外星人带走去做人体研究 ，在宇宙中只过了几个小时而已，地球上已经过了5年。然后我发现自己居然能从手心喷出火了。还有好像破解了电磁波？？？(背景：近期在学通信原理基础课一下通信原理)</p>
+<h2 id="2022年09月27日"><a href="#2022年09月27日" class="headerlink" title="2022年09月27日"></a>2022年09月27日</h2><h3 id="相机"><a href="#相机" class="headerlink" title="相机"></a>相机</h3><p>路过一个地方，有很多人，于是拿起手机（或者是相机）拍了很多照片。回到家里打开查看，结果发现照片里面全部是死人，瞬间一阵恐惧感涌上来，然后被吓醒。</p>
+<h2 id="2022年11月10日"><a href="#2022年11月10日" class="headerlink" title="2022年11月10日"></a>2022年11月10日</h2><h3 id="寒假作业"><a href="#寒假作业" class="headerlink" title="寒假作业"></a>寒假作业</h3><p>梦回高中时期，开学了作业没写完，作业的内容是：记录假期吃的饭。为了补作业，让饭店老板狂做36份不一样的菜拍照。有个烫很好喝，名字叫芹菜牛肉末汤。</p>
+<h2 id="2022年11月13日"><a href="#2022年11月13日" class="headerlink" title="2022年11月13日"></a>2022年11月13日</h2><h3 id="人生选择"><a href="#人生选择" class="headerlink" title="人生选择"></a>人生选择</h3><p>梦里有人告诉我，人一生会有很多选择，但是每个选择他是有一定的数学模型的。每个人的选择就是一个事物的发展曲线，曲线必然有高点，低点，拐点等特性，多个曲线还有焦点。人生的得意时刻莫过于在高点而落魄时刻在低点。</p>
+<blockquote>
+<p>这个神奇的梦让我豁然开朗：人生不就是这样吗？举个例子为了在大城市过上期望的生活实际上在城市里成了流浪人口。我在的这个地方深圳有多少男人怀揣梦想，最后落魄；又有多少女人盼望获得超越阶级的爱情而遍体情伤。这已经背离了初衷，就是所谓的“入不敷出”，玄学叫“万事皆有度”，为了一套房子破了这个”度”就得承受不该有的痛苦，30年房贷如万斤巨石，一辈子何来的快乐？犹记得少年时代说的“以后要去大城市生活”。</p>
+</blockquote>
+<h2 id="2022年11月30日"><a href="#2022年11月30日" class="headerlink" title="2022年11月30日"></a>2022年11月30日</h2><p>十一月最后一天，做了个武侠梦：一群人追杀2个人，被追到一个院子里，当他们被围起来的时候 ，周边一群人轮番拿刀砍他们，结果好一会儿发现不对劲，是自己人在互相打，原来这两个人不知什么时候突然易容变成了围他们的人的样子，他们最后趁机易容逃跑了。</p>
+<h2 id="2022年12月8日"><a href="#2022年12月8日" class="headerlink" title="2022年12月8日"></a>2022年12月8日</h2><p>这是个盗墓类的。梦中我和几个人去盗墓，明明看到别人在前面走，但是一回头看到他从后面闪过。一下子就把我吓醒了。</p>
+<h2 id="2023年3-10日"><a href="#2023年3-10日" class="headerlink" title="2023年3.10日"></a>2023年3.10日</h2><p>梦见和小学的一些同学玩耍，结果被某个人一下子推进一个很黑的小房间，这个房间是个大牢，想要解脱的办法就是骗人进来替换你。</p>
+<p>。。。我想到了传销。</p>
+<h2 id="2023年4-27日（凌晨3：30分）"><a href="#2023年4-27日（凌晨3：30分）" class="headerlink" title="2023年4.27日（凌晨3：30分）"></a>2023年4.27日（凌晨3：30分）</h2><p>梦里和别热讨论数学，讨论到一个“弯曲矩阵”，这个矩阵的定义是：</p>
+<blockquote>
+<p>当一个矩阵的每一个元素都分布到一个曲线上面，我们就称之为“弯曲矩阵”。</p>
+</blockquote>
+<p>。。。这个梦境太离谱了，学术都能在梦里讨论。</p>
+<h2 id="2023年6-16日"><a href="#2023年6-16日" class="headerlink" title="2023年6.16日"></a>2023年6.16日</h2><h3 id="消毒"><a href="#消毒" class="headerlink" title="消毒"></a>消毒</h3><p>世界末日到了，外面充满了毒气，人们躲在一个大楼里，搁着玻璃看外面的巨大宇宙飞船在喷杀毒剂。</p>
+<h2 id="2023年6-22日"><a href="#2023年6-22日" class="headerlink" title="2023年6.22日"></a>2023年6.22日</h2><h3 id="红色警戒"><a href="#红色警戒" class="headerlink" title="红色警戒"></a>红色警戒</h3><p>背景是一个打仗的时代，鲍里斯是我的战斗伙伴，我们一起执行任务的时候鲍里斯牺牲了，闭眼之前他留下了自己的AK47，他交给我。然后我就成了鲍里斯，不过我有两把枪，一把AK4,一把狙。</p>
+<h2 id="2023年6-24日"><a href="#2023年6-24日" class="headerlink" title="2023年6.24日"></a>2023年6.24日</h2><h3 id="大蜘蛛"><a href="#大蜘蛛" class="headerlink" title="大蜘蛛"></a>大蜘蛛</h3><p>家里的老院子后院有一棵树，树上不断的往下淋水，和下雨一样；看到一只黑色大蜘蛛乱跑。还有两只猫。</p>
+<hr>
+<p>上面写的这些是我梦中惊醒以后用手机记下来的。实际上还有很多没有记下来的，明明梦里很清晰，但是睁眼一瞬间就忘记了，也许冥冥之中真有什么在阻止我们回忆。</p>
+<p>几乎每天晚上都会有一些比较奇葩的梦境，大部分都是一些鬼怪，还有一些怪诞梦。在我看来这些梦境全是电影情节。如果经过作家的扩展。很有可能是一个非常不错的科幻小说或者是玄幻小说。</p>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%96%87%E9%9B%86-%E8%B8%89%E8%B7%84%E4%BA%8E%E4%B8%96/">文集-踉跄于世</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%96%87%E9%9B%86-%E8%B8%89%E8%B7%84%E4%B8%8E%E4%B8%96/">文集-踉跄与世</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/11/13/clmu1cbeg007e18ue1i4weyzt.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">一篇作文的题目</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2022/07/24/clmu1cbee007518ue5ch237a0.html">
+                        <span class="hidden-mobile">皮裤</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                  <script src="https://utteranc.es/client.js"
+                    repo="wwhai/gitalk"
+                    issue-term="url"
+                    label="[Utterances]"
+                    theme="preferred-color-scheme"
+                    crossorigin="anonymous"
+                    async>
+                  </script>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "我做过的一些荒诞的梦&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "#"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>

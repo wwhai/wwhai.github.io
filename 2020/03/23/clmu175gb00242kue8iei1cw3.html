@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="新四青年 的技术分享">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>EMQX二次开发教程（高级篇） - 新四青年</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+
+  <!-- 顶部提示 -->
+  <div class="alert alert-warning" role="alert"
+    style="margin-top: 70px; background-color: black;color: rgb(156, 255, 25);text-align: center;padding: 0 0 0 0;">
+    <strong>提示：本站一些文章的超时空时间是乱写的，主要是为了排序，并不是真实写作时间。</strong>
+  </div>
+
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar" style="background-color: #000000;">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>新四青年</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/openlab/academic.html">
+                
+                FreeOpenLab
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/things/">
+                
+                作品
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/post.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2020-03-23 16:12">
+      March 23, 2020 pm
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      32
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：June 30, 2023 pm
+                
+              </p>
+            
+            <article class="markdown-body">
+              <p>本文作者：[wangwenhai] # 概要：本文主要讲解用Erlang Java Interface实现和Erlang节点通信.</p>
+<span id="more"></span>
+
+<h1 id="1-本文概述"><a href="#1-本文概述" class="headerlink" title="1.本文概述"></a>1.本文概述</h1><p>近期准备用EMQ来实现一个业务:吧数据保存到MongoDb 里面,但是发现一个问题:Erlang的MongoDb 驱动版本太老,甚至是10年前的版本,只支持到MongoDb 3.0阶段.但是我们的需求是在MongoDb 4.0上进行.于是我找遍github还有其他的代码平台,都没找到合适的驱动.工作陷入僵局.</p>
+<p>这几天在看Erlang的官网文档,突然看到几个单词:Erlang Jinterface:</p>
+<blockquote>
+<p>The <strong><a target="_blank" rel="noopener" href="http://erlang.org/doc/apps/jinterface/java/com/ericsson/otp/erlang/package-summary.html">Jinterface</a></strong> package provides a set of tools for communication with Erlang processes. It can also be used for communication with other Java processes using the same package, as well as C processes using the Erl_Interface library.</p>
+</blockquote>
+<p>深入看了文档以后发现Jinterface是Erlang的Java接口,可以实现Java和Erlang节点直接通信.看到这里顿时来了希望,Java各种数据库驱动都有,我们可以用Java接口来实现这部分业务.</p>
+<h1 id="2-环境准备"><a href="#2-环境准备" class="headerlink" title="2.环境准备"></a>2.环境准备</h1><p>在此之前,我们先准备一下开发环境:</p>
+<ol>
+<li>JDK:8以上</li>
+<li>Erlang:22以上</li>
+<li>EMQX:4.0以上</li>
+</ol>
+<p>好了,准备好这些以后我们就开始写代码吧.</p>
+<h1 id="3-实现细节"><a href="#3-实现细节" class="headerlink" title="3.实现细节"></a>3.实现细节</h1><h2 id="1-Java项目准备"><a href="#1-Java项目准备" class="headerlink" title="1.Java项目准备"></a>1.Java项目准备</h2><p>我们需要新建一个Maven项目,把OTP的库依赖进去:</p>
+<pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- https://mvnrepository.com/artifact/org.erlang.otp/jinterface --&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.erlang.otp<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>jinterface<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.6.1<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span></code></pre>
+
+<p>然后新建一个Main类,按照正常的流程,在main方法里面加入下面的代码:</p>
+<pre><code class="hljs java">
+<span class="hljs-keyword">import</span> com.ericsson.otp.erlang.OtpEpmd;
+<span class="hljs-keyword">import</span> com.ericsson.otp.erlang.OtpMbox;
+<span class="hljs-keyword">import</span> com.ericsson.otp.erlang.OtpNode;
+
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment"> * 测试Erlang Interface</span>
+<span class="hljs-comment"> */</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ErlangNodeTest1</span> </span>&#123;
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;
+        String nodeName = <span class="hljs-string">&quot;ezlinker_core_node1@127.0.0.1&quot;</span>;
+        String receiveLoopProcessName = <span class="hljs-string">&quot;ezlinker_core_node1_receive_loop&quot;</span>;
+        OtpNode otpNode = <span class="hljs-keyword">new</span> OtpNode(nodeName, <span class="hljs-string">&quot;emqxsecretcookie&quot;</span>);
+        <span class="hljs-keyword">if</span> (otpNode.ping(<span class="hljs-string">&quot;emqx@127.0.0.1&quot;</span>, <span class="hljs-number">5</span>)) &#123;
+            System.out.println(<span class="hljs-string">&quot;远程节点启动&quot;</span>);
+        &#125; <span class="hljs-keyword">else</span> &#123;
+            System.out.println(<span class="hljs-string">&quot;远程节点停止&quot;</span>);
+        &#125;
+        OtpMbox otpMbox = otpNode.createMbox();
+        otpMbox.registerName(receiveLoopProcessName);
+        System.out.println(<span class="hljs-string">&quot;start to listen.....&quot;</span>);
+        <span class="hljs-keyword">while</span> (<span class="hljs-keyword">true</span>) &#123;
+            System.out.println(<span class="hljs-string">&quot;收到Erlang节点的消息:&quot;</span> + otpMbox.receiveMsg().getMsg());
+        &#125;
+    &#125;
+&#125;</code></pre>
+
+<p>注意:这里仅仅是做个Demo,并不能生产,有经验可以把这段代码移植到比如Spring上.到这里你肯定很兴奋，直接把main运行了一下，结果很失望：抛出异常了：</p>
+<pre><code class="hljs java">Exception in thread <span class="hljs-string">&quot;main&quot;</span> java.io.IOException: Nameserver not responding on <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span> when publishing ezlinker_core_node1
+	at com.ericsson.otp.erlang.OtpEpmd.r4_publish(OtpEpmd.java:<span class="hljs-number">344</span>)
+	at com.ericsson.otp.erlang.OtpEpmd.publishPort(OtpEpmd.java:<span class="hljs-number">141</span>)
+	at com.ericsson.otp.erlang.OtpNode$Acceptor.publishPort(OtpNode.java:<span class="hljs-number">784</span>)
+	at com.ericsson.otp.erlang.OtpNode$Acceptor.&lt;init&gt;(OtpNode.java:<span class="hljs-number">776</span>)
+	at com.ericsson.otp.erlang.OtpNode.init(OtpNode.java:<span class="hljs-number">232</span>)
+	at com.ericsson.otp.erlang.OtpNode.&lt;init&gt;(OtpNode.java:<span class="hljs-number">196</span>)
+	at com.ericsson.otp.erlang.OtpNode.&lt;init&gt;(OtpNode.java:<span class="hljs-number">149</span>)
+	at com.ezlinker.app.ErlangNodeTest1.main(ErlangNodeTest1.java:<span class="hljs-number">17</span>)
+</code></pre>
+
+<p>稳住！！！其实到这里还没有准备完整，接下来还有很多要做。</p>
+<h2 id="2-EMQX插件准备"><a href="#2-EMQX插件准备" class="headerlink" title="2.EMQX插件准备"></a>2.EMQX插件准备</h2><p>上面准备好Java方面的工作以后，我们来准备Erlang和EMQX，在这里我假设你的电脑上已经装好了Erlang环境，最低版本22，如果没有请上官网自己下载。</p>
+<p>接下来我们新建一个EMQX的插件和Java写的Node通信。</p>
+<ol>
+<li><p>安装rebar3（不做讲解，请网上自行下载安装对应版本）；</p>
+</li>
+<li><p>安装EMQX官方给出的插件工具（注意：Linux环境下）：</p>
+<pre><code class="hljs shell">mkdir -p ~/.config/rebar3/templates
+git clone https://github.com/emqx/rebar3_emqx_plugin ~/.config/rebar3/templates</code></pre>
+</li>
+<li><p>然后新建一个插件：</p>
+<pre><code class="hljs shell">rebar3 new emqx-plugin &lt;plugin-name&gt;</code></pre>
+
+<p>我新建的插件名字是：<code>ezlinker_core_plugin</code>:</p>
+<pre><code class="hljs shell">rebar3 new emqx-plugin `ezlinker_core_plugin`</code></pre>
+</li>
+<li><p>增加配置参数：</p>
+<p>首先在<code>etc</code>目录下找到<code>ezlinker_core_plugin.conf</code>文件，里面的内容如下：</p>
+<pre><code class="hljs erlang">
+ezlinker_core_plugin.hook.client.connected.<span class="hljs-number">1</span>     = &#123;<span class="hljs-string">&quot;action&quot;</span>: <span class="hljs-string">&quot;on_client_connected&quot;</span>&#125;
+ezlinker_core_plugin.hook.client.disconnected.<span class="hljs-number">1</span>  = &#123;<span class="hljs-string">&quot;action&quot;</span>: <span class="hljs-string">&quot;on_client_disconnected&quot;</span>&#125;
+ezlinker_core_plugin.hook.client.subscribe.<span class="hljs-number">1</span>     = &#123;<span class="hljs-string">&quot;action&quot;</span>: <span class="hljs-string">&quot;on_client_subscribe&quot;</span>, <span class="hljs-string">&quot;topic&quot;</span>: <span class="hljs-string">&quot;#&quot;</span>&#125;
+ezlinker_core_plugin.hook.client.unsubscribe.<span class="hljs-number">1</span>   = &#123;<span class="hljs-string">&quot;action&quot;</span>: <span class="hljs-string">&quot;on_client_unsubscribe&quot;</span>, <span class="hljs-string">&quot;topic&quot;</span>: <span class="hljs-string">&quot;#&quot;</span>&#125;
+ezlinker_core_plugin.hook.session.subscribed.<span class="hljs-number">1</span>   = &#123;<span class="hljs-string">&quot;action&quot;</span>: <span class="hljs-string">&quot;on_session_subscribed&quot;</span>, <span class="hljs-string">&quot;topic&quot;</span>: <span class="hljs-string">&quot;#&quot;</span>&#125;
+ezlinker_core_plugin.hook.session.unsubscribed.<span class="hljs-number">1</span> = &#123;<span class="hljs-string">&quot;action&quot;</span>: <span class="hljs-string">&quot;on_session_unsubscribed&quot;</span>, <span class="hljs-string">&quot;topic&quot;</span>: <span class="hljs-string">&quot;#&quot;</span>&#125;
+ezlinker_core_plugin.hook.message.publish.<span class="hljs-number">1</span>      = &#123;<span class="hljs-string">&quot;action&quot;</span>: <span class="hljs-string">&quot;on_message_publish&quot;</span>, <span class="hljs-string">&quot;topic&quot;</span>: <span class="hljs-string">&quot;#&quot;</span>&#125;
+ezlinker_core_plugin.hook.message.delivered.<span class="hljs-number">1</span>    = &#123;<span class="hljs-string">&quot;action&quot;</span>: <span class="hljs-string">&quot;on_message_delivered&quot;</span>, <span class="hljs-string">&quot;topic&quot;</span>: <span class="hljs-string">&quot;#&quot;</span>&#125;
+ezlinker_core_plugin.hook.message.acked.<span class="hljs-number">1</span>        = &#123;<span class="hljs-string">&quot;action&quot;</span>: <span class="hljs-string">&quot;on_message_acked&quot;</span>, <span class="hljs-string">&quot;topic&quot;</span>: <span class="hljs-string">&quot;#&quot;</span>&#125;</code></pre>
+<p>我们在最后加上自己的配置项：</p>
+<pre><code class="hljs erlang">## ezlinker core  node config
+ezlinker_core_plugin.node.name = ezlinker_core_node1@<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span></code></pre>
+<p>找到插件目录下的<code>priv</code>目录，最后一行加入：</p>
+<pre><code class="hljs erlang">&#123;mapping, <span class="hljs-string">&quot;ezlinker_core_plugin.node.name&quot;</span>, <span class="hljs-string">&quot;ezlinker_core_plugin.node_name&quot;</span>, [
+  &#123;datatype, string&#125;
+]&#125;.
+</code></pre>
+<p>其中mapping的作用是把配置项的键映射到插件的值，具体格式如下：</p>
+<pre><code class="hljs erlang">&#123;mapping, <span class="hljs-string">&quot;conf中的配置项名字&quot;</span>, <span class="hljs-string">&quot;插件名.插件中使用的项名&quot;</span>, [
+  &#123;datatype, string&#125;
+]&#125;.</code></pre>
+<p>是不是不耐烦了？其实到这里才刚开始，上述步骤仅仅是我们生成了一个插件，并且注册进了EMQ，能不能发挥作用还不一定呢。接下来我们就开始对这个插件进行简单的开发。</p>
+</li>
+</ol>
+<h2 id="3-插件开发"><a href="#3-插件开发" class="headerlink" title="3.插件开发"></a>3.插件开发</h2><p>我们目前实现一个最简单的功能：把EMQX的所有消息全部丢给JavaNode去处理。</p>
+<p>先打开：<code>ezlinker_core_plugin.erl</code>,找到publish相关的代码（大概在155行位置处）：</p>
+<pre><code class="hljs erlang"><span class="hljs-comment">%%--------------------------------------------------------------------</span>
+<span class="hljs-comment">%% Message publish</span>
+<span class="hljs-comment">%%--------------------------------------------------------------------</span>
+<span class="hljs-function"><span class="hljs-title">on_message_publish</span><span class="hljs-params">(Message = #message&#123;topic = &lt;&lt;<span class="hljs-string">&quot;$SYS/&quot;</span>, _/binary&gt;&gt;&#125;, _Env)</span> -&gt;</span>
+    &#123;ok, Message&#125;;
+<span class="hljs-function"><span class="hljs-title">on_message_publish</span><span class="hljs-params">(Message = #message&#123;topic = Topic, flags = #&#123;retain := Retain&#125;&#125;, &#123;Filter&#125;)</span> -&gt;</span>
+    EZlinkerNodeName = application:get_env(?APP, node_name, &#x27;ezlinker_core_node1@<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>&#x27;),
+    with_filter(
+      <span class="hljs-keyword">fun</span>() -&gt;
+        emqx_metrics:inc(&#x27;ezlinker_core_plugin.message_publish&#x27;),
+          // 核心代码
+        &#123;ezlinker_core_node1_receive_loop,list_to_atom(EZlinkerNodeName)&#125;!&#123;self(),Message&#125;,
+
+        &#123;ok, Message&#125;
+      <span class="hljs-keyword">end</span>, Message, Topic, Filter).
+</code></pre>
+
+<p>加入以下代码：</p>
+<pre><code class="hljs erlang">&#123;ezlinker_core_node1_receive_loop,list_to_atom(EZlinkerNodeName)&#125;!&#123;self(),Message&#125;,</code></pre>
+
+<p>上面代码表示，EMQX内部产生的消息全部转发倒=到我们配置的那个节点上面。</p>
+<p>到此为止，我们的插件就开发好了，接下来准备运行起来。</p>
+<h2 id="4-插件加载"><a href="#4-插件加载" class="headerlink" title="4.插件加载"></a>4.插件加载</h2><p>我们还需要维护一个发布EMQX的项目：emqx-rel：<code>https://github.com/emqx/emqx-rel.git</code>。首先需要fork下来，然后做个简单配置，目的是把插件加载进EMQX里面。</p>
+<p>在emqx-rel项目中找到rebar.config,在deps节点加入以下配置：</p>
+<pre><code class="hljs erlang">&#123;ezlinker_core_plugin,&#123;git,<span class="hljs-string">&quot;你插件的git位置&quot;</span>,&#123;branch, <span class="hljs-string">&quot;master&quot;</span>&#125;&#125;&#125;,</code></pre>
+
+<p>然后在relx节点下的release节点最后面加上：</p>
+<pre><code class="hljs erlang">&#123;ezlinker_core_plugin, load&#125;</code></pre>
+
+<p>到此为止插件就配置完整。</p>
+<h2 id="5-启动配置"><a href="#5-启动配置" class="headerlink" title="5.启动配置"></a>5.启动配置</h2><p>启动过程也是比较麻烦，首先需要确保你的主机已经启动了epmd（不知道可百度一下）。然后更改EMQX下面的启动脚本，把<code>_build\emqx\rel\emqx\bin\emqx</code>脚本28行倒32行全部注释，改成以下：</p>
+<pre><code class="hljs shell"><span class="hljs-meta"></span>
+<span class="hljs-meta">#</span><span class="bash"><span class="hljs-keyword">if</span> [ -z <span class="hljs-string">&quot;<span class="hljs-variable">$WITH_EPMD</span>&quot;</span> ]; <span class="hljs-keyword">then</span></span>
+<span class="hljs-meta">#</span><span class="bash">    EPMD_ARG=<span class="hljs-string">&quot;-start_epmd false -epmd_module ekka_epmd -proto_dist ekka&quot;</span></span>
+<span class="hljs-meta">#</span><span class="bash"><span class="hljs-keyword">else</span></span>
+<span class="hljs-meta">#</span><span class="bash">    EPMD_ARG=<span class="hljs-string">&quot;-start_epmd true <span class="hljs-variable">$PROTO_DIST_ARG</span>&quot;</span></span>
+<span class="hljs-meta">#</span><span class="bash"><span class="hljs-keyword">fi</span></span>
+EPMD_ARG=&quot;-start_epmd true $PROTO_DIST_ARG&quot;</code></pre>
+
+<p>这么做的原因是emqx目前是用ekka集群的，没有自己启动epmd，所以当前需要手动指定启动epmd。</p>
+<h2 id="6-运行EMQX"><a href="#6-运行EMQX" class="headerlink" title="6.运行EMQX"></a>6.运行EMQX</h2><p>​    切换倒emqx-rel项目，执行脚本：</p>
+<pre><code class="hljs shell">_build/emqx/rel/emqx/bin/emqx console</code></pre>
+
+<p>如果上面做的没问题，就会出现：</p>
+<pre><code class="hljs shell">_build/emqx/rel/emqx/bin/emqx console
+Exec: /mnt/c/Users/admin/Github/emqx-rel/_build/emqx/rel/emqx/erts-10.5/bin/erlexec -boot /mnt/c/Users/admin/Github/emqx-rel/_build/emqx/rel/emqx/releases/
+v4.0-beta.4/emqx -mode embedded -boot_var ERTS_LIB_DIR /mnt/c/Users/admin/Github/emqx-rel/_build/emqx/rel/emqx/erts-10.5/../lib -mnesia dir &quot;/mnt/c/Users/a
+&quot; -config /mnt/c/Users/admin/Github/emqx-rel/_build/emqx/rel/emqx/data/configs/app.2020.03.23.16.04.14.config -args_file /mnt/c/Users/admin/Github/emqx-rel
+/_build/emqx/rel/emqx/data/configs/vm.2020.03.23.16.04.14.args -vm_args /mnt/c/Users/admin/Github/emqx-rel/_build/emqx/rel/emqx/data/configs/vm.2020.03.23.
+16.04.14.args -start_epmd true -- console
+Root: /mnt/c/Users/admin/Github/emqx-rel/_build/emqx/rel/emqx
+/mnt/c/Users/admin/Github/emqx-rel/_build/emqx/rel/emqx
+Erlang/OTP 22 [erts-10.5] [source] [64-bit] [smp:16:16] [ds:16:16:8] [async-threads:4] [hipe]
+
+Starting emqx on node emqx@127.0.0.1
+2020-03-23 16:04:19.815 [alert] [Plugins] Cannot find plugins: [emqx_recon,emqx_rule_engine]
+Start http:management listener on 8081 successfully.
+Start http:dashboard listener on 18083 successfully.
+ezlinker_core_plugin loaded!
+Start mqtt:tcp listener on 127.0.0.1:11883 successfully.
+Start mqtt:tcp listener on 0.0.0.0:1883 successfully.
+Start_trap_listenerStart mqtt:trap listener on 0.0.0.0:1884 successfully.
+Start mqtt:ws listener on 0.0.0.0:8083 successfully.
+Start mqtt:ssl listener on 0.0.0.0:8883 successfully.
+Start mqtt:wss listener on 0.0.0.0:8084 successfully.
+EMQ X Broker master is running now!
+Eshell V10.5  (abort with ^G)</code></pre>
+
+<h2 id="7-启动插件"><a href="#7-启动插件" class="headerlink" title="7.启动插件"></a>7.启动插件</h2><p>打开<code>http://localhost:18083</code>,进入控制台，找到plugins：</p>
+<p><img src="/uploads/image-20200323171539539.png" srcset="/img/loading.gif" alt="image-20200323171539539"></p>
+<p>点击start按钮，启动插件。</p>
+<h2 id="8-测试通信"><a href="#8-测试通信" class="headerlink" title="8.测试通信"></a>8.测试通信</h2><p>此时我们回过去到第一步，运行java的<code>main</code>方法，发现居然不报错了？如果没有报错，说明epmd启动成功了。</p>
+<p>我们用Mqttfx发送一条消息看看效果：</p>
+<p><img src="/uploads/image-20200323171732153.png" srcset="/img/loading.gif" alt="image-20200323171732153"></p>
+<p>看java这边的打印：</p>
+<p><img src="/uploads/image-20200323171821974.png" srcset="/img/loading.gif" alt="image-20200323171821974"></p>
+<p>此时已经实现通信，到这里，我们就可以解析出消息来任意处理。</p>
+<h1 id="4-参考文档"><a href="#4-参考文档" class="headerlink" title="4.参考文档"></a>4.参考文档</h1><p><a target="_blank" rel="noopener" href="http://erlang.org/doc/apps/jinterface/jinterface_users_guide.html">http://erlang.org/doc/apps/jinterface/jinterface_users_guide.html</a></p>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/EMQX%E9%AB%98%E7%BA%A7%E5%BC%80%E5%8F%91%E6%95%99%E7%A8%8B/">EMQX高级开发教程</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Erlang/">Erlang</a>
+                    
+                      <a class="hover-with-bg" href="/tags/EMQX/">EMQX</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/03/23/clmu175i400a92kuedrr50uqt.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">PlatformIo-ESP32接入MQTT服务器</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/02/25/clmu175hd006f2kuecstw4fiu.html">
+                        <span class="hidden-mobile">异构数据结构的存储设计</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                  <script src="https://utteranc.es/client.js"
+                    repo="wwhai/gitalk"
+                    issue-term="url"
+                    label="[Utterances]"
+                    theme="preferred-color-scheme"
+                    crossorigin="anonymous"
+                    async>
+                  </script>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "EMQX二次开发教程（高级篇）&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "#"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>
