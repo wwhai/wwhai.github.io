@@ -33,11 +33,6 @@ author: wwhai
 ### mosquitto_broker.h 头文件
 ### mosquitto_plugin.h 头文件
 
-## (四)：Mosquitto Broker源码级二次开发指导
-## (五)：Mosquitto Broker在ARM32位架构上实践
-### Linux 内核调优
-### 压力测试
-
 ## 参考
 [^1]: 【官方文档1】https://mosquitto.org/documentation
 [^1]: 【官方文档2】https://mosquitto.org/api/files/mosquitto-h.html
