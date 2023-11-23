@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="新四青年 的技术分享">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>Ekka源码阅读 - 新四青年</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+
+  <!-- 顶部提示 -->
+  <div class="alert alert-warning" role="alert"
+    style="margin-top: 70px; background-color: black;color: rgb(156, 255, 25);text-align: center;padding: 0 0 0 0;">
+    <strong>提示：本站一些文章的超时空时间是乱写的，主要是为了排序，并不是真实写作时间。</strong>
+  </div>
+
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar" style="background-color: #000000;">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>新四青年</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/openlab/academic.html">
+                
+                FreeOpenLab
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/things/">
+                
+                作品
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/post.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2019-10-01 00:00">
+      October 1, 2019 am
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      855 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      13
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：June 30, 2023 pm
+                
+              </p>
+            
+            <article class="markdown-body">
+              <blockquote>
+<p>Ekka是emqx自动集群和自动愈合的一个组件。</p>
+</blockquote>
+<h2 id="1-节点发现与自动集群"><a href="#1-节点发现与自动集群" class="headerlink" title="1.节点发现与自动集群"></a>1.节点发现与自动集群</h2><p><strong>ekka_cluster_strategy</strong> 模块定义了一些行为。它们分别是：</p>
+<pre><code class="hljs erlang">-type<span class="hljs-params">(options() :: list(proplists:property()))</span>.
+
+<span class="hljs-comment">%% 发现</span>
+-callback<span class="hljs-params">(discover(options()) -&gt; &#123;ok, list(node())&#125; | &#123;error, term()&#125;)</span>.
+
+<span class="hljs-comment">%% 锁</span>
+-callback<span class="hljs-params">(lock(options()) -&gt; ok | ignore | &#123;error, term()&#125;)</span>.
+
+<span class="hljs-comment">%% 解锁</span>
+-callback<span class="hljs-params">(unlock(options()) -&gt; ok | ignore | &#123;error, term()&#125;)</span>.
+
+<span class="hljs-comment">%% 注册</span>
+-callback<span class="hljs-params">(register(options()) -&gt; ok | ignore | &#123;error, term()&#125;)</span>.
+
+<span class="hljs-comment">%% 移除注册</span>
+-callback<span class="hljs-params">(unregister(options()) -&gt; ok | ignore | &#123;error, term()&#125;)</span>.</code></pre>
+
+<p><strong>ekka_cluster</strong>模块提供一些集群的API调用和集群管理的RPC调用。它们分别是</p>
+<pre><code class="hljs erlang"><span class="hljs-comment">%% Cluster API</span>
+<span class="hljs-keyword">-export</span><span class="hljs-params">([</span>
+<span class="hljs-params">	join/<span class="hljs-number">1</span>,					<span class="hljs-comment">%% 加入</span></span>
+<span class="hljs-params">	leave/<span class="hljs-number">0</span>, 				<span class="hljs-comment">%% 离开</span></span>
+<span class="hljs-params">	force_leave/<span class="hljs-number">1</span>, 			<span class="hljs-comment">%% 强制离开</span></span>
+<span class="hljs-params">	status/<span class="hljs-number">0</span> 				<span class="hljs-comment">%% 状态</span></span>
+<span class="hljs-params">	])</span>.
+
+
+<span class="hljs-comment">%% RPC Call for Cluster Management</span>
+<span class="hljs-keyword">-export</span><span class="hljs-params">([</span>
+<span class="hljs-params">	prepare/<span class="hljs-number">1</span>,</span>
+<span class="hljs-params">	heal/<span class="hljs-number">1</span>,</span>
+<span class="hljs-params">	reboot/<span class="hljs-number">0</span></span>
+<span class="hljs-params">	])</span>.
+
+
+<span class="hljs-comment">%% @doc Join the cluster</span>
+<span class="hljs-comment">%% 加入集群</span>
+<span class="hljs-keyword">-spec</span><span class="hljs-params">(join(node()) -&gt; ok | ignore | &#123;error, any()&#125;)</span>.
+
+<span class="hljs-comment">%% 如果节点是当前节点，则忽略</span>
+<span class="hljs-function"><span class="hljs-title">join</span><span class="hljs-params">(Node)</span> <span class="hljs-title">when</span> N<span class="hljs-title">ode</span> =:= <span class="hljs-title">node</span><span class="hljs-params">()</span> -&gt;</span>
+    ignore;
+<span class="hljs-function"><span class="hljs-title">join</span><span class="hljs-params">(Node)</span> <span class="hljs-title">when</span> <span class="hljs-title">is_atom</span><span class="hljs-params">(Node)</span> -&gt;</span>
+    <span class="hljs-keyword">case</span> &#123;ekka_mnesia:is_node_in_cluster(Node), ekka_node:is_running(Node, ekka)&#125; <span class="hljs-keyword">of</span>
+        &#123;false, true&#125; -&gt; 
+        	<span class="hljs-comment">%% 如果节点没有在集群里而且节点正在运行， 则加入这个集群</span>
+            prepare(join), ok = ekka_mnesia:join_cluster(Node), reboot();
+        &#123;false, false&#125; -&gt;
+        	<span class="hljs-comment">%% 如果节点没有在集群里而且节点也没有运行  返回 错误</span>
+            &#123;error, &#123;node_down, Node&#125;&#125;;
+        &#123;true, _&#125; -&gt;
+        	<span class="hljs-comment">%% 如果节点已经在集群里运行</span>
+            &#123;error, &#123;already_in_cluster, Node&#125;&#125;
+    <span class="hljs-keyword">end</span>.
+
+<span class="hljs-comment">%% @doc Leave from the cluster.</span>
+<span class="hljs-comment">%% 离开集群</span>
+<span class="hljs-keyword">-spec</span><span class="hljs-params">(leave() -&gt; ok | &#123;error, any()&#125;)</span>.
+<span class="hljs-function"><span class="hljs-title">leave</span><span class="hljs-params">()</span> -&gt;</span>
+    <span class="hljs-keyword">case</span> ekka_mnesia:running_nodes() -- [node()] <span class="hljs-keyword">of</span>
+        [_|_] -&gt;
+            <span class="hljs-comment">%% 如果该节点在运行的节点列表里  离开该集群</span>
+            prepare(leave), ok = ekka_mnesia:leave_cluster(), reboot();
+        [] -&gt;
+            &#123;error, node_not_in_cluster&#125;
+    <span class="hljs-keyword">end</span>.
+
+
+<span class="hljs-comment">%% @doc Force a node leave from cluster.</span>
+<span class="hljs-comment">%% 强制一个节点离开集群</span>
+<span class="hljs-keyword">-spec</span><span class="hljs-params">(force_leave(node()) -&gt; ok | ignore | &#123;error, term()&#125;)</span>.
+
+<span class="hljs-comment">%% 如果是当前节点，忽略</span>
+<span class="hljs-function"><span class="hljs-title">force_leave</span><span class="hljs-params">(Node)</span> <span class="hljs-title">when</span> N<span class="hljs-title">ode</span> =:= <span class="hljs-title">node</span><span class="hljs-params">()</span> -&gt;</span>
+    ignore;
+<span class="hljs-function"><span class="hljs-title">force_leave</span><span class="hljs-params">(Node)</span> -&gt;</span>
+    <span class="hljs-comment">%% 如果Node节点在集群里，接着rpcdia</span>
+    <span class="hljs-keyword">case</span> ekka_mnesia:is_node_in_cluster(Node)
+         <span class="hljs-keyword">andalso</span> rpc:call(Node, ?MODULE, prepare, [leave]) <span class="hljs-keyword">of</span>
+        ok -&gt;
+            <span class="hljs-keyword">case</span> ekka_mnesia:remove_from_cluster(Node) <span class="hljs-keyword">of</span>
+                ok    -&gt; rpc:call(Node, ?MODULE, reboot, []);
+                Error -&gt; Error
+            <span class="hljs-keyword">end</span>;
+        <span class="hljs-literal">false</span> -&gt;
+            &#123;error, node_not_in_cluster&#125;;
+        &#123;badrpc, nodedown&#125; -&gt;
+            ekka_membership:announce(&#123;force_leave, Node&#125;),
+            ekka_mnesia:remove_from_cluster(Node);
+        &#123;badrpc, Reason&#125; -&gt;
+            &#123;error, Reason&#125;
+    <span class="hljs-keyword">end</span>.
+
+<span class="hljs-comment">%% @doc Cluster status.</span>
+<span class="hljs-comment">%% 集群状态</span>
+<span class="hljs-function"><span class="hljs-title">status</span><span class="hljs-params">()</span> -&gt;</span> ekka_mnesia:cluster_status().</code></pre>
+
+<h2 id="2-ekka-autocluster-自动集群模块"><a href="#2-ekka-autocluster-自动集群模块" class="headerlink" title="2.ekka_autocluster 自动集群模块"></a>2.ekka_autocluster 自动集群模块</h2><pre><code class="hljs erlang"><span class="hljs-keyword">-spec</span><span class="hljs-params">(run(atom()) -&gt; any())</span>.
+<span class="hljs-function"><span class="hljs-title">run</span><span class="hljs-params">(App)</span> -&gt;</span>
+    <span class="hljs-comment">%% 获得锁</span>
+    <span class="hljs-keyword">case</span> acquire_lock(App) <span class="hljs-keyword">of</span>
+        ok -&gt;
+            spawn(<span class="hljs-keyword">fun</span>() -&gt;
+                     <span class="hljs-comment">%% 把当前进程的组长设置为init</span>
+                      group_leader(whereis(init), self()),
+                      <span class="hljs-comment">%% 等待应用准备就绪</span>
+                      wait_application_ready(App, <span class="hljs-number">10</span>),
+                      <span class="hljs-keyword">try</span>
+                          <span class="hljs-comment">%% 发现且加入</span>
+                          discover_and_join()
+                      <span class="hljs-keyword">catch</span>
+                          _:Error:Stacktrace -&gt;
+                              ?LOG(error, <span class="hljs-string">&quot;Discover error: ~p~n~p&quot;</span>, [Error, Stacktrace])
+                      <span class="hljs-keyword">after</span>
+                          <span class="hljs-comment">%% 释放锁</span>
+                          release_lock(App)
+                      <span class="hljs-keyword">end</span>,
+                      <span class="hljs-comment">%% 可能需要再次运行</span>
+                      maybe_run_again(App)
+                  <span class="hljs-keyword">end</span>);
+        failed -&gt; ignore
+    <span class="hljs-keyword">end</span>.
+
+<span class="hljs-comment">%% 等待节点运行应用</span>
+<span class="hljs-function"><span class="hljs-title">wait_application_ready</span><span class="hljs-params">(_App, <span class="hljs-number">0</span>)</span> -&gt;</span>
+    timeout;
+<span class="hljs-function"><span class="hljs-title">wait_application_ready</span><span class="hljs-params">(App, Retries)</span> -&gt;</span>
+    <span class="hljs-keyword">case</span> ekka_node:is_running(App) <span class="hljs-keyword">of</span>
+        <span class="hljs-literal">true</span>  -&gt; ok;
+        <span class="hljs-literal">false</span> -&gt; timer:sleep(<span class="hljs-number">1000</span>),
+                 wait_application_ready(App, Retries - <span class="hljs-number">1</span>)
+    <span class="hljs-keyword">end</span>.
+
+<span class="hljs-comment">%% 可能需要在尝试一次</span>
+<span class="hljs-function"><span class="hljs-title">maybe_run_again</span><span class="hljs-params">(App)</span> -&gt;</span>
+    <span class="hljs-comment">%% Check if the node joined cluster?</span>
+    <span class="hljs-comment">%% 检查节点是否在集群里</span>
+    <span class="hljs-keyword">case</span> ekka_mnesia:is_node_in_cluster() <span class="hljs-keyword">of</span>
+        <span class="hljs-literal">true</span>  -&gt; ok;
+        <span class="hljs-literal">false</span> -&gt;
+                 <span class="hljs-comment">%% 如果节点没有加入集群， 5秒后再次重试</span>
+                 timer:sleep(<span class="hljs-number">5000</span>),
+                 run(App)
+    <span class="hljs-keyword">end</span>.
+
+<span class="hljs-keyword">-spec</span><span class="hljs-params">(discover_and_join() -&gt; any())</span>.
+<span class="hljs-function"><span class="hljs-title">discover_and_join</span><span class="hljs-params">()</span> -&gt;</span>
+    with_strategy(
+      <span class="hljs-keyword">fun</span>(Mod, Options) -&gt;
+        <span class="hljs-keyword">case</span> Mod:lock(Options) <span class="hljs-keyword">of</span>
+            ok -&gt;
+                discover_and_join(Mod, Options),
+                log_error(<span class="hljs-string">&quot;Unlock&quot;</span>, Mod:unlock(Options));
+            ignore -&gt;
+                timer:sleep(rand:uniform(<span class="hljs-number">3000</span>)),
+                discover_and_join(Mod, Options);
+            &#123;error, Reason&#125; -&gt;
+                ?LOG(error, <span class="hljs-string">&quot;AutoCluster stopped for lock error: ~p&quot;</span>, [Reason])
+        <span class="hljs-keyword">end</span>
+      <span class="hljs-keyword">end</span>).
+
+
+<span class="hljs-keyword">-spec</span><span class="hljs-params">(acquire_lock(atom()) -&gt; ok | failed)</span>.
+<span class="hljs-comment">%% 获取锁</span>
+<span class="hljs-function"><span class="hljs-title">acquire_lock</span><span class="hljs-params">(App)</span> -&gt;</span>
+    <span class="hljs-comment">%% 如果应用程序APP的配置参数 autocluster_lock没有被设置值，则设置为true，表示获得锁成功，否则获取锁失败</span>
+    <span class="hljs-keyword">case</span> application:get_env(App, autocluster_lock) <span class="hljs-keyword">of</span>
+        undefined -&gt;
+            application:set_env(App, autocluster_lock, true);
+        &#123;ok, _&#125; -&gt; failed
+    <span class="hljs-keyword">end</span>.
+
+<span class="hljs-keyword">-spec</span><span class="hljs-params">(release_lock(atom()) -&gt; ok)</span>.
+<span class="hljs-comment">%% 释放锁</span>
+<span class="hljs-function"><span class="hljs-title">release_lock</span><span class="hljs-params">(App)</span> -&gt;</span>
+    <span class="hljs-comment">%% 清除应用程序APP的配置参数 autocluster_lock</span>
+    application:unset_env(App, autocluster_lock).</code></pre>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Erlang%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">Erlang学习记录</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/erlang/">erlang</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/10/01/clpb7c65l002isgueecnf2eux.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">运行时错误</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2019/10/01/clpb7c65n002osgueexx843za.html">
+                        <span class="hidden-mobile">ETS</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                  <script src="https://utteranc.es/client.js"
+                    repo="wwhai/gitalk"
+                    issue-term="url"
+                    label="[Utterances]"
+                    theme="preferred-color-scheme"
+                    crossorigin="anonymous"
+                    async>
+                  </script>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Ekka源码阅读&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "#"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>

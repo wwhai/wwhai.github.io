@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="新四青年 的技术分享">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>1.Netty基础知识-NIO与IO - 新四青年</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+
+  <!-- 顶部提示 -->
+  <div class="alert alert-warning" role="alert"
+    style="margin-top: 70px; background-color: black;color: rgb(156, 255, 25);text-align: center;padding: 0 0 0 0;">
+    <strong>提示：本站一些文章的超时空时间是乱写的，主要是为了排序，并不是真实写作时间。</strong>
+  </div>
+
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar" style="background-color: #000000;">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>新四青年</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/openlab/academic.html">
+                
+                FreeOpenLab
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/things/">
+                
+                作品
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/post.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2020-09-03 17:02">
+      September 3, 2020 pm
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      57
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：June 30, 2023 pm
+                
+              </p>
+            
+            <article class="markdown-body">
+              <p>概要：开始进入Java NIO系列的深入学习了，Netty 是Java系的一个著名NIO框架，Netty在互联网领域获得了广泛的应用，一些著名的开源组件也基于Netty构建，比如RPC框架、zookeeper等。</p>
+<blockquote>
+<p>本文来源于：【<a target="_blank" rel="noopener" href="https://github.com/ztgreat/blog-docs.git】">https://github.com/ztgreat/blog-docs.git】</a><br>编者仅仅做了简单排版和搬运收藏，非商业用途，最终知识版权归原作者所有。</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>开始进入Java NIO系列的深入学习了，Netty 是Java系的一个著名NIO框架，Netty在互联网领域获得了广泛的应用，一些著名的开源组件也基于Netty构建，比如RPC框架、zookeeper等。</p>
+<p>Netty从使用的角度来说非常的简单，套官方的Demo就可以了，当然对于我们大部分的猿类来说仅仅是使用是不可能的，对于一些核心的技术知识，必须要知其所以然，不然长江后浪推前浪，前浪死在沙滩上(＞﹏＜)</p>
+<p>既然好用，那么说明设计得友好，当然各个类之间的关系肯定也就错综复杂，不断记录学习的过程，同时也不断的提高自己写作的能力，尽量用通俗的方式阐述清楚。</p>
+<p>我自己的风格喜欢先看大概，有一个框框，很多知识点都了解一下，但是不深入，这样再深入研究的时候，不至于不知所云，因此对于Netty系列的文章，我尽量从整体框架入手，从整体再到局部。</p>
+<p>Java NIO的知识 可以说从应用层到底层都有涉及，因此具体想如何学习，这个要看自己的定位，这里推荐几本书，尤其适合还在学校读书的朋友看，这个也是我以前看过的：<code>UNIX网络编程 卷1：套接字联网API</code>，<code>UNIX网络编程 卷2：进程间通信</code>，<code>UNIX环境高级编程</code>,整体偏向中下层，当然还有<code>TCP协议栈</code>相关的至少 对构建自己知识体系很有帮助，LZ是网络专业出身的，因此这方面相对比较熟悉。</p>
+<p><strong>注:本系列文章中用到的Netty 版本为 4.x</strong></p>
+<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><p>首先你得要有NIO基础吧，下面是我前段时间简单些的关于Java NIO的文章，可以参考一下</p>
+<p><a target="_blank" rel="noopener" href="http://blog.ztgreat.cn/article/43">Java NIO之Channel、Buffer</a></p>
+<p><a target="_blank" rel="noopener" href="http://blog.ztgreat.cn/article/47">Java NIO之Selector 浅析</a></p>
+<p>如果有Linux 相关的网络编程基础那就更好了（类似Linux 的select，epoll），了解Java 线程池。</p>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>废话扯完，现在可以开始正文了(๑•̀ㅂ•́)و✧。我们用官方源码中的例子（<strong>Echo</strong>），先来进行简单分析，可以自行clone 官方源码，里面有很多例子，值得学习和研究，调试也更加的方便。</p>
+<h2 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h2><p>客户端的代码我稍微调整了一下，方便理解和后面的介绍</p>
+<pre><code class="hljs arduino"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EchoClient</span> &#123;</span>
+
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">String</span> HOST = System.<span class="hljs-built_in">getProperty</span>(<span class="hljs-string">&quot;host&quot;</span>, <span class="hljs-string">&quot;127.0.0.1&quot;</span>);
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> PORT = Integer.<span class="hljs-built_in">parseInt</span>(System.<span class="hljs-built_in">getProperty</span>(<span class="hljs-string">&quot;port&quot;</span>, <span class="hljs-string">&quot;8007&quot;</span>));
+    <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> SIZE = Integer.<span class="hljs-built_in">parseInt</span>(System.<span class="hljs-built_in">getProperty</span>(<span class="hljs-string">&quot;size&quot;</span>, <span class="hljs-string">&quot;256&quot;</span>));
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">String</span>[] args)</span> throws Exception </span>&#123;
+
+        EventLoopGroup group = <span class="hljs-keyword">new</span> <span class="hljs-built_in">NioEventLoopGroup</span>();
+        <span class="hljs-keyword">try</span> &#123;
+            Bootstrap b = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Bootstrap</span>();
+
+            b.<span class="hljs-built_in">group</span>(group);
+            b.<span class="hljs-built_in">channel</span>(NioSocketChannel.class);
+            b.<span class="hljs-built_in">option</span>(ChannelOption.TCP_NODELAY, <span class="hljs-literal">true</span>);
+            b.<span class="hljs-built_in">handler</span>(<span class="hljs-keyword">new</span> ChannelInitializer&lt;SocketChannel&gt;() &#123;
+                 @Override
+                 <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-built_in">initChannel</span>(SocketChannel ch) throws Exception &#123;
+                     ChannelPipeline p = ch.<span class="hljs-built_in">pipeline</span>();
+                     p.<span class="hljs-built_in">addLast</span>(<span class="hljs-keyword">new</span> <span class="hljs-built_in">EchoClientHandler</span>());
+                 &#125;
+             &#125;);
+            <span class="hljs-comment">// Start the client.</span>
+            ChannelFuture future = b.<span class="hljs-built_in">connect</span>(HOST, PORT);
+            future.<span class="hljs-built_in">sync</span>();
+
+            <span class="hljs-comment">// Wait until the connection is closed.</span>
+            Channel channel= future.<span class="hljs-built_in">channel</span>();
+            ChannelFuture closeFuture=channel.<span class="hljs-built_in">closeFuture</span>();
+            closeFuture.<span class="hljs-built_in">sync</span>();
+        &#125; finally &#123;
+            <span class="hljs-comment">// Shut down the event loop to terminate all threads.</span>
+            group.<span class="hljs-built_in">shutdownGracefully</span>();
+        &#125;
+    &#125;
+&#125;</code></pre>
+
+<p>可以看到代码非常的简洁，但是涵盖的信息量却不少，接下来我们来大概看看一下框框，并不会深入。</p>
+<h3 id="EventLoopGroup"><a href="#EventLoopGroup" class="headerlink" title="EventLoopGroup"></a>EventLoopGroup</h3><p>从名字上了解，这个是事件循环相关的，没关系，我们直接看官方注释：</p>
+<pre><code class="hljs puppet">/**
+ * <span class="hljs-keyword">Special</span> &#123;@<span class="hljs-literal">link</span> EventExecutorGroup&#125; <span class="hljs-keyword">which</span> <span class="hljs-keyword">allows</span> <span class="hljs-keyword">registering</span> &#123;@<span class="hljs-literal">link</span> Channel&#125;<span class="hljs-keyword">s</span> <span class="hljs-keyword">that</span> <span class="hljs-keyword">get</span>
+ * processed for later selection during the event loop.
+ */</code></pre>
+
+<p>注册Channel以及在后续处理一些事件循环，emmmm，没关系，再来看看它的继承关系</p>
+<h4 id="继承关系"><a href="#继承关系" class="headerlink" title="继承关系"></a>继承关系</h4><p><img src="http://img.blog.ztgreat.cn/document/netty/20181221183913.png" srcset="/img/loading.gif" alt="netty eventLoopGroup"></p>
+<p>原来这个EventLoopGroup 可以看做是线程池，通过它来进行任务调度执行，完成Channel的注册，以及后面一些事件的处理，到这里，我们知道它的大概用途了，虽然不是很清晰和准确，但是大概心里有谱了。</p>
+<h3 id="Bootstrap"><a href="#Bootstrap" class="headerlink" title="Bootstrap"></a>Bootstrap</h3><p>接下来我们看到的就是Bootstrap，从名字知道，这个是启动类相关的，看看源码注释</p>
+<pre><code class="hljs puppet">/**
+ * <span class="hljs-keyword">A</span> &#123;@<span class="hljs-literal">link</span> Bootstrap&#125; <span class="hljs-keyword">that</span> <span class="hljs-keyword">makes</span> <span class="hljs-keyword">it</span> <span class="hljs-keyword">easy</span> <span class="hljs-keyword">to</span> <span class="hljs-keyword">bootstrap</span> <span class="hljs-keyword">a</span> &#123;@<span class="hljs-literal">link</span> Channel&#125; <span class="hljs-keyword">to</span> <span class="hljs-keyword">use</span>
+ * for clients.
+ *
+ * &lt;p&gt;<span class="hljs-keyword">The</span> &#123;@<span class="hljs-literal">link</span> <span class="hljs-comment">#bind()&#125; methods are useful in combination with connectionless transports such as datagram (UDP).</span>
+ * For regular TCP connections, please <span class="hljs-literal">use</span> the provided &#123;@<span class="hljs-literal">link</span> <span class="hljs-comment">#connect()&#125; methods.&lt;/p&gt;</span>
+ */</code></pre>
+
+<p>Bootstrap 是Netty 把复杂的启动过程进行封装后，方便我们用户使用，通过Bootstrap 我们可以很简单的建立TCP连接，可以理解成这是一个启动辅助类。</p>
+<pre><code class="hljs less"><span class="hljs-selector-tag">b</span><span class="hljs-selector-class">.group</span>(group);
+<span class="hljs-selector-tag">b</span><span class="hljs-selector-class">.channel</span>(NioSocketChannel.class);</code></pre>
+
+<p>（1）首先把EventLoopGroup 放到了Bootstrap 中。</p>
+<p>（2）设置channel，这里出现了NioSocketChannel，通过名字相关，这个应该和Java 中的Channel有联系，看看继承关系</p>
+<p><img src="http://img.blog.ztgreat.cn/document/netty/20181221185422.png" srcset="/img/loading.gif" alt="netty channel"></p>
+<pre><code class="hljs php"><span class="hljs-comment">/**</span>
+<span class="hljs-comment"> * &#123;<span class="hljs-doctag">@link</span> io.netty.channel.socket.SocketChannel&#125; which uses NIO selector based implementation.</span>
+<span class="hljs-comment"> */</span></code></pre>
+
+<p>现在我们明白了NioSocketChannel 是 NIO selector 的一种实现。</p>
+<p>我们看看 <code>channel</code>这个方法</p>
+<pre><code class="hljs typescript"><span class="hljs-keyword">public</span> B <span class="hljs-function"><span class="hljs-title">channel</span>(<span class="hljs-params">Class&lt;? <span class="hljs-keyword">extends</span> C&gt; channelClass</span>)</span> &#123;
+    <span class="hljs-keyword">if</span> (channelClass == <span class="hljs-literal">null</span>) &#123;
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> NullPointerException(<span class="hljs-string">&quot;channelClass&quot;</span>);
+    &#125;
+    <span class="hljs-keyword">return</span> channelFactory(<span class="hljs-keyword">new</span> ReflectiveChannelFactory&lt;C&gt;(channelClass));
+&#125;</code></pre>
+
+<p>这里并没有直接创建Channel（肯定啊，不知到ip这些，怎么建立socket (￣_,￣ )），而是创建了一个channelFactory ，很明显这个是一个工厂模式，通过Factory来创建Channel。</p>
+<p>同样的 进入这个<code>ReflectiveChannelFactory</code>里面：</p>
+<pre><code class="hljs haxe"><span class="hljs-keyword">public</span> ReflectiveChannelFactory(Class&lt;? extends T&gt; clazz) &#123;
+    <span class="hljs-keyword">if</span> (clazz == <span class="hljs-literal">null</span>) &#123;
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-type">NullPointerException</span>(<span class="hljs-string">&quot;clazz&quot;</span>);
+    &#125;
+    <span class="hljs-built_in">this</span>.clazz = clazz;
+&#125;
+
+@Override
+<span class="hljs-keyword">public</span> T <span class="hljs-keyword">new</span><span class="hljs-type">Channel</span>() &#123;
+    <span class="hljs-keyword">try</span> &#123;
+        <span class="hljs-keyword">return</span> clazz.getConstructor().<span class="hljs-keyword">new</span><span class="hljs-type">Instance</span>();
+    &#125; <span class="hljs-keyword">catch</span> (Throwable t) &#123;
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-type">ChannelException</span>(<span class="hljs-string">&quot;Unable to create Channel from class &quot;</span> + clazz, t);
+    &#125;
+&#125;</code></pre>
+
+<p>它提供了一个重要的方法, 即 <strong>newChannel</strong>.</p>
+<p>根据上面代码, 我们就可以确定:</p>
+<ul>
+<li>客户端 中的Bootstrap 中的 ChannelFactory 的实现是 ReflectiveChannelFactory</li>
+<li>生成的 Channel 的具体类型是 NioSocketChannel.<br>Channel 的实例化过程, 其实就是调用的 ChannelFactory#newChannel 方法, 而实例化的 Channel 的具体的类型又是和在初始化 Bootstrap 时传入的 channel() 方法的参数相关. 因此对于我们这个例子中的客户端的 Bootstrap 而言, 生成的的 Channel 实例就是 NioSocketChannel.</li>
+</ul>
+<p>接下里我们继续往下看:</p>
+<pre><code class="hljs cmake">b.<span class="hljs-keyword">option</span>(ChannelOption.TCP_NODELAY, <span class="hljs-keyword">true</span>);</code></pre>
+
+<p>其实这个时候，我们可以不用care 这些的，如果了解TCP协议的话，知道这个应该是设置一些属性（option），不过这里还是提一下算了，名字表达的意思是<code>禁止延迟</code>，看下文档：</p>
+<blockquote>
+<p><strong>TCP_NODELAY</strong></p>
+<p>If set, disable the Nagle algorithm. This means that segments are always sent as soon as possible, even if there is only a small amount of data. When not set, data is buffered until there is a sufficient amount to send out, thereby avoiding the frequent sending of small packets, which results in poor utilization of the network. This option is overridden by <strong>TCP_CORK</strong>; however, setting this option forces an explicit flush of pending output, even if <strong>TCP_CORK</strong> is currently set.</p>
+</blockquote>
+<p>参考<a target="_blank" rel="noopener" href="https://linux.die.net/man/7/tcp">TCP protocol</a></p>
+<p>TCP/IP协议中有一个<code>Nagle</code>算法。Nagle算法通过减少需要传输的数据包，来优化网络。关于Nagle算法，在内核实现中，数据包的发送和接受会先做缓存，分别对应于写缓存和读缓存。<br>启动TCP_NODELAY，就意味着禁用了Nagle算法，允许小包的发送。对于延时敏感型，同时数据传输量比较小的应用，开启TCP_NODELAY选项无疑是一个正确的选择。</p>
+<p>如果开启了Nagle算法，就很可能出现频繁的延时，数据只有在写缓存中累积到一定量之后，才会被发送出去，这样明显提高了网络利用率。但是这由不可避免地增加了延时。</p>
+<h3 id="handler"><a href="#handler" class="headerlink" title="handler"></a>handler</h3><pre><code class="hljs aspectj">b.<span class="hljs-keyword">handler</span>(<span class="hljs-keyword">new</span> ChannelInitializer&lt;SocketChannel&gt;() &#123;
+    <span class="hljs-meta">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">initChannel</span><span class="hljs-params">(SocketChannel ch)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;
+        ChannelPipeline p = ch.pipeline();
+        p.addLast(<span class="hljs-keyword">new</span> EchoClientHandler());
+    &#125;
+&#125;);</code></pre>
+
+<p>在这段代码中，关键词handler,ChannelPipeline 这里不会太细讲，但是会提出相关概念，具体的分析会在后面给出。</p>
+<p>handler  中 传入的是ChannelInitializer ，字面意思呢就是Channel 初始化，在其方法中 initChannel，参数便是创建好的 Channel,再获取ChannelPipeline，设置我们的逻辑逻辑方法 EchoClientHandler。</p>
+<p>下面简单大致描述一下Channel的内部逻辑结构：</p>
+<p>每个 Channel 内部都有一个 pipeline，pipeline 由<strong>多个 handler</strong> 组成，<strong>handler 之间的顺序是很重要的</strong>，因为 IO 事件将按照顺序顺次经过 pipeline 上的 handler，这样每个 handler 只关注自己的业务逻辑，由多个 handler 组合来完成一些复杂的逻辑。</p>
+<p><img src="http://img.blog.ztgreat.cn/document/netty/20181223152945.png" srcset="/img/loading.gif" alt="netty pipeline"></p>
+<p>首先，两个重要的概念：<strong>Inbound</strong> 和 <strong>Outbound</strong>。在 Netty 中，IO 事件被分为 Inbound 事件和 Outbound 事件。</p>
+<p><strong>Outbound</strong> 的 <strong>out</strong> 指的是 <strong>出去</strong>，比如 connect、write、flush 这些 IO 操作是往外部方向进行的(<strong>数据往外传输</strong>)，它们就属于 Outbound 事件，其他的，类似 accept、read 这种就属于 Inbound 事件（<strong>有远程数据进入</strong>）。</p>
+<p>定义处理 Inbound 事件的 handler 需要实现 ChannelInboundHandler，定义处理 Outbound 事件的 handler 需要实现 ChannelOutboundHandler，通常我们继承其相应的适配器，然后实现相关方法就可以了。</p>
+<p><img src="http://img.blog.ztgreat.cn/document/netty/20181223154151.png" srcset="/img/loading.gif" alt="netty handler"></p>
+<p>特别的，如果我们希望定义一个 handler 能同时处理 Inbound 和 Outbound 事件（可以认为是双工模式），我们可以继承 ChannelDuplexHandler 的方式(继承关系图中未列出来)。</p>
+<p>关于Handler 和Pipeline 我们就暂说到这里。</p>
+<h3 id="connect"><a href="#connect" class="headerlink" title="connect"></a>connect</h3><pre><code class="hljs arduino">ChannelFuture future = b.<span class="hljs-built_in">connect</span>(HOST, PORT);</code></pre>
+
+<p>很明显，这里是进行connect，连接远程主机，建立TCP连接，那么这里面肯定也会创建Channle,我们跟踪查看一下</p>
+<h4 id="doResolveAndConnect"><a href="#doResolveAndConnect" class="headerlink" title="doResolveAndConnect"></a>doResolveAndConnect</h4><pre><code class="hljs reasonml"><span class="hljs-keyword">private</span> ChannelFuture <span class="hljs-keyword">do</span><span class="hljs-constructor">ResolveAndConnect(<span class="hljs-params">final</span> SocketAddress <span class="hljs-params">remoteAddress</span>, <span class="hljs-params">final</span> SocketAddress <span class="hljs-params">localAddress</span>)</span> &#123;
+    final ChannelFuture regFuture = init<span class="hljs-constructor">AndRegister()</span>;
+    final Channel channel = regFuture.channel<span class="hljs-literal">()</span>;
+
+    <span class="hljs-keyword">if</span> (regFuture.is<span class="hljs-constructor">Done()</span>) &#123;
+        <span class="hljs-keyword">if</span> (!regFuture.is<span class="hljs-constructor">Success()</span>) &#123;
+            return regFuture;
+        &#125;
+        return <span class="hljs-keyword">do</span><span class="hljs-constructor">ResolveAndConnect0(<span class="hljs-params">channel</span>, <span class="hljs-params">remoteAddress</span>, <span class="hljs-params">localAddress</span>, <span class="hljs-params">channel</span>.<span class="hljs-params">newPromise</span>()</span>);
+    &#125; <span class="hljs-keyword">else</span> &#123;
+        
+        <span class="hljs-comment">//省略代码</span>
+    &#125;
+&#125;</code></pre>
+
+<p>中间省略几个方法调用，最终我们看这个doResolveAndConnect 方法，里面对Channel进行初始化和注册（initAndRegister 方法），我们看看 initAndRegister 方法：</p>
+<h4 id="initAndRegister"><a href="#initAndRegister" class="headerlink" title="initAndRegister"></a>initAndRegister</h4><pre><code class="hljs reasonml">final ChannelFuture init<span class="hljs-constructor">AndRegister()</span> &#123;
+    Channel channel = null;
+    <span class="hljs-keyword">try</span> &#123;
+        channel = channelFactory.<span class="hljs-keyword">new</span><span class="hljs-constructor">Channel()</span>;
+        init(channel);
+    &#125; catch (Throwable t) &#123;
+        <span class="hljs-keyword">if</span> (channel != null) &#123;
+            channel.unsafe<span class="hljs-literal">()</span>.close<span class="hljs-constructor">Forcibly()</span>;
+            return <span class="hljs-keyword">new</span> <span class="hljs-constructor">DefaultChannelPromise(<span class="hljs-params">channel</span>, GlobalEventExecutor.INSTANCE)</span>.set<span class="hljs-constructor">Failure(<span class="hljs-params">t</span>)</span>;
+        &#125;
+        return <span class="hljs-keyword">new</span> <span class="hljs-constructor">DefaultChannelPromise(<span class="hljs-params">new</span> FailedChannel()</span>, GlobalEventExecutor.INSTANCE).set<span class="hljs-constructor">Failure(<span class="hljs-params">t</span>)</span>;
+    &#125;
+    ChannelFuture regFuture = config<span class="hljs-literal">()</span>.group<span class="hljs-literal">()</span>.register(channel);
+    <span class="hljs-keyword">if</span> (regFuture.cause<span class="hljs-literal">()</span> != null) &#123;
+        <span class="hljs-keyword">if</span> (channel.is<span class="hljs-constructor">Registered()</span>) &#123;
+            channel.close<span class="hljs-literal">()</span>;
+        &#125; <span class="hljs-keyword">else</span> &#123;
+            channel.unsafe<span class="hljs-literal">()</span>.close<span class="hljs-constructor">Forcibly()</span>;
+        &#125;
+    &#125;
+    return regFuture;
+&#125;</code></pre>
+
+
+
+<p>这里我们看到 channel = channelFactory.newChannel(); 这个便是创建Channel,而这个channelFactory便是我们前面看到的 <code>ReflectiveChannelFactory</code></p>
+<h3 id="ChannelFuture"><a href="#ChannelFuture" class="headerlink" title="ChannelFuture"></a>ChannelFuture</h3><p>我们继续往下看</p>
+<pre><code class="hljs arduino"><span class="hljs-comment">// Start the client.</span>
+ChannelFuture future = b.<span class="hljs-built_in">connect</span>(HOST, PORT);
+future.<span class="hljs-built_in">sync</span>();
+
+<span class="hljs-comment">// Wait until the connection is closed.</span>
+Channel channel= future.<span class="hljs-built_in">channel</span>();
+ChannelFuture closeFuture=channel.<span class="hljs-built_in">closeFuture</span>();
+closeFuture.<span class="hljs-built_in">sync</span>();</code></pre>
+
+<p>通过connect后，返回了一个ChannelFuture，查看这个ChannelFuture的继承关系，我们发现它继承JDK 中的Future。</p>
+<p>关于 JDK 中的Future 接口，大家应该都比较熟悉吧，在使用 Java 的线程池 ThreadPoolExecutor 的时候了。在 <strong>submit</strong> 一个任务到线程池中的时候，返回的就是一个 <strong>Future</strong> 实例，通过它来获取提交的任务的执行状态和最终的执行结果，我们最常用它的 <code>isDone()</code> 和 <code>get()</code> 方法。</p>
+<p>既然如此，虽然我们还没有研究ChannelFuture，但是我们可以猜测其实和JDK 中的Future 是差不多的，future.sync(); 方法，通过sync这个名字，我们知道这个是在同步等待，等待什么？，等待连接建立成功.</p>
+<p>当连接建立完毕后，我们就可以通过ChannelFuture 来获取Channel。通过Channel又获取了一个Future,通过名字我们知道这个一个关于Channel 关闭后的Future，然后执行sync 方法，等待Channel 关闭</p>
+<p>如果没有closeFuture.sync();那么执行完连接后（假设我们连接成功了），客户端会直接退出,这肯定是我们不想要的。</p>
+<p>ok,到这里我们就把客户端的大致逻辑梳理了一下，虽然没有深入，但是对于大致的功能，流程还是有所明白的，下面再来看看服务端的代码。</p>
+<h2 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h2><pre><code class="hljs reasonml">public final <span class="hljs-keyword">class</span> EchoServer &#123;
+
+    static final <span class="hljs-built_in">int</span> PORT = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Integer</span>.</span></span>parse<span class="hljs-constructor">Int(System.<span class="hljs-params">getProperty</span>(<span class="hljs-string">&quot;port&quot;</span>, <span class="hljs-string">&quot;8007&quot;</span>)</span>);
+
+    public static void main(String<span class="hljs-literal">[]</span> args) throws Exception &#123;
+
+        EventLoopGroup bossGroup = <span class="hljs-keyword">new</span> <span class="hljs-constructor">NioEventLoopGroup(1)</span>;
+        EventLoopGroup workerGroup = <span class="hljs-keyword">new</span> <span class="hljs-constructor">NioEventLoopGroup()</span>;
+
+        <span class="hljs-keyword">try</span> &#123;
+            ServerBootstrap b = <span class="hljs-keyword">new</span> <span class="hljs-constructor">ServerBootstrap()</span>;
+
+            b.group(bossGroup, workerGroup);
+            b.channel(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">NioServerSocketChannel</span>.</span></span><span class="hljs-keyword">class</span>);
+            b.option(ChannelOption.SO_BACKLOG, <span class="hljs-number">100</span>);
+            b.handler(<span class="hljs-keyword">new</span> <span class="hljs-constructor">LoggingHandler(LogLevel.INFO)</span>);
+
+            b.child<span class="hljs-constructor">Handler(<span class="hljs-params">new</span> ChannelInitializer&lt;SocketChannel&gt;()</span> &#123;
+                 @Override
+                 public void init<span class="hljs-constructor">Channel(SocketChannel <span class="hljs-params">ch</span>)</span> throws Exception &#123;
+                     ChannelPipeline p = ch.pipeline<span class="hljs-literal">()</span>;
+                     p.add<span class="hljs-constructor">Last(<span class="hljs-params">new</span> EchoServerHandler()</span>);
+                 &#125;
+             &#125;);
+
+            <span class="hljs-comment">// Start the server.</span>
+            ChannelFuture future = b.bind(PORT);
+            future.sync<span class="hljs-literal">()</span>;
+
+            <span class="hljs-comment">// Wait until the server socket is closed.</span>
+            Channel channel = future.channel<span class="hljs-literal">()</span>;
+            ChannelFuture closeFuture = channel.close<span class="hljs-constructor">Future()</span>;
+            closeFuture.sync<span class="hljs-literal">()</span>;
+        &#125; finally &#123;
+            <span class="hljs-comment">// Shut down all event loops to terminate all threads.</span>
+            bossGroup.shutdown<span class="hljs-constructor">Gracefully()</span>;
+            workerGroup.shutdown<span class="hljs-constructor">Gracefully()</span>;
+        &#125;
+    &#125;
+&#125;</code></pre>
+
+<p>我们看到其实服务端和客户端非常的相似，这里我们也只是大概看一下差异性。</p>
+<h3 id="ServerBootstrap"><a href="#ServerBootstrap" class="headerlink" title="ServerBootstrap"></a>ServerBootstrap</h3><p>相比客户端的 Bootstrap，这里变成了ServerBootstrap，这个也好理解，毕竟一个是客户端，一个是服务端，两者分开，更好的理解和设计维护，从功能上来上都是一样，都是便于用户的使用，通过ServerBootstrap 我们可以很轻松的开启一个服务端的Netty 应用。</p>
+<h3 id="EventLoopGroup-1"><a href="#EventLoopGroup-1" class="headerlink" title="EventLoopGroup"></a>EventLoopGroup</h3><p>这里我们看到有两个EventLoopGroup，而客户端只有一个，也就是说服务端用了两个线程池来处理一些任务。</p>
+<p>对于客户端而言，通常就是连接服务器，然后与服务器进行交互。</p>
+<p>对于服务端而言，服务端需要监听是否有客户端来进行连接，也就是对客户端的Accept的处理，当accept后，才是真正的与客户端进行交互。</p>
+<p>我们可以从源码了解到一些信息：</p>
+<pre><code class="hljs typescript"><span class="hljs-comment">/**</span>
+<span class="hljs-comment"> * Specify the &#123;<span class="hljs-doctag">@link </span>EventLoopGroup&#125; which is used for the parent (acceptor) and the child (client).</span>
+<span class="hljs-comment"> */</span>
+<span class="hljs-meta">@Override</span>
+<span class="hljs-keyword">public</span> ServerBootstrap <span class="hljs-function"><span class="hljs-title">group</span>(<span class="hljs-params">EventLoopGroup group</span>)</span> &#123;
+    <span class="hljs-keyword">return</span> group(group, group);
+&#125;
+
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment"> * Set the &#123;<span class="hljs-doctag">@link </span>EventLoopGroup&#125; for the parent (acceptor) and the child (client). These</span>
+<span class="hljs-comment"> * &#123;<span class="hljs-doctag">@link </span>EventLoopGroup&#125;&#x27;s are used to handle all the events and IO for &#123;<span class="hljs-doctag">@link </span>ServerChannel&#125; and</span>
+<span class="hljs-comment"> * &#123;<span class="hljs-doctag">@link </span>Channel&#125;&#x27;s.</span>
+<span class="hljs-comment"> */</span>
+<span class="hljs-keyword">public</span> ServerBootstrap <span class="hljs-function"><span class="hljs-title">group</span>(<span class="hljs-params">EventLoopGroup parentGroup, EventLoopGroup childGroup</span>)</span> &#123;
+    <span class="hljs-built_in">super</span>.group(parentGroup);
+    <span class="hljs-keyword">if</span> (childGroup == <span class="hljs-literal">null</span>) &#123;
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> NullPointerException(<span class="hljs-string">&quot;childGroup&quot;</span>);
+    &#125;
+    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.childGroup != <span class="hljs-literal">null</span>) &#123;
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalStateException(<span class="hljs-string">&quot;childGroup set already&quot;</span>);
+    &#125;
+    <span class="hljs-built_in">this</span>.childGroup = childGroup;
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>;
+&#125;</code></pre>
+
+
+
+<p>其中一个EventLoopGroup则是负责处理客户端的<strong>连接请求</strong>; 而 另一个 就是负责<strong>客户端连接后的 IO 交互</strong>.，这里，我们不深入，有个概念就可以了。</p>
+<h3 id="NioServerSocketChannel"><a href="#NioServerSocketChannel" class="headerlink" title="NioServerSocketChannel"></a>NioServerSocketChannel</h3><p>同样的，这里也和客户端的NioSocketChannel 不一样，NioServerSocketChannel 是针对Netty 服务端的NIO selector的实现。</p>
+<pre><code class="hljs puppet">/**
+ * <span class="hljs-keyword">A</span> &#123;@<span class="hljs-literal">link</span> io.netty.channel.socket.ServerSocketChannel&#125; <span class="hljs-keyword">implementation</span> <span class="hljs-keyword">which</span> <span class="hljs-keyword">uses</span>
+ * NIO selector based implementation to accept new connections.
+ */</code></pre>
+
+<h4 id="ChannelOption"><a href="#ChannelOption" class="headerlink" title="ChannelOption"></a>ChannelOption</h4><pre><code class="hljs less"><span class="hljs-selector-tag">b</span><span class="hljs-selector-class">.option</span>(ChannelOption.SO_BACKLOG, <span class="hljs-number">100</span>);</code></pre>
+
+<p>查看 <code>java.nio.channels.ServerSocketChannel</code> bind 方法:</p>
+<pre><code class="hljs aspectj"><span class="hljs-comment">/**</span>
+<span class="hljs-comment">* Binds the channel&#x27;s socket to a local address and configures the socket to</span>
+<span class="hljs-comment">* listen for connections.</span>
+<span class="hljs-comment">*</span>
+<span class="hljs-comment">* &lt;p&gt; This method is used to establish an association between the socket and</span>
+<span class="hljs-comment">* a local address. Once an association is established then the socket remains</span>
+<span class="hljs-comment">* bound until the channel is closed.</span>
+<span class="hljs-comment">*</span>
+<span class="hljs-comment">* &lt;p&gt; The &#123;<span class="hljs-doctag">@code</span> backlog&#125; parameter is the maximum number of pending</span>
+<span class="hljs-comment">* connections on the socket. Its exact semantics are implementation specific.</span>
+<span class="hljs-comment">* In particular, an implementation may impose a maximum length or may choose</span>
+<span class="hljs-comment">* to ignore the parameter altogther. If the &#123;<span class="hljs-doctag">@code</span> backlog&#125; parameter has</span>
+<span class="hljs-comment">* the value &#123;<span class="hljs-doctag">@code</span> 0&#125;, or a negative value, then an implementation specific</span>
+<span class="hljs-comment">* default is used.</span>
+<span class="hljs-comment">*/</span>
+
+<span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-function">ServerSocketChannel <span class="hljs-title">bind</span><span class="hljs-params">(SocketAddress local, <span class="hljs-keyword">int</span> backlog)</span></span>
+<span class="hljs-function">        <span class="hljs-keyword">throws</span> IOException</span>;</code></pre>
+
+<p>最大等待建立连接的scoket数量（等待建立socket连接 排队数量）</p>
+<p><strong>注:下面说法可能不严谨，仅供 提供相关信息，可以自己查阅资料</strong></p>
+<p>（1）一种说法:</p>
+<p>在linux系统内核中有一个队列：syns queue</p>
+<p>用于保存<strong>半连接状态</strong>的请求（TCP三次握手），其大小通过/proc/sys/net/ipv4/tcp_max_syn_backlog指定，常见的TCP SYN FLOOD恶意DOS攻击方式就是建立大量的半连接状态的请求，然后丢弃，导致syns queue不能保存其它正常的请求。</p>
+<blockquote>
+<p><em>tcp_max_syn_backlog</em> (integer; default: see below; since Linux 2.2)</p>
+<p>The maximum number of queued connection requests which have still not received an acknowledgement from the connecting client. If this number is exceeded, the kernel will begin dropping requests. The default value of 256 is increased to 1024 when the memory present in the system is adequate or greater (&gt;= 128Mb), and reduced to 128 for those systems with very low memory (&lt;= 32Mb). It is recommended that if this needs to be increased above 1024, </p>
+</blockquote>
+<p>参考<a target="_blank" rel="noopener" href="https://linux.die.net/man/7/tcp">TCP protocol</a></p>
+<p>更多可以参考了解 <a target="_blank" rel="noopener" href="https://blog.csdn.net/u014634338/article/details/49154685">Linux网络编程—TCP三次握手，SYN洪水攻击</a></p>
+<p>（2）第二种说法</p>
+<p><code>backlog</code>参数的行为在<code>Linux</code>2.2之后有所改变。现在，它指定了等待<code>accept</code>系统调用的已建立连接队列的长度，而不是待完成连接请求数</p>
+<p>更多可以参考:</p>
+<p><a target="_blank" rel="noopener" href="http://veithen.io/2014/01/01/how-tcp-backlog-works-in-linux.html">How TCP backlog works in Linux</a>(需要科学上网)</p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/7fde92785056">[译文]深入理解Linux TCP backlog</a></p>
+<p><a target="_blank" rel="noopener" href="https://linux.die.net/man/2/listen">https://linux.die.net/man/2/listen</a></p>
+<p>具体的和Linux系统实现有关，这个我觉得自己明白怎么回事就可以了。</p>
+<h3 id="handler-1"><a href="#handler-1" class="headerlink" title="handler"></a>handler</h3><p>服务器端的 handler 的添加过程和客户端的有点区别, 和 EventLoopGroup 一样, 服务器端的 handler 也有两个, 一个是通过 handler() 方法设置 handler 字段, 另一个是通过 childHandler() 设置 childHandler 字段. </p>
+<p>类比  EventLoopGroup，这个 handler 字段与 accept 过程有关, 也就是说这个 handler 负责处理客户端的<strong>连接请求</strong>; 而 childHandler 就是负责<strong>客户端连接后的 IO 交互</strong>.</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>走马观花的把Netty的demo过了一遍，对每个模块进行了简单的提及和分析，没有探讨任何细节的地方，首先我们对Netty有了一个感性的认识，了解了一些关键点，知道了大概的流程，这样，并不需要我们非要一行一行代码的弄清楚，有了大致认识后，可以去了解相关的知识点，有了这些基础知识后，再对netty 深入分析，相当于把零散的东西再进行一次整合，这样从整体到局部，再从局部到整体，我觉得这样对框架的整体认识才会比较深刻。</p>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Netty%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">Netty基础知识</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Java/">Java</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Netty/">Netty</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/12/06/clpb7c652000gsgue7vcv2dsc.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">物联网所需技术总结</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/09/03/clpb7c68t00j8sgue7lm55sap.html">
+                        <span class="hidden-mobile">2.Netty基础知识-源码简单解析</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                  <script src="https://utteranc.es/client.js"
+                    repo="wwhai/gitalk"
+                    issue-term="url"
+                    label="[Utterances]"
+                    theme="preferred-color-scheme"
+                    crossorigin="anonymous"
+                    async>
+                  </script>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "1.Netty基础知识-NIO与IO&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "#"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>

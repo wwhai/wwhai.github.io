@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="新四青年 的技术分享">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>Trap协议-简单TCP通信协议设计 - 新四青年</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+
+  <!-- 顶部提示 -->
+  <div class="alert alert-warning" role="alert"
+    style="margin-top: 70px; background-color: black;color: rgb(156, 255, 25);text-align: center;padding: 0 0 0 0;">
+    <strong>提示：本站一些文章的超时空时间是乱写的，主要是为了排序，并不是真实写作时间。</strong>
+  </div>
+
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar" style="background-color: #000000;">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>新四青年</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/openlab/academic.html">
+                
+                FreeOpenLab
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/things/">
+                
+                作品
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/post.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2019-10-31 21:26">
+      October 31, 2019 pm
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      28
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：June 30, 2023 pm
+                
+              </p>
+            
+            <article class="markdown-body">
+              <p>本文作者：[wangwenhai] # 概要：本文主要讲如何从协议涉及到代码，再到实现一个简单的基于TCP的物联网服务器的过程。</p>
+<span id="more"></span>
+
+<h1 id="Trap-Protocol协议设计文档"><a href="#Trap-Protocol协议设计文档" class="headerlink" title="Trap Protocol协议设计文档"></a>Trap Protocol协议设计文档</h1><h2 id="1-背景阐述"><a href="#1-背景阐述" class="headerlink" title="1.背景阐述"></a>1.背景阐述</h2><p>近期在家里看着墙发呆的时候，闹钟引起了我的注意。这个闹钟是大学的时候用过的，一直到现在都还在正常显示，突然想起来上一次换时间貌似是2017年12月–一个冬天，现在都快两年了，拿过来摆弄了一番，发现里面装了3节南孚电池。令我惊讶的是，闹钟还能很大声的响铃。<br>我不由得来了兴趣，仔细分析了一下这个闹钟的基本构造。闹钟用了液晶数码管作为显示屏，而液晶数码管的功耗就非常低了，这节省了很大的电量。同时有3节7号电池供电，电压是1.5*3=4.5V，差不多工作电流是0.001MA(百度了一下基本的参数做了对比)，在如此低功耗条件下工作了快2年，确实值得研究。<br>于是我想了一下，能不能发明一个专门针对低功耗的芯片的通信协议，来实现以非常低的功率长时间工作。最好是 纽扣电池，或者是马铃薯、番茄电池都能维持通信。我的闹钟上面可以显示温湿度，如果加以改造，就可以把这些数据上传到云服务器，岂不是可以时刻监控温湿度而实现动态调节？同时我还想远程换个铃声，这又涉及到了远程及时通信了，在这个比较有趣的情景下，我决定发明一个简单的基于TCP的，但是靠谱的，针对低端尤其是低功耗的设备进行少量数据传输的协议。<br>为何叫Trap？可能我觉得我的能力不够，做出来的东西就是个坑(Trap)吧，为了避免过分解读和吐槽，简单定义为：一个简单的玩具协议。</p>
+<h2 id="2-参照标准"><a href="#2-参照标准" class="headerlink" title="2.参照标准"></a>2.参照标准</h2><p>在设计之前，我参考了好几种常见的协议，站在巨人的肩上工作能无限接近天花板不是吗。<br>近期参考了EMQ的一些设计思路(尤其是EMQ的产品介绍PPT)，还有之前的一个TCP服务器Demo也给了我一定程度的启发，EMQ给我的思路是：通信需要并发处理，TCP服务器Demo给我的思路是：越简单越好，这句话也是Python之禅的名言。<br>我协议设计的主要思路来源于Erlang的TCP并发处理模式和低功耗的芯片通信。</p>
+<h2 id="3-同类协议"><a href="#3-同类协议" class="headerlink" title="3.同类协议"></a>3.同类协议</h2><p>在这个场景下，前辈们做了不少研究，业界比较知名的就是MQTT和CoAP两个协议。我在这里简单的讲一下。</p>
+<h3 id="1-CoAP协议"><a href="#1-CoAP协议" class="headerlink" title="1.CoAP协议"></a>1.CoAP协议</h3><p>CoAP（Constrained Application Protocol）是一种在物联网世界的类HTTP协议，它的详细规范定义在 RFC 7252。COAP名字翻译来就是“受限应用协议”，顾名思义，使用在资源受限的物联网设备上。物联网设备的资源很受限，运行HTTP是不可以接受的。<br>COAP是一个非常简单的协议，非常轻量级，甚至可以看作是HTTP的精简版(当然和HTTP区别很大)。</p>
+<h3 id="2-MQTT-协议"><a href="#2-MQTT-协议" class="headerlink" title="2.MQTT 协议"></a>2.MQTT 协议</h3><p>MQTT 全称为 Message Queuing Telemetry Transport（消息队列遥测传输）是一种基于发布/订阅范式的“轻量级”消息协议，由 IBM 发布。MQTT 可以被解释为一种低开销，低带宽占用的即时通讯协议，可以用极少的代码和带宽的为连接远程设备提供实时可靠的消息服务，它适用于硬件性能低下的远程设备以及网络状况糟糕的环境下，因此 MQTT 协议在 IoT（Internet of things，物联网），小型设备应用，移动应用等方面有较广泛的应用。<br>MQTT 可以看作是TCP之上的一个高级封装协议，功能强大，很适合作为物联网设备采集数据使用的协议。<br>关于其他的就不赘述了，上面介绍这两种协议最终目的就是让大家看到一个共同之处：物联网世界的通信大部分是：低功率、条件受限，资源不足。我们就按照这个设计思路出发设计新的协议，能同时支持TCP和类CoAP协议的协议，貌似是简单合体又比单独两个协议更好玩（不是取代，也不是挑战，而是另一种思路，给学习者带来一种心情的愉悦）的简单协议。</p>
+<h2 id="4-详细设计"><a href="#4-详细设计" class="headerlink" title="4.详细设计"></a>4.详细设计</h2><h3 id="1-报文固定包头"><a href="#1-报文固定包头" class="headerlink" title="1. 报文固定包头"></a><strong>1.</strong> 报文固定包头</h3><p>数据固定报头使用4个字节(byte)来表示，如下表所示：</p>
+<table>
+<thead>
+<tr>
+<th>字节0</th>
+<th>0</th>
+<th>0</th>
+<th>0</th>
+<th>0</th>
+<th>0</th>
+<th>0</th>
+<th>0</th>
+<th>0</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>字节1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>字节2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>字节3</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<h4 id="包头详解："><a href="#包头详解：" class="headerlink" title="包头详解："></a>包头详解：</h4><ul>
+<li><p>字节0的高四位(higher 4bit)表示连接模式Mode，该Mode目前有2个值：1和2。其中1表示TCP长连接，2表示类似于COAP POST的短连接；·字节0低四位(lower 4bit)表示消息报文类型，目前留16个值，实际用不到这么多。具体如下表所示。·字节1、字节2表示消息的长度，最长支持2^16=65536(byte)个字符,也就是64KB。</p>
+</li>
+<li><p>字节3为扩展字节，预留给其他数据域使用。如果客户端需要认证，在这里填充Client ID的长度，最长支持2^8=256(byte)个字符，可以用来标识唯一识别号，此时ClientID的内容被放在数据域的第一段。</p>
+</li>
+</ul>
+<h4 id="Mode-1-TCP模式-的情况下数据报文类型列表"><a href="#Mode-1-TCP模式-的情况下数据报文类型列表" class="headerlink" title="Mode=1(TCP模式)的情况下数据报文类型列表:"></a>Mode=1(TCP模式)的情况下数据报文类型列表:</h4><h5 id="成功返回："><a href="#成功返回：" class="headerlink" title="成功返回："></a>成功返回：</h5><table>
+<thead>
+<tr>
+<th><strong><em>\</em>binary**</strong></th>
+<th><strong><em>\</em>十进制**</strong></th>
+<th><strong><em>\</em>客户端**</strong></th>
+<th><strong><em>\</em>服务端**</strong></th>
+<th><strong><em>\</em>含义**</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0000</td>
+<td>0</td>
+<td>PING</td>
+<td>PONG</td>
+<td>心跳包\心跳回复</td>
+</tr>
+<tr>
+<td>0001</td>
+<td>1</td>
+<td>AUTH</td>
+<td>OK</td>
+<td>认证成功\认证失败</td>
+</tr>
+<tr>
+<td>0010</td>
+<td>2</td>
+<td>SEND</td>
+<td>OK</td>
+<td>发送成功\认证失败</td>
+</tr>
+<tr>
+<td>0011</td>
+<td>3</td>
+<td>PUBLISH</td>
+<td>OK</td>
+<td>发布成功\发布失败</td>
+</tr>
+</tbody></table>
+<h5 id="错误返回："><a href="#错误返回：" class="headerlink" title="错误返回："></a>错误返回：</h5><table>
+<thead>
+<tr>
+<th><strong><em>\</em>binary**</strong></th>
+<th><strong><em>\</em>十进制**</strong></th>
+<th><strong><em>\</em>客户端**</strong></th>
+<th><strong><em>\</em>服务端**</strong></th>
+<th><strong><em>\</em>含义**</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0100</td>
+<td>4</td>
+<td>AUTH</td>
+<td>AUTH_FAILURE</td>
+<td>认证失败</td>
+</tr>
+<tr>
+<td>0101</td>
+<td>5</td>
+<td>SEND</td>
+<td>SEND_FAILURE</td>
+<td>发送失败</td>
+</tr>
+<tr>
+<td>0110</td>
+<td>6</td>
+<td>PUBLISH</td>
+<td>PUB_FAILURE</td>
+<td>发布失败</td>
+</tr>
+</tbody></table>
+<h4 id="Mode-2-Trap模式-的情况下数据报文类型列表"><a href="#Mode-2-Trap模式-的情况下数据报文类型列表" class="headerlink" title="Mode=2(Trap模式)的情况下数据报文类型列表:"></a>Mode=2(Trap模式)的情况下数据报文类型列表:</h4><h5 id="成功返回：-1"><a href="#成功返回：-1" class="headerlink" title="成功返回："></a>成功返回：</h5><table>
+<thead>
+<tr>
+<th><strong><em>\</em>binary**</strong></th>
+<th><strong><em>\</em>十进制**</strong></th>
+<th><strong><em>\</em>客户端**</strong></th>
+<th><strong><em>\</em>服务端**</strong></th>
+<th><strong><em>\</em>含义**</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0000</td>
+<td>1</td>
+<td>SEND</td>
+<td>OK</td>
+<td>发送成功</td>
+</tr>
+<tr>
+<td>0001</td>
+<td>2</td>
+<td>PUBLISH</td>
+<td>OK</td>
+<td>发布成功</td>
+</tr>
+</tbody></table>
+<h5 id="错误返回：-1"><a href="#错误返回：-1" class="headerlink" title="错误返回："></a>错误返回：</h5><table>
+<thead>
+<tr>
+<th><strong><em>\</em>binary**</strong></th>
+<th><strong><em>\</em>十进制**</strong></th>
+<th><strong><em>\</em>客户端**</strong></th>
+<th><strong><em>\</em>服务端**</strong></th>
+<th><strong><em>\</em>含义**</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0010</td>
+<td>3</td>
+<td>SEND</td>
+<td>SEND_FAILURE</td>
+<td>发送失败</td>
+</tr>
+<tr>
+<td>0110</td>
+<td>4</td>
+<td>PUBLISH</td>
+<td>PUB_FAILURE</td>
+<td>发布失败</td>
+</tr>
+</tbody></table>
+<h3 id="2-两种模式"><a href="#2-两种模式" class="headerlink" title="2.两种模式"></a>2.两种模式</h3><ul>
+<li><p>TCP模式</p>
+<p>当包头的字节0的高4位为0001(十进制为1)的时候，表示此时协议是TCP模式。在此模式下，客户端和服务端保持长连接。客户端可以向服务端SEND数据，也可以向另一个客户端PUBLISH数据，此模式是一个双工模式，服务端，客户端之间可以双向通信。</p>
+</li>
+</ul>
+<p>TCP模式下客户端的连接过程</p>
+<ol>
+<li><p>请求连接</p>
+<p>客户端向服务端发送一个请求连接的CONNECT报文，此时仅仅是为了保证Socket连接成功，所以没有任何身份信息。</p>
+</li>
+<li><p>回复确认</p>
+<p>如果网络没有问题，服务端正常，客户端可信，此时回复一个OK报文，表示服务端准备就绪。</p>
+<p>如果配置了ACL或者是因为别的原因，服务端识别到非法客户端，此时直接回复REFUSE_CONNECT报文，告诉客户端不允许连接。</p>
+</li>
+<li><p>发送Client Id进行认证</p>
+<p>服务端回复确认OK包以后，客户端发送AUTH包，同时带上自己的ClientID请求连接，假如说ClientID此时为:CLIENT001，此时是9Byte，则字节3的值为CLIENT_ID_LENGTH=9(1001),同时数据区的第一段CLIENT_ID_LENGTH长度的数据即为真正的CLIENT_ID。如下图所示：</p>
+<p><img src="/uploads/image-20191031222159175.png" srcset="/img/loading.gif" alt="image-20191031222159175"></p>
+</li>
+</ol>
+<ol start="4">
+<li><p>回复认证结果</p>
+<p>如果认证成功，服务端返回OK包，如果认证失败，服务端返回AUTH_FAILURE包。</p>
+</li>
+<li><p>SEND：发送数据</p>
+<p>客户端把数据提交到服务端，服务端可进行存储或者丢弃处理，不做转发。假如客户端CLIENT001送”helloworld”到服务端，其中字节3低四位表示客户端的CLIENTID长度；字节1、2连起来表示helloworld的长度即为10，二进制表示为:0000000000001010：</p>
+<p><img src="/uploads/image-20191031222735382.png" srcset="/img/loading.gif" alt="image-20191031222735382"></p>
+<p>发送成功返回OK包，发送失败返回SEND_FAILURE包。</p>
+</li>
+<li><p>PUBLISH：发布数据</p>
+<p>表示客户端发送数据到另一个客户端，其实就是客户端之间的相互通信过程。当发送PUBLISH包的时候，需要注意下面的问题：</p>
+<ul>
+<li>FROM：数据从何而来，指的是数据源；</li>
+<li>TO：数据从何而去，指的是数据的目的地，指的是另一个客户端的ID。</li>
+</ul>
+<p>发布成功返回OK包，发布失败返回PUB_FAILURE包。</p>
+</li>
+</ol>
+<ul>
+<li><p>Trap模式</p>
+<p>当包头的字节0的高4位为0010(十进制为2)的时候，表示此时协议是Trap模式。在此模式下，只支持SEND形式发送数据，客户端只能提交数据到服务器上，不能进行转发，而是否持久化或者丢弃是服务端来决定的。Trap在发送数据的时候，必须带上ClientId。</p>
+<p>Trap模式和TCP模式的区别在于：TCP模式SEND结束以后保持连接，而Trap模式则断开连接，SEND完成后，如果成功则返回OK包，如果失败则返回SEND_FAILURE包，最后都是断开客户端的连接。</p>
+<p>其中Trap模式下SEND数据和TCP没有区别：</p>
+<p>CLIENT001发送(SEND)“helloworld”到服务端，其中字节3低四位表示客户端的CLIENTID长度；字节1、2连起来表示helloworld的长度即为10，二进制表示为:0000000000001010：</p>
+<p><img src="/uploads/image-20191031223415183.png" srcset="/img/loading.gif" alt="image-20191031223415183"></p>
+</li>
+</ul>
+<h2 id="5-报文"><a href="#5-报文" class="headerlink" title="5.报文"></a>5.报文</h2><ol>
+<li>CONNECT</li>
+<li>CONNECT_OK</li>
+<li>CONNECT_FAILURE</li>
+<li>AUTH</li>
+<li>AUTH_OK</li>
+<li>AUTH_FAILURE</li>
+<li>SEND</li>
+<li>SEND_OK</li>
+<li>SEND_FAILURE</li>
+<li>PUBLISH</li>
+<li>PUB_OK</li>
+<li>PUB_FAILURE</li>
+<li>CMD</li>
+<li>CMD_OK</li>
+<li>CMD_FAILURE</li>
+</ol>
+<h2 id="6-状态码"><a href="#6-状态码" class="headerlink" title="6.状态码"></a>6.状态码</h2><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>成功</th>
+<th>备注</th>
+<th>失败</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>请求连接</td>
+<td>0</td>
+<td>0000</td>
+<td>1</td>
+<td>0001</td>
+</tr>
+<tr>
+<td>发送数据</td>
+<td>0</td>
+<td>0000</td>
+<td>2</td>
+<td>0010</td>
+</tr>
+<tr>
+<td>发布数据</td>
+<td>0</td>
+<td>0000</td>
+<td>3</td>
+<td>0011</td>
+</tr>
+<tr>
+<td>执行命令</td>
+<td>0</td>
+<td>0000</td>
+<td>4</td>
+<td>0100</td>
+</tr>
+</tbody></table>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Erlang/">Erlang</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">服务器</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Erlang/">Erlang</a>
+                    
+                      <a class="hover-with-bg" href="/tags/TCP/">TCP</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/11/06/clpb7c67n00apsgue6hwdcpfo.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">云函数回调</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2019/10/25/clpb7c65a0016sgue3bzh23ze.html">
+                        <span class="hidden-mobile">EMQX插件开发基础</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                  <script src="https://utteranc.es/client.js"
+                    repo="wwhai/gitalk"
+                    issue-term="url"
+                    label="[Utterances]"
+                    theme="preferred-color-scheme"
+                    crossorigin="anonymous"
+                    async>
+                  </script>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Trap协议-简单TCP通信协议设计&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "#"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>

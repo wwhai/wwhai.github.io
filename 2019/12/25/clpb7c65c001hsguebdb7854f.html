@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="新四青年 的技术分享">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>Emqx插件开发实战 - 新四青年</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+
+  <!-- 顶部提示 -->
+  <div class="alert alert-warning" role="alert"
+    style="margin-top: 70px; background-color: black;color: rgb(156, 255, 25);text-align: center;padding: 0 0 0 0;">
+    <strong>提示：本站一些文章的超时空时间是乱写的，主要是为了排序，并不是真实写作时间。</strong>
+  </div>
+
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar" style="background-color: #000000;">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>新四青年</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/openlab/academic.html">
+                
+                FreeOpenLab
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/things/">
+                
+                作品
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/post.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2019-12-25 09:06">
+      December 25, 2019 am
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      13
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：June 30, 2023 pm
+                
+              </p>
+            
+            <article class="markdown-body">
+              <p>本文作者：[wangwenhai] # 概要：本文主要讲如何开发一个完整的数据转发插件,通过该插件可以把EMQX产生的数据发送到任一接口.</p>
+<span id="more"></span>
+
+<h2 id="1-本文概述"><a href="#1-本文概述" class="headerlink" title="1.本文概述"></a>1.本文概述</h2><p>EMQX的官方插件满足不了的时候,我们可以自定义开发插件.本文就以一个简单的插件入手,演示如何为EMQX开发可使用的插件.</p>
+<h2 id="2-环境准备"><a href="#2-环境准备" class="headerlink" title="2.环境准备"></a>2.环境准备</h2><ol>
+<li>Erlang环境;</li>
+<li>一个编辑器,建议VScode;</li>
+<li>git;</li>
+<li>rebar3;</li>
+<li>rebar3的EMQX插件模板.</li>
+</ol>
+<p>上面的环境确保安装成功以后再进行下一步,如果没有安装请查阅之前的文章进行安装.</p>
+<h2 id="3-开发实战"><a href="#3-开发实战" class="headerlink" title="3.开发实战"></a>3.开发实战</h2><p>本插件是一个把EMQX的消息发布到WEB端的简单模块,接下来我们按照软件开发流程来走一遍.其中我们的插件名字叫:advisory_plugin.</p>
+<h3 id="1-创建项目"><a href="#1-创建项目" class="headerlink" title="1.创建项目"></a>1.创建项目</h3><ol>
+<li><p>切换到自己的工作目录</p>
+</li>
+<li><p>执行命令:</p>
+<pre><code class="hljs shell">rebar3 new emqx-plugin advisory_plugin</code></pre>
+</li>
+<li><p>输出成功以后,会生成如下目录结构:</p>
+</li>
+</ol>
+<p><img src="/uploads/image-20191225091715849.png" srcset="/img/loading.gif" alt="image-20191225091715849"></p>
+<p>其中我们的源码在src下.</p>
+<h3 id="2-实现接口"><a href="#2-实现接口" class="headerlink" title="2.实现接口"></a>2.实现接口</h3><p>此处我们拿当客户端连接成功这个事件来作为案例:当设备连接成功以后,给WEB端 一个上线通知,写入一些记录.</p>
+<p>解析来找到上线的响应函数:<code>on_client_connected</code></p>
+<pre><code class="hljs erlang"><span class="hljs-function"><span class="hljs-title">on_client_connected</span><span class="hljs-params">(ClientInfo = #&#123;clientid := ClientId, username := Username, peerhost :=Host&#125;, <span class="hljs-number">0</span>, _ConnInfo, _Env)</span> -&gt;</span>
+  emqx_metrics:inc(&#x27;advisory_plugin.client_connected&#x27;),
+  Params = [
+    &#123;action, connected&#125;,
+    &#123;clientid, ClientId&#125;,
+    &#123;username, Username&#125;,
+    &#123;ip, iolist_to_binary(ntoa(Host))&#125;
+  ],
+  ?LOG(debug, <span class="hljs-string">&quot;on_client_connected ~p~n&quot;</span>, [ClientInfo]),
+  send_http_post(<span class="hljs-string">&quot;connected&quot;</span>, Params),
+  ok;
+
+<span class="hljs-function"><span class="hljs-title">on_client_connected</span><span class="hljs-params">(#&#123;&#125;, _ConnAck, _ConnInfo, _Env)</span> -&gt;</span>
+  ok.
+</code></pre>
+
+
+
+<p>其中<code>send_http_post</code>函数便是推送函数,具体代码如下:</p>
+<pre><code class="hljs erlang"><span class="hljs-function"><span class="hljs-title">send_http_post</span><span class="hljs-params">(Api, Params)</span> -&gt;</span>
+  Json = jsx:encode(Params),
+  Url = application:get_env(?APP, destination, <span class="hljs-string">&quot;http://127.0.0.1&quot;</span>),
+  <span class="hljs-keyword">case</span> request(post, &#123;string:concat(Url, Api), [], <span class="hljs-string">&quot;application/json&quot;</span>, Json&#125;, [&#123;timeout, <span class="hljs-number">5000</span>&#125;], [], <span class="hljs-number">0</span>) <span class="hljs-keyword">of</span>
+    &#123;ok, _&#125; -&gt;
+      ?LOG(debug, <span class="hljs-string">&quot;Post to:[~p], Params:~s success~n&quot;</span>, [Url, Json]),
+      ok;
+    &#123;error, Reason&#125; -&gt;
+      ?LOG(error, <span class="hljs-string">&quot;HTTP request error: ~p&quot;</span>, [Reason]),
+      error
+  <span class="hljs-keyword">end</span>.
+
+<span class="hljs-function"><span class="hljs-title">request</span><span class="hljs-params">(Method, Req, HTTPOpts, Opts, Times)</span> -&gt;</span>
+  <span class="hljs-comment">%% Resend request, when TCP closed by remotely</span>
+  <span class="hljs-keyword">case</span> httpc:request(Method, Req, HTTPOpts, Opts) <span class="hljs-keyword">of</span>
+    &#123;error, socket_closed_remotely&#125; <span class="hljs-keyword">when</span> Times &lt; <span class="hljs-number">3</span> -&gt;
+      timer:sleep(trunc(math:pow(<span class="hljs-number">10</span>, Times))),
+      request(Method, Req, HTTPOpts, Opts, Times + <span class="hljs-number">1</span>);
+    Other -&gt; Other
+  <span class="hljs-keyword">end</span>.</code></pre>
+
+<p>其中我们用到了jsx库,这是一个erlang的JSON解析器实现.</p>
+<pre><code class="hljs ini"><span class="hljs-attr">Url</span> = application:get_env(?APP, destination, <span class="hljs-string">&quot;http://127.0.0.1&quot;</span>)</code></pre>
+
+<p>上述代码先从配置文件中获取推送的目标,如果不存在就是<code>http://127.0.0.1</code>,然后把数据post上去.代码看起来比较简单,接下来我们增加配置项.</p>
+<p>找到<code>priv</code>目录下的schema文件,最后加入以下代码:</p>
+<pre><code class="hljs elm">&#123;mapping, <span class="hljs-string">&quot;advisory_plugin.destination&quot;</span>, <span class="hljs-string">&quot;advisory_plugin.destination&quot;</span>, [
+  &#123;data<span class="hljs-keyword">type</span>, string&#125;
+]&#125;.</code></pre>
+
+<p>这里表示的是从配置文件中映射配置项,下面是配置文件<code>etc</code>目录下的conf文件:</p>
+<pre><code class="hljs awk">advisory_plugin.destination = http:<span class="hljs-regexp">//</span>localhost:端口<span class="hljs-regexp">/data/</span></code></pre>
+
+<p>到这步,我们的插件就开发完成了,然后来实现WEB端的接口.</p>
+<h3 id="3-WEB推送接口实现"><a href="#3-WEB推送接口实现" class="headerlink" title="3.WEB推送接口实现"></a>3.WEB推送接口实现</h3><p>我拿SpringMVC为例:</p>
+<pre><code class="hljs java"><span class="hljs-meta">@PostMapping(&quot;/connected&quot;)</span>
+<span class="hljs-function"><span class="hljs-keyword">public</span> R <span class="hljs-title">connected</span><span class="hljs-params">(<span class="hljs-meta">@RequestBody</span> <span class="hljs-meta">@Valid</span> ConnectedMessage message)</span> <span class="hljs-keyword">throws</span> XException </span>&#123;
+System.out.println(<span class="hljs-string">&quot;设备 Clientid is:&quot;</span> + message.getClientid() + <span class="hljs-string">&quot; Username is:&quot;</span> + message.getUsername() + <span class="hljs-string">&quot; 上线&quot;</span>);
+&#125;
+</code></pre>
+
+<p>此时我们就能监听客户端的数据了.</p>
+<h3 id="4-插件安装"><a href="#4-插件安装" class="headerlink" title="4.插件安装"></a>4.插件安装</h3><p>在这里我使用了编译的形式安装插件.首先我们打开emqx-rel项目,没有的话可以先git克隆下来:</p>
+<pre><code class="hljs shell">git clone https://github.com/emqx/emqx-rel.git</code></pre>
+
+<p>找到rebar.config文件,加入插件,在deps节点下加入(这里我用了自己的仓库):</p>
+<pre><code class="hljs erlang">&#123; advisory_plugin, &#123; git , <span class="hljs-string">&quot;https://gitee.com/lagrangewang/advisory_plugin.git&quot;</span> , &#123;branch, <span class="hljs-string">&quot;master&quot;</span>&#125; &#125; &#125;</code></pre>
+
+<p>然后配置插件加载,在relx节点下加入:</p>
+<pre><code class="hljs erlang">&#123;advisory_plugin,load&#125;</code></pre>
+
+<p>然后执行make.经过漫长的等待以后,不出问题,我们的项目可以编译成功,执行下面的命令:</p>
+<pre><code class="hljs shell">cd _build/emqx/rel/emqx &amp;&amp; ./bin/emqx console</code></pre>
+
+<p>会有如下输出:</p>
+<p><img src="/uploads/image-20191225093324490.png" srcset="/img/loading.gif" alt="image-20191225093324490"></p>
+<p>此时表示已经成功运行起了EMQX,我们看看插件情况,打开<code>http://localhost:18083/</code>,我们看到插件已经加载到了EMQX里面.</p>
+<p><img src="/uploads/image-20191225093425903.png" srcset="/img/loading.gif" alt="image-20191225093425903"></p>
+<h3 id="5-总结"><a href="#5-总结" class="headerlink" title="5.总结"></a>5.总结</h3><p>本文我们主要讲了EMQX插件的开发流程和一个简单的Demo.WEB接口可自定义去实现功能.</p>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/EMQX%E9%AB%98%E7%BA%A7%E5%BC%80%E5%8F%91%E6%95%99%E7%A8%8B/">EMQX高级开发教程</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Erlang/">Erlang</a>
+                    
+                      <a class="hover-with-bg" href="/tags/EMQX/">EMQX</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/12/30/clpb7c667004nsguehsajh4i6.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">用数据库配置常量标记之一种简单的查字典方式</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2019/12/01/clpb7c65c001dsgue56tkdx5i.html">
+                        <span class="hidden-mobile">EMQX二次开发之自定义Listener</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                  <script src="https://utteranc.es/client.js"
+                    repo="wwhai/gitalk"
+                    issue-term="url"
+                    label="[Utterances]"
+                    theme="preferred-color-scheme"
+                    crossorigin="anonymous"
+                    async>
+                  </script>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Emqx插件开发实战&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "#"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>
