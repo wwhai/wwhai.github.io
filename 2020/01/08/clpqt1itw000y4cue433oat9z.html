@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="新四青年 的技术分享">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>EMQ新手玩家常见问题解答 - 新四青年</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+
+  <!-- 顶部提示 -->
+  <div class="alert alert-warning" role="alert"
+    style="margin-top: 70px; background-color: black;color: rgb(156, 255, 25);text-align: center;padding: 0 0 0 0;">
+    <strong>提示：本站一些文章的超时空时间是乱写的，主要是为了排序，并不是真实写作时间。</strong>
+  </div>
+
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar" style="background-color: #000000;">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>新四青年</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/openlab/academic.html">
+                
+                FreeOpenLab
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/things/">
+                
+                作品
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/post.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2020-01-08 08:48">
+      January 8, 2020 am
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      17
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：June 30, 2023 pm
+                
+              </p>
+            
+            <article class="markdown-body">
+              <p>本文作者：[wangwenhai] # 概要：本文主要讲一下刚接触EMQ的时候遇到的一些新手问题,这些问题每天都有人问,但是没人总结,故抽空总结一下,以便后人翻阅.</p>
+<span id="more"></span>
+
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1.概述"></a>1.概述</h2><p>相信很多朋友在初次接触EMQ的时候,都会有一些基础问题,什么端口在哪?还有API怎么调用等等,每天都在群里看到新人问,为了方便大家统一查阅,我专门整理了个文档来记录下来.</p>
+<h2 id="2-问答"><a href="#2-问答" class="headerlink" title="2.问答"></a>2.问答</h2><p>下面这些是起步的时候遇到的基础问题:</p>
+<h3 id="1-EMQ怎么下载"><a href="#1-EMQ怎么下载" class="headerlink" title="1. EMQ怎么下载?"></a>1. EMQ怎么下载?</h3><p>   下载地址:<a target="_blank" rel="noopener" href="https://www.emqx.io/cn/downloads">https://www.emqx.io/cn/downloads</a></p>
+<p>   <img src="/uploads/image-20200108090253684.png" srcset="/img/loading.gif" alt="image-20200108090253684"></p>
+<p>   版本选择:</p>
+<ul>
+<li><p>如果你是个人用户,建议下载Broker;</p>
+</li>
+<li><p>如果是企业用户,建议下载Enterprise.</p>
+</li>
+</ul>
+<h3 id="2-EMQ在windows怎么启动"><a href="#2-EMQ在windows怎么启动" class="headerlink" title="2. EMQ在windows怎么启动?"></a>2. EMQ在windows怎么启动?</h3><p>​根据这两年的研究和使用,我自己发现在windows下启动的时候很不友好,有时候经常启动失败,我总结的办法是:当输入:<code>emqx start</code>的时候,会卡住比较久,在这个时候<code>Ctrl+C</code>取消,然后再来一遍,可能就成功了,总之在windows下启动不太理想,建议用linux或者WSL也可以.</p>
+<h3 id="3-为何我的WEB控制台报404"><a href="#3-为何我的WEB控制台报404" class="headerlink" title="3. 为何我的WEB控制台报404?"></a>3. 为何我的WEB控制台报404?</h3><p> EMQ的WEB控制台的端口默认是8080,如果你事先已经占用了8080,比如启动了tomcat,请先去看下是不是冲突了,这种情况大部分是端口冲突.</p>
+<h3 id="4-为何我的WEB控制台启动不了"><a href="#4-为何我的WEB控制台启动不了" class="headerlink" title="4. 为何我的WEB控制台启动不了?"></a>4. 为何我的WEB控制台启动不了?</h3><p>原因同上面第三点,端口冲突.</p>
+<h3 id="5-怎么设置WEB界面为中文"><a href="#5-怎么设置WEB界面为中文" class="headerlink" title="5. 怎么设置WEB界面为中文?"></a>5. 怎么设置WEB界面为中文?</h3><p> <img src="/uploads/image-20200108090839669.png" srcset="/img/loading.gif" alt="image-20200108090839669"></p>
+<h3 id="6-WEB界面的管理员账号怎么设置"><a href="#6-WEB界面的管理员账号怎么设置" class="headerlink" title="6. WEB界面的管理员账号怎么设置?"></a>6. WEB界面的管理员账号怎么设置?</h3><p><img src="/uploads/image-20200108090915883.png" srcset="/img/loading.gif" alt="image-20200108090915883"></p>
+<h2 id="下面这些在使用过程中遇到的"><a href="#下面这些在使用过程中遇到的" class="headerlink" title="下面这些在使用过程中遇到的:"></a>下面这些在使用过程中遇到的:</h2><h3 id="1-为何我的MQTT客户端连接不了EMQ"><a href="#1-为何我的MQTT客户端连接不了EMQ" class="headerlink" title="1. 为何我的MQTT客户端连接不了EMQ?"></a>1. 为何我的MQTT客户端连接不了EMQ?</h3><p>   请检查端口是否是1883,或者看看EMQ启动成功了没.</p>
+<h3 id="2-为何我改了XXX配置还是不行"><a href="#2-为何我改了XXX配置还是不行" class="headerlink" title="2. 为何我改了XXX配置还是不行?"></a>2. 为何我改了XXX配置还是不行?</h3><p>   EMQ的配置修改了以后需要重启才能加载进内存.</p>
+<h3 id="3-为何我的Mysql插件配置成功了但是还是没有效果"><a href="#3-为何我的Mysql插件配置成功了但是还是没有效果" class="headerlink" title="3. 为何我的Mysql插件配置成功了但是还是没有效果?"></a>3. 为何我的Mysql插件配置成功了但是还是没有效果?</h3><p>   EMQ的匿名连接默认是开的,也就是默认不需要认证,如果开启Mysql认证插件,就需要配合关闭匿名,具体操作如下:</p>
+<ul>
+<li><p>打开emqx.conf,关闭匿名模式，大概在410行的位置处，把【anonymous=true】改成【anonymous=false】;</p>
+</li>
+<li><p>在大约415行处【acl_nomatch = allow】改成【acl_nomatch = deny】;</p>
+</li>
+<li><p>如果需要严格约束,可以配置当ACL不匹配的时候拒绝连接:445行的【acl_deny_action=ignore】改为【acl_deny_action=disconnect】。</p>
+</li>
+</ul>
+<h3 id="4-为何我的Mysql认证插件老是拒绝连接"><a href="#4-为何我的Mysql认证插件老是拒绝连接" class="headerlink" title="4. 为何我的Mysql认证插件老是拒绝连接?"></a>4. 为何我的Mysql认证插件老是拒绝连接?</h3><p>   检查密码的加密方式是不是有问题.</p>
+<h3 id="5-为何我的WebHook插件没有效果"><a href="#5-为何我的WebHook插件没有效果" class="headerlink" title="5. 为何我的WebHook插件没有效果?"></a>5. 为何我的WebHook插件没有效果?</h3><p>   有2种情况:</p>
+<ul>
+<li>URL配置错误,倒是webhook请求不到</li>
+<li>webhook压根没启动</li>
+</ul>
+<h3 id="6-怎么监控设备上下线"><a href="#6-怎么监控设备上下线" class="headerlink" title="6. 怎么监控设备上下线?"></a>6. 怎么监控设备上下线?</h3><p>   目前有2种形式:</p>
+<ol>
+<li><p>用一个MQTT客户端订阅下面的两个topic:</p>
+<table>
+<thead>
+<tr>
+<th align="left">主题(Topic)</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">${clientid}/connected</td>
+<td align="left">上线事件。当某客户端上线时，会发布该消息</td>
+</tr>
+<tr>
+<td align="left">${clientid}/disconnected</td>
+<td align="left">下线事件。当某客户端离线时，会发布该消息</td>
+</tr>
+</tbody></table>
+<ul>
+<li>‘connected’ 事件消息的 Payload 可解析成 JSON 格式:</li>
+</ul>
+<pre><code class="hljs json">&#123;
+    <span class="hljs-attr">&quot;clientid&quot;</span>:<span class="hljs-string">&quot;id1&quot;</span>,
+    <span class="hljs-attr">&quot;username&quot;</span>:<span class="hljs-string">&quot;u&quot;</span>,
+    <span class="hljs-attr">&quot;ipaddress&quot;</span>:<span class="hljs-string">&quot;127.0.0.1&quot;</span>,
+    <span class="hljs-attr">&quot;connack&quot;</span>:<span class="hljs-number">0</span>,
+    <span class="hljs-attr">&quot;ts&quot;</span>:<span class="hljs-number">1554047291</span>,
+    <span class="hljs-attr">&quot;proto_ver&quot;</span>:<span class="hljs-number">3</span>,
+    <span class="hljs-attr">&quot;proto_name&quot;</span>:<span class="hljs-string">&quot;MQIsdp&quot;</span>,
+    <span class="hljs-attr">&quot;clean_start&quot;</span>:<span class="hljs-literal">true</span>,
+    <span class="hljs-attr">&quot;keepalive&quot;</span>:<span class="hljs-number">60</span>
+&#125;</code></pre>
+
+<ul>
+<li>‘disconnected’ 事件消息的 Payload 可解析成 JSON 格式:</li>
+</ul>
+<pre><code class="hljs json">&#123;
+    <span class="hljs-attr">&quot;clientid&quot;</span>:<span class="hljs-string">&quot;id1&quot;</span>,
+    <span class="hljs-attr">&quot;username&quot;</span>:<span class="hljs-string">&quot;u&quot;</span>,
+    <span class="hljs-attr">&quot;reason&quot;</span>:<span class="hljs-string">&quot;normal&quot;</span>,
+    <span class="hljs-attr">&quot;ts&quot;</span>:<span class="hljs-number">1554047291</span>
+&#125;</code></pre>
+</li>
+<li><p>用WebHook插件:</p>
+<h2 id="WebHook-插件"><a href="#WebHook-插件" class="headerlink" title="WebHook 插件"></a>WebHook 插件</h2><p><a target="_blank" rel="noopener" href="https://github.com/emqx/emqx-web-hook">emqx_web_hook</a> 插件可以将所有 <em>EMQ X</em> 的事件及消息都发送到指定的 HTTP 服务器。</p>
+<h3 id="配置-WebHook-插件"><a href="#配置-WebHook-插件" class="headerlink" title="配置 WebHook 插件"></a>配置 WebHook 插件</h3><ul>
+<li>etc/plugins/emqx_web_hook.conf:</li>
+</ul>
+<pre><code class="hljs ini"><span class="hljs-comment">## 回调的 Web Server 地址</span>
+<span class="hljs-attr">web.hook.api.url</span> = http://<span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8080</span>
+
+<span class="hljs-comment">## 编码 Payload 字段</span>
+<span class="hljs-comment">## 枚举值: undefined | base64 | base62</span>
+<span class="hljs-comment">## 默认值: undefined (不进行编码)</span>
+<span class="hljs-comment">## web.hook.encode_payload = base64</span>
+
+<span class="hljs-comment">## 消息、事件配置</span>
+<span class="hljs-attr">web.hook.rule.client.connected.1</span>     = &#123;<span class="hljs-string">&quot;action&quot;</span>: <span class="hljs-string">&quot;on_client_connected&quot;</span>&#125;
+<span class="hljs-attr">web.hook.rule.client.disconnected.1</span>  = &#123;<span class="hljs-string">&quot;action&quot;</span>: <span class="hljs-string">&quot;on_client_disconnected&quot;</span>&#125;
+<span class="hljs-attr">web.hook.rule.client.subscribe.1</span>     = &#123;<span class="hljs-string">&quot;action&quot;</span>: <span class="hljs-string">&quot;on_client_subscribe&quot;</span>&#125;
+<span class="hljs-attr">web.hook.rule.client.unsubscribe.1</span>   = &#123;<span class="hljs-string">&quot;action&quot;</span>: <span class="hljs-string">&quot;on_client_unsubscribe&quot;</span>&#125;
+<span class="hljs-attr">web.hook.rule.session.created.1</span>      = &#123;<span class="hljs-string">&quot;action&quot;</span>: <span class="hljs-string">&quot;on_session_created&quot;</span>&#125;
+<span class="hljs-attr">web.hook.rule.session.subscribed.1</span>   = &#123;<span class="hljs-string">&quot;action&quot;</span>: <span class="hljs-string">&quot;on_session_subscribed&quot;</span>&#125;
+<span class="hljs-attr">web.hook.rule.session.unsubscribed.1</span> = &#123;<span class="hljs-string">&quot;action&quot;</span>: <span class="hljs-string">&quot;on_session_unsubscribed&quot;</span>&#125;
+<span class="hljs-attr">web.hook.rule.session.terminated.1</span>   = &#123;<span class="hljs-string">&quot;action&quot;</span>: <span class="hljs-string">&quot;on_session_terminated&quot;</span>&#125;
+<span class="hljs-attr">web.hook.rule.message.publish.1</span>      = &#123;<span class="hljs-string">&quot;action&quot;</span>: <span class="hljs-string">&quot;on_message_publish&quot;</span>&#125;
+<span class="hljs-attr">web.hook.rule.message.deliver.1</span>      = &#123;<span class="hljs-string">&quot;action&quot;</span>: <span class="hljs-string">&quot;on_message_deliver&quot;</span>&#125;
+<span class="hljs-attr">web.hook.rule.message.acked.1</span>        = &#123;<span class="hljs-string">&quot;action&quot;</span>: <span class="hljs-string">&quot;on_message_acked&quot;</span>&#125;</code></pre>
+
+</li>
+</ol>
+<h3 id="7-怎么监控设备发送的数据"><a href="#7-怎么监控设备发送的数据" class="headerlink" title="7. 怎么监控设备发送的数据?"></a>7. 怎么监控设备发送的数据?</h3><p>   可以和第八点一样的形式,或者使用规则引擎</p>
+<p>下面这些是比较高级的使用:</p>
+<h3 id="1-怎么让我的XXX设备通过MQTT协议把数据上报到EMQ"><a href="#1-怎么让我的XXX设备通过MQTT协议把数据上报到EMQ" class="headerlink" title="1. 怎么让我的XXX设备通过MQTT协议把数据上报到EMQ?"></a>1. 怎么让我的XXX设备通过MQTT协议把数据上报到EMQ?</h3><p>   让设备作为一个客户端,然后向一个topic发送数据即可.</p>
+<h3 id="2-怎么设计一个简单的物联网平台"><a href="#2-怎么设计一个简单的物联网平台" class="headerlink" title="2. 怎么设计一个简单的物联网平台?"></a>2. 怎么设计一个简单的物联网平台?</h3><p>   设计一个平台比较复杂,没有能分分钟完成的,建议先参考同类,总结需求再提出设计方案..</p>
+<p>   欢迎加入QQ群进行讨论:475512169</p>
+<h2 id="3-建议"><a href="#3-建议" class="headerlink" title="3.建议"></a>3.建议</h2><p>建议大家多阅读文档,最好是通读一遍,大概有个印象,每次遇到问题就能直接去查阅,而不是反反复复的问问题,其实每个问题都是很多人重复问过的.</p>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4.总结"></a>4.总结</h2><p>本文总结了一些EMQ的新手使用问题.</p>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/EMQX/">EMQX</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/emqx/">emqx</a>
+                    
+                      <a class="hover-with-bg" href="/tags/erlang/">erlang</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/01/08/clpqt1itx00134cue0wgq480e.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">通过WebSocket监控EMQX的设备上下线</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/01/07/clpqt1iv2004y4cue0dnjeybn.html">
+                        <span class="hidden-mobile">Springboot项目中使用Mybatisplus分页Mongodb</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                  <script src="https://utteranc.es/client.js"
+                    repo="wwhai/gitalk"
+                    issue-term="url"
+                    label="[Utterances]"
+                    theme="preferred-color-scheme"
+                    crossorigin="anonymous"
+                    async>
+                  </script>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "EMQ新手玩家常见问题解答&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "#"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>

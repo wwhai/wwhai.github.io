@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="新四青年 的技术分享">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>Arduino简单命令行模拟 - 新四青年</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+
+  <!-- 顶部提示 -->
+  <div class="alert alert-warning" role="alert"
+    style="margin-top: 70px; background-color: black;color: rgb(156, 255, 25);text-align: center;padding: 0 0 0 0;">
+    <strong>提示：本站一些文章的超时空时间是乱写的，主要是为了排序，并不是真实写作时间。</strong>
+  </div>
+
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar" style="background-color: #000000;">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>新四青年</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/openlab/academic.html">
+                
+                FreeOpenLab
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/things/">
+                
+                作品
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/post.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2020-01-06 10:59">
+      January 6, 2020 am
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      32
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：June 30, 2023 pm
+                
+              </p>
+            
+            <article class="markdown-body">
+              <p>本文作者：[wangwenhai] # 概要：本文主要展示一段之前实现的Arduino命令行模拟代码,包含了WIFI操作,MQTT,DHT11温湿度读取等等常见操作.</p>
+<span id="more"></span>
+
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1.概述"></a>1.概述</h2><p>我们在用串口操作Arduino的时候,会有一些输出提示,一般我们做一个封装,比如命令行输出一些提示信息给用户去查看,操作比较友好,于是我自己写了个非常简单的模拟固件,同时还有通过串口配置WIFI的一些操作.</p>
+<h2 id="2-代码展示"><a href="#2-代码展示" class="headerlink" title="2.代码展示"></a>2.代码展示</h2><p>代码如下所示:</p>
+<pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;ESP_EEPROM.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;ESP8266WiFi.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;PubSubClient.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;Wire.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;Ethernet.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;ACROBOTIC_SSD1306.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;Arduino_JSON.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&quot;DHTesp.h&quot;</span></span>
+<span class="hljs-comment">///</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> RED_LED_GPIO 12</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> GREEN_LED_GPIO 13</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> BLUE_LED_GPIO 15</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> DHT11_GPIO 5</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> BUZZER_GPIO  14</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> MQTT_MAX_TRANSFER_SIZE</span>
+<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span>* clientId = <span class="hljs-string">&quot;85C05BE9296E49EBAACA1A4BF77AD0E2&quot;</span>;
+<span class="hljs-comment">/*</span>
+<span class="hljs-comment">   联网不一定连MQTT服务器</span>
+<span class="hljs-comment">   不联网一定不连MQTT服务器</span>
+<span class="hljs-comment">*/</span>
+DHTesp dht;
+boolean isConnectToWifi ;
+boolean isConnectToMqtt ;
+<span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">SysConfig</span></span>
+<span class="hljs-class">&#123;</span>
+  <span class="hljs-keyword">char</span> ssid[<span class="hljs-number">32</span>];
+  <span class="hljs-keyword">char</span> password[<span class="hljs-number">32</span>];
+  <span class="hljs-keyword">char</span> mqttServer[<span class="hljs-number">64</span>] = <span class="hljs-string">&quot;192.168.1.100&quot;</span>;
+  <span class="hljs-keyword">char</span> mqttClientId[<span class="hljs-number">64</span>] = <span class="hljs-string">&quot;testEsp&quot;</span>;
+  <span class="hljs-keyword">char</span> mqttUsername[<span class="hljs-number">64</span>] = <span class="hljs-string">&quot;system&quot;</span>;
+  <span class="hljs-keyword">char</span> mqttPassword[<span class="hljs-number">64</span>] = <span class="hljs-string">&quot;password&quot;</span>;
+  <span class="hljs-keyword">int</span> mqttPort = <span class="hljs-number">1883</span>;
+&#125;;
+
+SysConfig sysConfig;
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment">   连接Mqtt用的</span>
+<span class="hljs-comment">*/</span>
+WiFiClient espClient;
+<span class="hljs-function">PubSubClient <span class="hljs-title">mqttClient</span><span class="hljs-params">(<span class="hljs-string">&quot;192.168.1.100&quot;</span>, <span class="hljs-number">1883</span>, espClient)</span></span>;
+<span class="hljs-comment">//PubSubClient mqttClient(espClient);</span>
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment">   OLED 显示屏</span>
+<span class="hljs-comment">*/</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">display</span><span class="hljs-params">(<span class="hljs-keyword">int</span> line, <span class="hljs-keyword">int</span> x, boolean isClear, <span class="hljs-keyword">char</span> content[])</span> </span>&#123;
+  <span class="hljs-keyword">if</span> (isClear) &#123;
+    oled.<span class="hljs-built_in">clearDisplay</span>();
+    oled.<span class="hljs-built_in">setTextXY</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+    oled.<span class="hljs-built_in">putString</span>(content);
+  &#125; <span class="hljs-keyword">else</span> &#123;
+    oled.<span class="hljs-built_in">setTextXY</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+    oled.<span class="hljs-built_in">putString</span>(content);
+  &#125;
+
+&#125;
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment">   加载配置</span>
+<span class="hljs-comment">*/</span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">loadSysConfig</span><span class="hljs-params">()</span> </span>&#123;
+  EEPROM.<span class="hljs-built_in">begin</span>(<span class="hljs-built_in"><span class="hljs-keyword">sizeof</span></span>(SysConfig));
+  EEPROM.<span class="hljs-built_in">get</span>(<span class="hljs-number">0</span>, sysConfig);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;--------Load wifi SysConfig from EPROM--------&quot;</span>);
+  Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;|SSID: &quot;</span>);
+  Serial.<span class="hljs-built_in">print</span>(sysConfig.ssid);
+  Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\t Password: &quot;</span>);
+  Serial.<span class="hljs-built_in">println</span>(sysConfig.password);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;----------------------------------------------&quot;</span>);
+
+&#125;
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment">   写入配置到EPROM</span>
+<span class="hljs-comment">*/</span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">writeSysConfig</span><span class="hljs-params">()</span> </span>&#123;
+  EEPROM.<span class="hljs-built_in">begin</span>(<span class="hljs-built_in"><span class="hljs-keyword">sizeof</span></span>(SysConfig));
+  EEPROM.<span class="hljs-built_in">put</span>(<span class="hljs-number">0</span>, sysConfig);
+  EEPROM.<span class="hljs-built_in">commitReset</span>();
+&#125;
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment">   打印banner</span>
+<span class="hljs-comment">*/</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">welcome</span><span class="hljs-params">()</span> </span>&#123;
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;&quot;</span>);
+
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;**********************************************&quot;</span>);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;*     Welcome use NodeMcu Cli Mode V0.0.1    *&quot;</span>);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;*     Send &#x27;help&#x27; for more information       *&quot;</span>);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;**********************************************&quot;</span>);
+
+&#125;
+
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment">   Help</span>
+<span class="hljs-comment">*/</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">showHelp</span><span class="hljs-params">()</span> </span>&#123;
+
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;&quot;</span>);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;**********************************************&quot;</span>);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;|SysConfig Wlan: wlanset -s &#123;SSID&#125; -p &#123;Password&#125;|&quot;</span>);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;|Print Wlan Info:wlan                        |&quot;</span>);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;|Test Buzzer &#123;n&#125; times: beep &#123;n&#125;             |&quot;</span>);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;|Print tempature:temp                        |&quot;</span>);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;|Print tempature:hum                         |&quot;</span>);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;**********************************************&quot;</span>);
+&#125;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">echoTemp</span><span class="hljs-params">()</span> </span>&#123;
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;*------------------------------------------*&quot;</span>);
+  Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;|             Current tempature is:      &quot;</span>);
+  Serial.<span class="hljs-built_in">print</span>(<span class="hljs-number">35</span>);  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;|&quot;</span>);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;*------------------------------------------*&quot;</span>);
+&#125;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">echoHumidity</span><span class="hljs-params">()</span> </span>&#123;
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;*------------------------------------------*&quot;</span>);
+  Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;|     Current humidity:             |&quot;</span>);
+  Serial.<span class="hljs-built_in">print</span>(<span class="hljs-number">35</span>);  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;|&quot;</span>);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;*------------------------------------------*&quot;</span>);
+&#125;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">echoWlan</span><span class="hljs-params">()</span> </span>&#123;
+  <span class="hljs-keyword">if</span> (WiFi.<span class="hljs-built_in">status</span>() == WL_CONNECTED) &#123;
+    Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;*------------------------------------------*&quot;</span>);
+    Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;|state:&quot;</span>);
+    Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;ON\t&quot;</span>);
+    Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;     \tIP:&quot;</span>);
+    Serial.<span class="hljs-built_in">println</span>(WiFi.<span class="hljs-built_in">localIP</span>());
+    Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;*------------------------------------------*&quot;</span>);
+  &#125; <span class="hljs-keyword">else</span> &#123;
+    Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;|Network has disconnected.&quot;</span>);
+  &#125;
+
+&#125;
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment">   配置网络</span>
+<span class="hljs-comment">*/</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setupWifi</span><span class="hljs-params">()</span> </span>&#123;
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;-----------------SetUp wifi-------------------&quot;</span>);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;|Try  connect to network.&quot;</span>);
+  Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;|&quot;</span>);
+  WiFi.<span class="hljs-built_in">begin</span>(sysConfig.ssid, sysConfig.password);
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span> ; i &lt; <span class="hljs-number">10</span>; i++) &#123;
+    Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;=&gt;&quot;</span>);
+    <span class="hljs-built_in">delay</span>(<span class="hljs-number">1000</span>);
+    <span class="hljs-keyword">if</span> (WiFi.<span class="hljs-built_in">status</span>() == WL_CONNECTED) &#123;
+      WiFi.<span class="hljs-built_in">hostname</span>(<span class="hljs-string">&quot;ESP8266_NODE_1&quot;</span>);
+      Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;\n|Success connect to network.&quot;</span>);
+      isConnectToWifi = <span class="hljs-literal">true</span>;
+      <span class="hljs-built_in">writeSysConfig</span>();
+      <span class="hljs-keyword">break</span>;
+    &#125;
+  &#125;
+  <span class="hljs-keyword">if</span> (WiFi.<span class="hljs-built_in">status</span>() != WL_CONNECTED) &#123;
+    Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;\n|Connect to network failure.Please try again!&quot;</span>);
+  &#125;
+
+&#125;
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment">   初始化MQTT</span>
+<span class="hljs-comment">*/</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">initMqtt</span><span class="hljs-params">()</span> </span>&#123;
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;-----------------SetUp mqtt-------------------&quot;</span>);
+  mqttClient.<span class="hljs-built_in">setCallback</span>([](<span class="hljs-keyword">char</span>* topic, byte * payload, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> length)-&gt; <span class="hljs-keyword">void</span>&#123;
+    String msg ;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span> ; i &lt; length; i++) &#123;
+      msg += (<span class="hljs-keyword">char</span> )payload[i];
+    &#125;
+    JSONVar dataJson = JSON.<span class="hljs-built_in">parse</span>(msg);
+    <span class="hljs-keyword">if</span> (JSON.<span class="hljs-built_in">typeof</span>(dataJson) == <span class="hljs-string">&quot;undefined&quot;</span>) &#123;
+      Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;Parsing input failed!&quot;</span>);
+      <span class="hljs-keyword">return</span>;
+    &#125; <span class="hljs-keyword">else</span>&#123;
+      Serial.<span class="hljs-built_in">println</span>(dataJson);
+
+    &#125;
+
+
+  &#125;);
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span> ; i &lt; <span class="hljs-number">10</span>; i++) &#123;
+    mqttClient.<span class="hljs-built_in">connect</span>(<span class="hljs-string">&quot;NodeMcu10010&quot;</span>);
+<span class="hljs-comment">//    mqttClient.connect(sysConfig.mqttClientId, sysConfig.mqttUsername, sysConfig.mqttPassword);</span>
+    Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;=&gt;&quot;</span>);
+    <span class="hljs-built_in">delay</span>(<span class="hljs-number">1000</span>);
+    <span class="hljs-keyword">if</span> (mqttClient.<span class="hljs-built_in">connected</span>()) &#123;
+      <span class="hljs-comment">//连接成功</span>
+      <span class="hljs-comment">//mqttClient.subscribe(String(String(&quot;/device/OUT/&quot;) + sysConfig.mqttClientId).c_str(), 2);</span>
+      mqttClient.<span class="hljs-built_in">subscribe</span>(<span class="hljs-built_in">String</span>(<span class="hljs-string">&quot;mqttTestNodeMcu&quot;</span>).<span class="hljs-built_in">c_str</span>(),<span class="hljs-number">2</span>);
+      isConnectToMqtt = <span class="hljs-literal">true</span>;
+      Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;\n|Connect to mqtt success!&quot;</span>);
+      <span class="hljs-keyword">break</span>;
+    &#125;
+  &#125;
+  <span class="hljs-keyword">if</span> (!mqttClient.<span class="hljs-built_in">connected</span>() ) &#123;
+    isConnectToMqtt = <span class="hljs-literal">false</span>;
+    Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;\n|Connect to mqtt failure.Please try again!&quot;</span>);
+  &#125;
+
+&#125;
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment">   Mqtt配置:</span>
+<span class="hljs-comment">   准备使用clientId作为Topic</span>
+<span class="hljs-comment">   mqttset|username|password|clientId</span>
+<span class="hljs-comment">*/</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setupMqtt</span><span class="hljs-params">(String cmd)</span> </span>&#123;
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;|Start setup mqtt&quot;</span>);
+&#125;
+
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment">   配置WIFI</span>
+<span class="hljs-comment">*/</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setWlan</span><span class="hljs-params">( String cmd)</span> </span>&#123;
+  <span class="hljs-comment">// wlanset|206-public|665544332211</span>
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;|Start SysConfig wifi&quot;</span>);
+  String ssid = cmd.<span class="hljs-built_in">substring</span>(cmd.<span class="hljs-built_in">indexOf</span>(<span class="hljs-string">&quot;|&quot;</span>) + <span class="hljs-number">1</span>, cmd.<span class="hljs-built_in">lastIndexOf</span>(<span class="hljs-string">&quot;|&quot;</span>));
+  String password = cmd.<span class="hljs-built_in">substring</span>( cmd.<span class="hljs-built_in">lastIndexOf</span>(<span class="hljs-string">&quot;|&quot;</span>) + <span class="hljs-number">1</span>, cmd.<span class="hljs-built_in">length</span>());
+  ssid.<span class="hljs-built_in">trim</span>();
+  password.<span class="hljs-built_in">trim</span>();
+  <span class="hljs-keyword">if</span> (ssid.<span class="hljs-built_in">length</span>() &gt; <span class="hljs-number">0</span> &amp;&amp; password.<span class="hljs-built_in">length</span>() &gt; <span class="hljs-number">0</span> ) &#123;
+    Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;|Wifi SSID:&quot;</span>); Serial.<span class="hljs-built_in">println</span>(ssid);
+    Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;|Password:&quot;</span>); Serial.<span class="hljs-built_in">println</span>(password);
+    SysConfig &amp;tempCfg = sysConfig;
+    <span class="hljs-built_in">strcpy</span>(tempCfg.ssid, ssid.<span class="hljs-built_in">c_str</span>());
+    <span class="hljs-built_in">strcpy</span>(tempCfg.password, password.<span class="hljs-built_in">c_str</span>());
+    <span class="hljs-built_in">setupWifi</span>();
+
+  &#125; <span class="hljs-keyword">else</span> &#123;
+    Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;SSID and password must not null,command is : wlanset|ssid|password!&quot;</span>);
+  &#125;
+
+
+
+&#125;
+
+
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment">   初始化GPIO</span>
+<span class="hljs-comment">*/</span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">initialGpio</span><span class="hljs-params">()</span> </span>&#123;
+  <span class="hljs-built_in">pinMode</span>(<span class="hljs-number">12</span>, OUTPUT);
+  <span class="hljs-built_in">pinMode</span>(<span class="hljs-number">13</span>, OUTPUT);
+  <span class="hljs-built_in">pinMode</span>(<span class="hljs-number">15</span>, OUTPUT);
+  <span class="hljs-built_in">pinMode</span>(<span class="hljs-number">3</span>, OUTPUT);
+  <span class="hljs-built_in">pinMode</span>(<span class="hljs-number">14</span>, OUTPUT);
+  <span class="hljs-built_in">digitalWrite</span>(<span class="hljs-number">12</span>, LOW);
+  <span class="hljs-built_in">digitalWrite</span>(<span class="hljs-number">13</span>, LOW);
+  <span class="hljs-built_in">digitalWrite</span>(<span class="hljs-number">15</span>, LOW);
+  Wire.<span class="hljs-built_in">begin</span>();
+  oled.<span class="hljs-built_in">init</span>();
+  dht.<span class="hljs-built_in">setup</span>(DHT11_GPIO, DHTesp::DHT11);
+
+&#125;
+
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment">   指示灯：三色RGB指示灯，可以组合出6种颜色；</span>
+<span class="hljs-comment">   r g b  含义</span>
+<span class="hljs-comment">   0 000  断电</span>
+<span class="hljs-comment">   1 001  联网</span>
+<span class="hljs-comment">   2 010  联网但是MQTT没有连上</span>
+<span class="hljs-comment">   3 011  联网+MQTT连上</span>
+<span class="hljs-comment">   4 100  断网</span>
+<span class="hljs-comment">   5 101  待定</span>
+<span class="hljs-comment">   6 111  待定</span>
+<span class="hljs-comment">*/</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">blinkRGB</span><span class="hljs-params">(<span class="hljs-keyword">int</span> pin)</span> </span>&#123;
+  <span class="hljs-built_in">digitalWrite</span>(pin, LOW);
+  <span class="hljs-built_in">delay</span>(<span class="hljs-number">1000</span>);
+  <span class="hljs-built_in">digitalWrite</span>(pin, HIGH);
+  <span class="hljs-built_in">delay</span>(<span class="hljs-number">1000</span>);
+&#125;
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment">   蜂鸣器 嘀嘀嘀</span>
+<span class="hljs-comment">   beep|n</span>
+<span class="hljs-comment">*/</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">buzzerBeep</span><span class="hljs-params">(<span class="hljs-keyword">int</span> times)</span> </span>&#123;
+  Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;|Beep: &quot;</span>);
+  Serial.<span class="hljs-built_in">println</span>(times);
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; times; i++) &#123;
+    <span class="hljs-built_in">tone</span>(BUZZER_GPIO, <span class="hljs-number">1500</span>); <span class="hljs-comment">// Send 1MHz sound signal...</span>
+    <span class="hljs-built_in">delay</span>(<span class="hljs-number">1000</span>);        <span class="hljs-comment">// ...for 1 sec</span>
+    <span class="hljs-built_in">noTone</span>(BUZZER_GPIO);     <span class="hljs-comment">// Stop sound...</span>
+    <span class="hljs-built_in">delay</span>(<span class="hljs-number">1000</span>);        <span class="hljs-comment">// ...for 1sec</span>
+  &#125;
+&#125;
+
+
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment">   初始化</span>
+<span class="hljs-comment">*/</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setup</span><span class="hljs-params">()</span> </span>&#123;
+  <span class="hljs-built_in">buzzerBeep</span>(<span class="hljs-number">1</span>);
+  <span class="hljs-built_in">delay</span>(<span class="hljs-number">1000</span>);
+  <span class="hljs-built_in">initialGpio</span>();
+  <span class="hljs-built_in">display</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-literal">true</span>, <span class="hljs-string">&quot;Hello world!NodeMcu!&quot;</span>);
+  <span class="hljs-built_in">delay</span>(<span class="hljs-number">1000</span>);
+  Serial.<span class="hljs-built_in">begin</span>(<span class="hljs-number">115200</span>);
+  <span class="hljs-built_in">delay</span>(<span class="hljs-number">1000</span>);
+  <span class="hljs-built_in">welcome</span>();
+  <span class="hljs-built_in">delay</span>(<span class="hljs-number">1000</span>);
+  <span class="hljs-built_in">loadSysConfig</span>();
+  <span class="hljs-built_in">delay</span>(<span class="hljs-number">1000</span>);
+  <span class="hljs-built_in">setupWifi</span>();
+  <span class="hljs-built_in">delay</span>(<span class="hljs-number">1000</span>);
+  <span class="hljs-built_in">initMqtt</span>();
+
+&#125;
+<span class="hljs-comment">/*</span>
+<span class="hljs-comment"> *  读取DHT11</span>
+<span class="hljs-comment">*/</span>
+<span class="hljs-function">JSONVar <span class="hljs-title">getDHT11Data</span><span class="hljs-params">()</span> </span>&#123;
+  JSONVar data;
+  <span class="hljs-built_in">delay</span>(dht.<span class="hljs-built_in">getMinimumSamplingPeriod</span>());
+  <span class="hljs-comment">//湿度</span>
+  <span class="hljs-keyword">float</span> h = dht.<span class="hljs-built_in">getHumidity</span>();
+  <span class="hljs-comment">//摄氏度</span>
+  <span class="hljs-keyword">float</span> c = dht.<span class="hljs-built_in">getTemperature</span>();
+  <span class="hljs-comment">//华氏度</span>
+  <span class="hljs-keyword">float</span> f = dht.<span class="hljs-built_in">toFahrenheit</span>(c);
+  <span class="hljs-comment">//热指数</span>
+  <span class="hljs-keyword">float</span> cc = dht.<span class="hljs-built_in">computeHeatIndex</span>(c, h, <span class="hljs-literal">true</span>);
+  <span class="hljs-keyword">float</span> ff = dht.<span class="hljs-built_in">computeHeatIndex</span>(f, h, <span class="hljs-literal">true</span>);
+
+  data[<span class="hljs-string">&quot;h&quot;</span>] = h;
+  data[<span class="hljs-string">&quot;c&quot;</span>] = c;
+  data[<span class="hljs-string">&quot;f&quot;</span>] = f;
+  data[<span class="hljs-string">&quot;cc&quot;</span>] = cc;
+  data[<span class="hljs-string">&quot;ff&quot;</span>] = ff;
+  <span class="hljs-keyword">return</span> data;
+&#125;
+
+
+<span class="hljs-function">JSONVar <span class="hljs-title">jsonDataPackage</span><span class="hljs-params">(JSONVar j2strData)</span></span>
+<span class="hljs-function"></span>&#123;
+  JSONVar jsonData;
+  jsonData[<span class="hljs-string">&quot;clientId&quot;</span>] = clientId;
+  jsonData[<span class="hljs-string">&quot;value&quot;</span>] = JSON.<span class="hljs-built_in">stringify</span>(j2strData);
+  
+  <span class="hljs-keyword">return</span> jsonData;
+&#125;
+
+
+
+
+
+<span class="hljs-comment">//</span>
+<span class="hljs-keyword">int</span> count = <span class="hljs-number">0</span>;
+<span class="hljs-keyword">int</span> flag=<span class="hljs-number">0</span>;
+String publishData = <span class="hljs-string">&quot;&quot;</span>;
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">loop</span><span class="hljs-params">()</span> </span>&#123;
+  count += <span class="hljs-number">1</span>;
+  <span class="hljs-keyword">if</span> (isConnectToMqtt) &#123;
+    mqttClient.<span class="hljs-built_in">loop</span>();
+    <span class="hljs-keyword">if</span> (count &gt;= <span class="hljs-number">100000</span>) &#123;
+      publishData = JSON.<span class="hljs-built_in">stringify</span>(<span class="hljs-built_in">jsonDataPackage</span>(<span class="hljs-built_in">getDHT11Data</span>()));
+<span class="hljs-comment">//      flag=mqttClient.publish(&quot;/device/IN/NodeMcuTest&quot;,publishData.c_str(),strlen(publishData.c_str()));</span>
+      mqttClient.<span class="hljs-built_in">beginPublish</span>(<span class="hljs-string">&quot;/device/IN/NodeMcuTest&quot;</span>,<span class="hljs-built_in">strlen</span>(publishData.<span class="hljs-built_in">c_str</span>()),<span class="hljs-literal">false</span>);
+      mqttClient.<span class="hljs-built_in">print</span>(publishData.<span class="hljs-built_in">c_str</span>());
+      mqttClient.<span class="hljs-built_in">endPublish</span>();
+      Serial.<span class="hljs-built_in">println</span>(publishData+flag);
+      count = <span class="hljs-number">0</span>;
+
+    &#125;
+  &#125;
+
+
+
+  String cmd = <span class="hljs-string">&quot;&quot;</span>;
+  <span class="hljs-keyword">if</span> (Serial.<span class="hljs-built_in">available</span>() &gt; <span class="hljs-number">0</span>) &#123;
+    cmd = Serial.<span class="hljs-built_in">readStringUntil</span>(<span class="hljs-string">&#x27;\n&#x27;</span>);
+    <span class="hljs-built_in">delay</span>(<span class="hljs-number">100</span>);
+  &#125;
+  <span class="hljs-keyword">if</span> (cmd.<span class="hljs-built_in">length</span>() &gt; <span class="hljs-number">0</span>) &#123;
+    <span class="hljs-keyword">if</span> (cmd.<span class="hljs-built_in">equals</span>(<span class="hljs-built_in">String</span>(<span class="hljs-string">&quot;help&quot;</span>))) &#123;
+      <span class="hljs-built_in">showHelp</span>();
+    &#125;
+    <span class="hljs-keyword">if</span> (cmd.<span class="hljs-built_in">equals</span>(<span class="hljs-built_in">String</span>(<span class="hljs-string">&quot;wlaninfo&quot;</span>))) &#123;
+      <span class="hljs-built_in">echoWlan</span>();
+    &#125;
+    <span class="hljs-keyword">if</span> (cmd.<span class="hljs-built_in">equals</span>(<span class="hljs-built_in">String</span>(<span class="hljs-string">&quot;temp&quot;</span>))) &#123;
+      <span class="hljs-built_in">echoTemp</span>();
+    &#125;
+    <span class="hljs-keyword">if</span> (cmd.<span class="hljs-built_in">equals</span>(<span class="hljs-built_in">String</span>(<span class="hljs-string">&quot;hum&quot;</span>))) &#123;
+      <span class="hljs-built_in">echoHumidity</span>();
+    &#125;
+    <span class="hljs-comment">/**</span>
+<span class="hljs-comment">       led 闪烁</span>
+<span class="hljs-comment">    */</span>
+    <span class="hljs-keyword">if</span> (cmd.<span class="hljs-built_in">equals</span>(<span class="hljs-built_in">String</span>(<span class="hljs-string">&quot;red&quot;</span>))) &#123;
+      <span class="hljs-built_in">blinkRGB</span>(<span class="hljs-number">12</span>);
+    &#125;
+    <span class="hljs-keyword">if</span> (cmd.<span class="hljs-built_in">equals</span>(<span class="hljs-built_in">String</span>(<span class="hljs-string">&quot;green&quot;</span>))) &#123;
+      <span class="hljs-built_in">blinkRGB</span>(<span class="hljs-number">13</span>);
+    &#125;
+    <span class="hljs-keyword">if</span> (cmd.<span class="hljs-built_in">equals</span>(<span class="hljs-built_in">String</span>(<span class="hljs-string">&quot;blue&quot;</span>))) &#123;
+      <span class="hljs-built_in">blinkRGB</span>(<span class="hljs-number">15</span>);
+    &#125;
+    <span class="hljs-keyword">if</span> (cmd.<span class="hljs-built_in">startsWith</span>(<span class="hljs-built_in">String</span>(<span class="hljs-string">&quot;wlanset|&quot;</span>))) &#123;
+      <span class="hljs-built_in">setWlan</span>(cmd);
+    &#125;
+    <span class="hljs-keyword">if</span> (cmd.<span class="hljs-built_in">startsWith</span>(<span class="hljs-built_in">String</span>(<span class="hljs-string">&quot;mqttset|&quot;</span>))) &#123;
+      <span class="hljs-built_in">setWlan</span>(cmd);
+    &#125;
+    <span class="hljs-keyword">if</span> (cmd.<span class="hljs-built_in">startsWith</span>(<span class="hljs-built_in">String</span>(<span class="hljs-string">&quot;beep|&quot;</span>))) &#123;
+      <span class="hljs-keyword">int</span> times = cmd.<span class="hljs-built_in">substring</span>( cmd.<span class="hljs-built_in">lastIndexOf</span>(<span class="hljs-string">&quot;|&quot;</span>) + <span class="hljs-number">1</span>, cmd.<span class="hljs-built_in">length</span>()).<span class="hljs-built_in">toInt</span>();
+      <span class="hljs-built_in">buzzerBeep</span>(times);
+    &#125;
+
+  &#125;
+
+  <span class="hljs-comment">// wlanset|206-public|665544332211</span>
+  <span class="hljs-keyword">if</span> ( isConnectToWifi) &#123;
+    <span class="hljs-comment">// blue</span>
+    <span class="hljs-built_in">digitalWrite</span>(<span class="hljs-number">12</span>, LOW);
+    <span class="hljs-built_in">digitalWrite</span>(<span class="hljs-number">13</span>, LOW);
+    <span class="hljs-built_in">digitalWrite</span>(<span class="hljs-number">15</span>, HIGH);
+    <span class="hljs-comment">//if connect to mqtt</span>
+    <span class="hljs-keyword">if</span> (isConnectToWifi &amp;&amp; isConnectToMqtt) &#123;
+      <span class="hljs-comment">//Green</span>
+      <span class="hljs-built_in">digitalWrite</span>(<span class="hljs-number">12</span>, LOW);
+      <span class="hljs-built_in">digitalWrite</span>(<span class="hljs-number">13</span>, HIGH);
+      <span class="hljs-built_in">digitalWrite</span>(<span class="hljs-number">15</span>, LOW);
+    &#125;
+  &#125; <span class="hljs-keyword">else</span> &#123;
+    <span class="hljs-comment">//Red</span>
+    <span class="hljs-built_in">digitalWrite</span>(<span class="hljs-number">12</span>, HIGH);
+    <span class="hljs-built_in">digitalWrite</span>(<span class="hljs-number">13</span>, LOW);
+    <span class="hljs-built_in">digitalWrite</span>(<span class="hljs-number">15</span>, LOW);
+  &#125;
+&#125;</code></pre>
+
+<p>上述代码,注释加的比较完善,比较容易看懂,就不详细解释了,有个细节在这里提一下就行,位置在通过串口配置网络处:</p>
+<pre><code class="hljs C++"><span class="hljs-comment">/**</span>
+<span class="hljs-comment">   配置网络</span>
+<span class="hljs-comment">*/</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setupWifi</span><span class="hljs-params">()</span> </span>&#123;
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;-----------------SetUp wifi-------------------&quot;</span>);
+  Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;|Try  connect to network.&quot;</span>);
+  Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;|&quot;</span>);
+  WiFi.<span class="hljs-built_in">begin</span>(sysConfig.ssid, sysConfig.password);
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span> ; i &lt; <span class="hljs-number">10</span>; i++) &#123;
+    Serial.<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;=&gt;&quot;</span>);
+      <span class="hljs-comment">/**</span>
+<span class="hljs-comment">      *</span>
+<span class="hljs-comment">      *此处的delay1000很重要,为了防止抖动引起的误差.</span>
+<span class="hljs-comment">      **/</span>
+    <span class="hljs-built_in">delay</span>(<span class="hljs-number">1000</span>);
+    <span class="hljs-keyword">if</span> (WiFi.<span class="hljs-built_in">status</span>() == WL_CONNECTED) &#123;
+      WiFi.<span class="hljs-built_in">hostname</span>(<span class="hljs-string">&quot;ESP8266_NODE_1&quot;</span>);
+      Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;\n|Success connect to network.&quot;</span>);
+      isConnectToWifi = <span class="hljs-literal">true</span>;
+      <span class="hljs-built_in">writeSysConfig</span>();
+      <span class="hljs-keyword">break</span>;
+    &#125;
+  &#125;
+  <span class="hljs-keyword">if</span> (WiFi.<span class="hljs-built_in">status</span>() != WL_CONNECTED) &#123;
+    Serial.<span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;\n|Connect to network failure.Please try again!&quot;</span>);
+  &#125;
+
+&#125;</code></pre>
+
+<p>单独把 delay(1000);这行拿出来说,因为通过实际操作发现,串口数据抖动还是比较大,建议做延迟防抖.</p>
+<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3.总结"></a>3.总结</h2><p>本文展示了一段简单的Arduino代码Demo.</p>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Arduino/">Arduino</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Arduino/">Arduino</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/01/07/clpqt1iv2004y4cue0dnjeybn.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Springboot项目中使用Mybatisplus分页Mongodb</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/01/02/clpqt1iv0004r4cue8zi631iw.html">
+                        <span class="hidden-mobile">ThingsBoard源码分析-JavaMqtt实现原理</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                  <script src="https://utteranc.es/client.js"
+                    repo="wwhai/gitalk"
+                    issue-term="url"
+                    label="[Utterances]"
+                    theme="preferred-color-scheme"
+                    crossorigin="anonymous"
+                    async>
+                  </script>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Arduino简单命令行模拟&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "#"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>
