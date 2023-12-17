@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="新四青年 的技术分享">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>轻量级规则引擎设计 - 新四青年</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+
+  <!-- 顶部提示 -->
+  <div class="alert alert-warning" role="alert"
+    style="margin-top: 70px; background-color: black;color: rgb(156, 255, 25);text-align: center;padding: 0 0 0 0;">
+    <strong>提示：本站一些文章的超时空时间是乱写的，主要是为了排序，并不是真实写作时间。</strong>
+  </div>
+
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar" style="background-color: #000000;">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>新四青年</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/openlab/academic.html">
+                
+                FreeOpenLab
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/things/">
+                
+                作品
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/post.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2021-10-06 00:00">
+      October 6, 2021 am
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      15
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：June 30, 2023 pm
+                
+              </p>
+            
+            <article class="markdown-body">
+              <p>本文主要讲了轻量级规则引擎设计过程</p>
+<span id="more"></span>
+
+<h2 id="通用轻量级规则引擎：RulEngine"><a href="#通用轻量级规则引擎：RulEngine" class="headerlink" title="通用轻量级规则引擎：RulEngine"></a>通用轻量级规则引擎：RulEngine</h2><h2 id="关于"><a href="#关于" class="headerlink" title="关于"></a>关于</h2><p>什么是规则引擎？本质上就是个数据选择器，每个规则只关心自己匹配到部分，来进行进一步的操作和处理，更像是一个管道操作，本质是上一次操作的输出作为下一次的输入，整个流程如图所示。</p>
+<pre><code class="hljs sequence">Input -&gt; Rule1: Input data
+Note over Rule1: RulEngine.Run(Rule1)
+
+
+Rule1 -&gt; Rule2 : next, NewInput
+Note over Rule2: RulEngine.Run(Rule2)
+Rule2 --&gt; Rule1 : stop
+
+Rule2 -&gt; Rule3 : next, NewInput
+Note over Rule3: RulEngine.Run(Rule3)
+Rule3 -&gt; Rule2 : stop
+
+
+Rule3 -&gt; RuleN : next, NewInput
+Note over RuleN: RulEngine.Run(RuleN)
+RuleN -&gt; Rule3 : stop
+
+RuleN -&gt; Output : Output</code></pre>
+
+
+<h2 id="技术"><a href="#技术" class="headerlink" title="技术"></a>技术</h2><p>规则引擎核心部件采用 golang 作为主要开发语言来实现，规则用 JavaScript 脚本来动态实现，本质上是 golang 启动一个 JavaScript解释器，然后执行规则定义代码。</p>
+<h2 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h2><h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><p>规则引擎生命周期如下所示：</p>
+<pre><code class="hljs sequence">Start-&gt; InitInEnds: Initial Input Resources
+InitInEnds-&gt; InitOutEnds: Initial Output Resources
+InitOutEnds-&gt; LoadRules: Load Rules
+LoadRules -&gt; Working : Work
+Working -&gt; Working : Working State
+Working-&gt; Destory: Free Resources
+Destory-&gt; Stop: Stop Rule Engine
+</code></pre>
+
+<h3 id="外部接口"><a href="#外部接口" class="headerlink" title="外部接口"></a>外部接口</h3><ul>
+<li>Start() :  启动规则引擎，返回值是个 MAP，里面包含了一些配置信息或者环境变量；</li>
+<li>InitInEnd() list.List: 初始化输入端的资源，通常指规则引擎需要监听的端；</li>
+<li>InitOutEnd() list.List: 初始化数据流出的目的地，比如数据库或者是转发；</li>
+<li>LoadRule() list.List: 加载规则，在这里指的是 JavaScript 脚本；</li>
+<li>Work(): 准备就绪开始工作；</li>
+<li>Destory(): 规则引擎停止之前的释放资源操作；</li>
+<li>Stop(): 停止规则引擎。</li>
+</ul>
+<h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>RuleEngine 执行脚本过程：</p>
+<pre><code class="hljs sas"><span class="hljs-keyword">data </span>= InEnd.<span class="hljs-meta">input</span>
+RuleEngine.work(inendId, data)
+    -&gt; RuleEngine.<span class="hljs-meta">call</span>(Js1, <span class="hljs-meta">Input</span>): next, NewInput | <span class="hljs-meta">stop</span>
+    -&gt; RuleEngine.<span class="hljs-meta">call</span>(Js2, <span class="hljs-meta">Input</span>): next, NewInput | <span class="hljs-meta">stop</span>
+    -&gt; .......
+    -&gt; RuleEngine.<span class="hljs-meta">call</span>(Jsn, <span class="hljs-meta">Input</span>): next, NewInput | <span class="hljs-meta">stop</span></code></pre>
+
+<p>规则使用JavaScript来描述:</p>
+<pre><code class="hljs js"><span class="hljs-keyword">let</span> name = <span class="hljs-string">&quot;demo rule1&quot;</span>;
+<span class="hljs-keyword">let</span> description = <span class="hljs-string">&quot;ok, let&#x27;s go&quot;</span>;
+<span class="hljs-keyword">let</span> <span class="hljs-keyword">from</span> = [<span class="hljs-string">&quot;in_id1&quot;</span>, <span class="hljs-string">&quot;in_id2&quot;</span>];
+<span class="hljs-keyword">let</span> actions = [
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">a</span>(<span class="hljs-params">params</span>) </span>&#123;
+        print(<span class="hljs-string">&quot;params1&quot;</span>, params)
+    &#125;,
+    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">b</span>(<span class="hljs-params">params</span>) </span>&#123;
+        print(<span class="hljs-string">&quot;params2&quot;</span>, params);
+    &#125;
+    <span class="hljs-comment">// …………</span>
+];
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">success</span>(<span class="hljs-params"></span>) </span>&#123;
+    print(<span class="hljs-string">&quot;success callback rule call success&quot;</span>);
+&#125;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">failed</span>(<span class="hljs-params">error</span>) </span>&#123;
+    print(<span class="hljs-string">&quot;failed callback ,rule call error:&quot;</span>, error);
+&#125;</code></pre>
+
+<p>字段解释：</p>
+<ul>
+<li>name: 规则的名字</li>
+<li>description：描述信息</li>
+<li>from：来自哪个输入端，这是个数组，值是输入端的ID</li>
+<li>actions：规则过滤函数</li>
+<li>success：规则执行成功后回调</li>
+<li>failed：规则执行失败后回调</li>
+</ul>
+<p>JavaScript 规则脚本回调函数：</p>
+<pre><code class="hljs js"><span class="hljs-comment">// 其中params表示输入的数据</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">$</span></span>&#123;name)(params) &#123;
+   <span class="hljs-comment">// todo</span>
+    <span class="hljs-keyword">return</span> $&#123;RETURN&#125;;
+&#125;</code></pre>
+
+<ul>
+<li>回调函数不可以是匿名函数</li>
+<li>回调函数必须是 1个参数</li>
+<li>回调函数返回值必须是<code>&quot;stop&quot;</code> 或者 <code>[&quot;next&quot;, params]</code></li>
+</ul>
+<blockquote>
+<p>注意：规则描述里面所有字段必须是必填的，缺一不可。</p>
+</blockquote>
+<h2 id="重要表结构"><a href="#重要表结构" class="headerlink" title="重要表结构"></a>重要表结构</h2><p>规则引擎为了加速和利用硬件性能，所有运行时数据全部存在某个内存表里面，因此需要合理设计几张内存表。</p>
+<h3 id="输入端"><a href="#输入端" class="headerlink" title="输入端"></a>输入端</h3><table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>类型</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>string</td>
+<td>唯一ID，系统分配</td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>类型</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>名称</td>
+</tr>
+<tr>
+<td>description</td>
+<td>string</td>
+<td>描述文本</td>
+</tr>
+<tr>
+<td>config</td>
+<td>Map string</td>
+<td>配置信息,包含了输入端的有些配置，比如可能是MQTT的鉴权，Topic等</td>
+</tr>
+<tr>
+<td>cts</td>
+<td>timestamp</td>
+<td>创建时间</td>
+</tr>
+</tbody></table>
+<p>输入端一般指的是外部数据产生方，比如来自HTTP的请求，或者MQTT消息等。当创建一个输入端以后，系统会启动一个进程来维护这个输入端。</p>
+<blockquote>
+<p>其中输入端业务必须实现接口：void RunEngine(data)，最后数据流转的时候，回调这个接口：</p>
+<p>inend.RunEngine(data){</p>
+<p>​    id : = 自己的唯一ID</p>
+<p>   rulEngine.work(id, data)</p>
+<p>}</p>
+</blockquote>
+<h3 id="规则"><a href="#规则" class="headerlink" title="规则"></a>规则</h3><table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>类型</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>string</td>
+<td>唯一ID，系统分配</td>
+</tr>
+<tr>
+<td>in_end</td>
+<td>string</td>
+<td>输入端的ID</td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>类型</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>名称</td>
+</tr>
+<tr>
+<td>script</td>
+<td>string</td>
+<td>规则脚本</td>
+</tr>
+<tr>
+<td>description</td>
+<td>string</td>
+<td>描述文本</td>
+</tr>
+<tr>
+<td>config</td>
+<td>Map string</td>
+<td>配置信息</td>
+</tr>
+<tr>
+<td>cts</td>
+<td>timestamp</td>
+<td>创建时间</td>
+</tr>
+</tbody></table>
+<p>规则表相对来说比较负责，除了基础字段，还包含了一个输入端ID。输入端ID主要用来标记该规则作用点，假设我们需要一个MQTT消息处理规则，则首先我们需要创建一个InEnd，然后创建一个规则，规则作用点为之前创建的InEnd。</p>
+<h3 id="输出端"><a href="#输出端" class="headerlink" title="输出端"></a>输出端</h3><table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>类型</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>id</td>
+<td>string</td>
+<td>唯一ID，系统分配</td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>类型</td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>名称</td>
+</tr>
+<tr>
+<td>description</td>
+<td>string</td>
+<td>描述文本</td>
+</tr>
+<tr>
+<td>config</td>
+<td>Map string</td>
+<td>配置信息</td>
+</tr>
+<tr>
+<td>cts</td>
+<td>timestamp</td>
+<td>创建时间</td>
+</tr>
+</tbody></table>
+<p>输出端和输入端结构保持一致，原理就是把数据最终吐出到某个地方。</p>
+<h3 id="系统用户表"><a href="#系统用户表" class="headerlink" title="系统用户表"></a>系统用户表</h3><table>
+<thead>
+<tr>
+<th>字段名</th>
+<th>类型</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>username</td>
+<td>string</td>
+<td>用户名</td>
+</tr>
+<tr>
+<td>password</td>
+<td>string</td>
+<td>密码</td>
+</tr>
+<tr>
+<td>email</td>
+<td>string</td>
+<td>Email</td>
+</tr>
+<tr>
+<td>phone</td>
+<td>string</td>
+<td>手机号码</td>
+</tr>
+<tr>
+<td>extra_info</td>
+<td>string</td>
+<td>扩展信息</td>
+</tr>
+</tbody></table>
+<p>因为用户管理不是本系统的主要功能，所以尽量做得简单，只做了个基础鉴权功能。如果觉得用户信息还需要扩展，那就在 extra 字段里面保存一些额外信息。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>[otto ] (<a target="_blank" rel="noopener" href="https://github.com/robertkrimen/otto"> A JavaScript interpreter in Go</a>)</p>
+<p>[Rule engine] (<a target="_blank" rel="noopener" href="https://openrules.com/ruleengine.htm">OpenRules Rule Engine</a>)</p>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/freeopenlab/">freeopenlab</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/freeopenlab/">freeopenlab</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/10/06/clq9g4ts30009fwuecwda2n4t.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">一种假设的基于万有引力的通信模型</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2021/10/06/clq9g4tsa000ofwue8wcr49zq.html">
+                        <span class="hidden-mobile">设计一个简单的虚拟机</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                  <script src="https://utteranc.es/client.js"
+                    repo="wwhai/gitalk"
+                    issue-term="url"
+                    label="[Utterances]"
+                    theme="preferred-color-scheme"
+                    crossorigin="anonymous"
+                    async>
+                  </script>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "轻量级规则引擎设计&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "#"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>
