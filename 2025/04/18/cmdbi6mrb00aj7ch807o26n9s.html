@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="新四青年 的技术分享">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>An Embedded Software Architecture - 新四青年</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+
+  <!-- 顶部提示 -->
+  <div class="alert alert-warning" role="alert"
+    style="margin-top: 70px; background-color: black;color: rgb(156, 255, 25);text-align: center;padding: 0 0 0 0;">
+    <strong>提示：本站一些文章的超时空时间是乱写的，主要是为了排序，并不是真实写作时间。</strong>
+  </div>
+
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar" style="background-color: #000000;">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>新四青年</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/openlab/academic.html">
+                
+                FreeOpenLab
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/things/">
+                
+                作品
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/post.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2025-04-18 21:34">
+      April 18, 2025 pm
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      21
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：July 20, 2025 pm
+                
+              </p>
+            
+            <article class="markdown-body">
+              <p>本文作者：[wangwenhai] # 概要：’An Embedded Application Layer Software Architecture Design’</p>
+<span id="more"></span>
+
+
+
+<h3 id="Title-An-Embedded-Application-Layer-Software-Architecture-Design"><a href="#Title-An-Embedded-Application-Layer-Software-Architecture-Design" class="headerlink" title="Title: An Embedded Application Layer Software Architecture Design"></a><strong>Title</strong>: An Embedded Application Layer Software Architecture Design</h3><h4 id="Keywords-Embedded-Software-IoT-Data-Processing"><a href="#Keywords-Embedded-Software-IoT-Data-Processing" class="headerlink" title="Keywords: Embedded Software, IoT, Data Processing"></a><strong>Keywords</strong>: Embedded Software, IoT, Data Processing</h4><hr>
+<h3 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a><strong>Abstract</strong></h3><p>This paper introduces a novel embedded software architecture designed to abstract hardware and system interactions within the application layer. By using a “Resource” abstraction to represent hardware components and a “Device” abstraction to represent logical devices, the architecture facilitates easier application development by decoupling the business logic from low-level hardware details. The architecture’s flexibility makes it suitable for various IoT applications, such as edge gateways, smart metering systems, and HMI control interfaces. This paper outlines the detailed design, architecture, and key innovations behind this approach.</p>
+<hr>
+<h3 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1. Introduction"></a><strong>1. Introduction</strong></h3><p>In embedded systems, the traditional software architecture is often divided into three primary layers: hardware, system, and application. The hardware layer represents the physical devices, the system layer deals with resource management and task scheduling, and the application layer focuses on business logic and user interaction. However, embedded software development can become cumbersome due to the tight coupling between the application layer and hardware-specific implementations.</p>
+<p>To address this issue, this paper proposes an architecture where the application layer is abstracted from hardware-specific details. The key abstraction used in this design is the “Resource,” which logically represents hardware components, and the “Device,” which abstracts the logical devices used in the application. This abstraction not only enhances modularity but also allows for easier scalability and portability across different hardware platforms.</p>
+<hr>
+<h3 id="2-Detailed-Design"><a href="#2-Detailed-Design" class="headerlink" title="2. Detailed Design"></a><strong>2. Detailed Design</strong></h3><h4 id="2-1-Architecture-Overview"><a href="#2-1-Architecture-Overview" class="headerlink" title="2.1 Architecture Overview"></a><strong>2.1 Architecture Overview</strong></h4><p>The proposed architecture consists of three primary layers:</p>
+<ol>
+<li><strong>Hardware Layer</strong>: This layer contains physical devices such as sensors, actuators, and communication interfaces (e.g., UART, I2C, SPI).</li>
+<li><strong>System Layer</strong>: This layer manages task scheduling, resource allocation, and communication with hardware components. It contains the operating system kernel and device drivers.</li>
+<li><strong>Application Layer</strong>: This layer contains the business logic and interacts with logical devices via the Resource abstraction.</li>
+</ol>
+<p>In this architecture, the application layer does not interact directly with physical hardware. Instead, it communicates with logical devices through an intermediate layer (Resource) that abstracts hardware-specific details.</p>
+<h4 id="2-2-Resource-Layer"><a href="#2-2-Resource-Layer" class="headerlink" title="2.2 Resource Layer"></a><strong>2.2 Resource Layer</strong></h4><p>The <strong>Resource</strong> layer represents hardware components as logical entities. A <code>Resource</code> encapsulates the physical interaction with hardware (e.g., a serial port or I2C bus), providing a standardized interface to the application layer. The Resource layer abstracts the low-level details, such as communication protocols, allowing the application to focus on high-level functionality.</p>
+<p>For example, a <code>SerialPortResource</code> abstracts the communication with a physical UART port, while a <code>SPIResource</code> abstracts the interaction with an SPI bus.</p>
+<h5 id="Resource-Class-Example"><a href="#Resource-Class-Example" class="headerlink" title="Resource Class Example:"></a><strong>Resource Class Example:</strong></h5><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Resource</span> &#123;</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span> </span>= <span class="hljs-number">0</span>;            <span class="hljs-comment">// Initialize resource</span>
+    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">readData</span><span class="hljs-params">()</span> </span>= <span class="hljs-number">0</span>;        <span class="hljs-comment">// Read data from resource</span>
+    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">writeData</span><span class="hljs-params">()</span> </span>= <span class="hljs-number">0</span>;       <span class="hljs-comment">// Write data to resource</span>
+&#125;;</code></pre>
+
+<h4 id="2-3-Device-Layer"><a href="#2-3-Device-Layer" class="headerlink" title="2.3 Device Layer"></a><strong>2.3 Device Layer</strong></h4><p>The <strong>Device</strong> layer represents logical devices that interact with hardware through resources. A <code>Device</code> uses resources (such as <code>SerialPortResource</code> or <code>SPIResource</code>) to interact with the underlying hardware but is independent of the hardware implementation. The application layer interacts with these devices, focusing solely on the business logic, such as data collection and control operations.</p>
+<h5 id="Device-Class-Example"><a href="#Device-Class-Example" class="headerlink" title="Device Class Example:"></a><strong>Device Class Example:</strong></h5><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TemperatureSensorDevice</span> &#123;</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-built_in">TemperatureSensorDevice</span>(Resource* resource) : <span class="hljs-built_in">resource_</span>(resource) &#123;&#125;
+
+    <span class="hljs-function"><span class="hljs-keyword">float</span> <span class="hljs-title">getTemperature</span><span class="hljs-params">()</span> </span>&#123;
+        resource_-&gt;<span class="hljs-built_in">readData</span>();
+        <span class="hljs-keyword">return</span> temperatureData;  <span class="hljs-comment">// Assuming the data has been processed</span>
+    &#125;
+
+<span class="hljs-keyword">private</span>:
+    Resource* resource_;
+    <span class="hljs-keyword">float</span> temperatureData;
+&#125;;</code></pre>
+
+<h4 id="2-4-Data-Point-Table"><a href="#2-4-Data-Point-Table" class="headerlink" title="2.4 Data Point Table"></a><strong>2.4 Data Point Table</strong></h4><p>A <strong>Data Point Table</strong> organizes data points for each device. These data points may represent measurements (e.g., temperature, humidity) or attributes (e.g., configuration settings). The table distinguishes between measurement and attribute points using a clear type system.</p>
+<p>This abstraction allows the application layer to retrieve and interpret data from devices in a structured manner.</p>
+<h5 id="Data-Point-Class-Example"><a href="#Data-Point-Class-Example" class="headerlink" title="Data Point Class Example:"></a><strong>Data Point Class Example:</strong></h5><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DataPoint</span> &#123;</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">Type</span> &#123;</span> MEASUREMENT, ATTRIBUTE &#125;;
+
+    <span class="hljs-built_in">DataPoint</span>(std::string name, Type type) : <span class="hljs-built_in">name_</span>(name), <span class="hljs-built_in">type_</span>(type) &#123;&#125;
+
+    <span class="hljs-function">std::string <span class="hljs-title">getName</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>&#123; <span class="hljs-keyword">return</span> name_; &#125;
+    <span class="hljs-function">Type <span class="hljs-title">getType</span><span class="hljs-params">()</span> <span class="hljs-keyword">const</span> </span>&#123; <span class="hljs-keyword">return</span> type_; &#125;
+
+<span class="hljs-keyword">private</span>:
+    std::string name_;
+    Type type_;
+&#125;;</code></pre>
+
+<h4 id="2-5-Application-Layer"><a href="#2-5-Application-Layer" class="headerlink" title="2.5 Application Layer"></a><strong>2.5 Application Layer</strong></h4><p>The <strong>Application Layer</strong> interacts with devices and their data points. It contains the core business logic, such as reading sensor data, aggregating information, and issuing control commands. By abstracting the hardware interaction, the application layer remains hardware-independent and can easily adapt to new hardware configurations.</p>
+<h5 id="Application-Logic-Example"><a href="#Application-Logic-Example" class="headerlink" title="Application Logic Example:"></a><strong>Application Logic Example:</strong></h5><pre><code class="hljs cpp"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EdgeGatewayApp</span> &#123;</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">collectData</span><span class="hljs-params">(TemperatureSensorDevice&amp; tempDevice)</span> </span>&#123;
+        <span class="hljs-keyword">float</span> temperature = tempDevice.<span class="hljs-built_in">getTemperature</span>();
+        <span class="hljs-comment">// Process and send data to the cloud</span>
+    &#125;
+&#125;;</code></pre>
+
+<hr>
+<h3 id="3-UML-Architecture-Diagrams"><a href="#3-UML-Architecture-Diagrams" class="headerlink" title="3. UML Architecture Diagrams"></a><strong>3. UML Architecture Diagrams</strong></h3><h4 id="3-1-Component-Diagram"><a href="#3-1-Component-Diagram" class="headerlink" title="3.1 Component Diagram"></a><strong>3.1 Component Diagram</strong></h4><p>This diagram illustrates the primary components of the architecture and their relationships:</p>
+<pre><code class="hljs plaintext">+---------------------+     +------------------+     +------------------+
+|    Application      | &lt;-- |    Resource      | &lt;-- |    Hardware      |
+| (Business Logic)    |     | (Abstraction)    |     |  (Physical HW)   |
++---------------------+     +------------------+     +------------------+
+        |                          |                         |
+        V                          V                         V
++-------------------+        +-------------------+    +-------------------+
+| TemperatureSensor |        | SerialPortResource|    | UART Driver       |
+|   Device          |        |                   |    |                   |
++-------------------+        +-------------------+    +-------------------+</code></pre>
+
+<ul>
+<li><strong>Application Layer</strong>: Contains business logic interacting with logical devices (e.g., <code>TemperatureSensorDevice</code>).</li>
+<li><strong>Resource Layer</strong>: Abstracts hardware communication (e.g., <code>SerialPortResource</code>).</li>
+<li><strong>Hardware Layer</strong>: Represents the physical hardware, such as UART, SPI, or I2C.</li>
+</ul>
+<h4 id="3-2-Class-Diagram"><a href="#3-2-Class-Diagram" class="headerlink" title="3.2 Class Diagram"></a><strong>3.2 Class Diagram</strong></h4><p>This diagram represents the relationships between key classes in the system:</p>
+<pre><code class="hljs plaintext">+---------------------+   1     +-------------------+    1     +-------------------+
+|  TemperatureSensor  | ------&gt; |    Resource       | ------&gt; |  SerialPort       |
+|    Device           |         |   (Abstract Class)|         |  Resource         |
++---------------------+         +-------------------+         +-------------------+
+        |                          /   |  ^                        |
+        V                        +-----+  +-----------------------+
++--------------------+
+| DataPointTable     |
++--------------------+</code></pre>
+
+<ul>
+<li><strong>TemperatureSensorDevice</strong>: Represents a logical device interacting with hardware resources.</li>
+<li><strong>Resource</strong>: An abstract class representing hardware resources.</li>
+<li><strong>DataPointTable</strong>: Contains all data points related to a device (e.g., temperature, configuration).</li>
+</ul>
+<h4 id="3-3-Sequence-Diagram"><a href="#3-3-Sequence-Diagram" class="headerlink" title="3.3 Sequence Diagram"></a><strong>3.3 Sequence Diagram</strong></h4><p>This diagram illustrates how the application retrieves data from a device:</p>
+<pre><code class="hljs plaintext">+---------------------+        +------------------+         +------------------+
+|   Application       |        |    Resource      |         |     Hardware     |
++---------------------+        +------------------+         +------------------+
+         |                           |                           |
+         |  getTemperature()          |                           |
+         |--------------------------&gt;|                           |
+         |                           |  resource.readData()      |
+         |                           |--------------------------&gt;|
+         |                           |                           |
+         |                           |  return temperatureData   |
+         |                           |&lt;--------------------------|
+         |  return temperature       |                           |
+         |&lt;--------------------------|                           |</code></pre>
+
+<hr>
+<h3 id="4-Innovations"><a href="#4-Innovations" class="headerlink" title="4. Innovations"></a><strong>4. Innovations</strong></h3><ol>
+<li><p><strong>Resource Abstraction</strong>: By introducing the Resource abstraction, the application layer is freed from direct interaction with hardware details, enhancing modularity and portability across different hardware platforms.</p>
+</li>
+<li><p><strong>Device Abstraction</strong>: The Device layer abstracts logical devices, making it easier for the application to interact with devices without being concerned with the underlying hardware.</p>
+</li>
+<li><p><strong>Data Point Table</strong>: The Data Point Table categorizes measurement and attribute points in a structured manner, simplifying data processing and enhancing scalability.</p>
+</li>
+<li><p><strong>Separation of Concerns</strong>: This design maintains a clear separation between hardware, system, and application layers, making the system more modular and easier to maintain, test, and extend.</p>
+</li>
+<li><p><strong>Scalability and Flexibility</strong>: The architecture allows for easy addition of new devices or resources without requiring significant changes to the application logic, promoting scalability and flexibility.</p>
+</li>
+</ol>
+<hr>
+<h3 id="5-Conclusion"><a href="#5-Conclusion" class="headerlink" title="5. Conclusion"></a><strong>5. Conclusion</strong></h3><p>This paper presents a software architecture for embedded systems that abstracts hardware interaction, facilitating easier application development and enhancing system scalability. By introducing the Resource and Device layers, this architecture decouples the application layer from low-level hardware details, improving code reuse and simplifying maintenance. This approach is particularly well-suited for IoT applications, such as edge gateways and smart metering systems, and can be adapted to a wide range of embedded use cases.</p>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%96%87%E9%9B%86-%E9%87%8E%E7%94%9F%E7%A7%91%E7%A0%94%E9%83%A8%E9%97%A8/">文集-野生科研部门</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%96%87%E9%9B%86-%E9%87%8E%E7%94%9F%E7%A7%91%E7%A0%94%E9%83%A8%E9%97%A8/">文集-野生科研部门</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/04/20/cmdbi6mqn00757ch8065bg94l.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">我的十六人格测试结果</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2025/04/18/cmdbi6mrm00c17ch8ey5k45cu.html">
+                        <span class="hidden-mobile">Arduino-Modbus 测试小工具</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                  <script src="https://utteranc.es/client.js"
+                    repo="wwhai/gitalk"
+                    issue-term="url"
+                    label="[Utterances]"
+                    theme="preferred-color-scheme"
+                    crossorigin="anonymous"
+                    async>
+                  </script>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "An Embedded Software Architecture&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "#"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>

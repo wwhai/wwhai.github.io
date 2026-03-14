@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="新四青年 的技术分享">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>一种区间计时执行策略 - 新四青年</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+
+  <!-- 顶部提示 -->
+  <div class="alert alert-warning" role="alert"
+    style="margin-top: 70px; background-color: black;color: rgb(156, 255, 25);text-align: center;padding: 0 0 0 0;">
+    <strong>提示：本站一些文章的超时空时间是乱写的，主要是为了排序，并不是真实写作时间。</strong>
+  </div>
+
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar" style="background-color: #000000;">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>新四青年</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/openlab/academic.html">
+                
+                FreeOpenLab
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/things/">
+                
+                作品
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/post.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2025-02-11 00:34">
+      February 11, 2025 am
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      980 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      11
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：July 20, 2025 pm
+                
+              </p>
+            
+            <article class="markdown-body">
+              <p>本文作者：[wangwenhai] # 概要：本文详细介绍了一种计时执行策略。</p>
+<span id="more"></span>
+<p>即在特定的时间间隔 <code>T</code> 内，当某个变量积累的次数达到 <code>N</code> 时，触发执行一个特定动作。文中给出了该策略的设计思路、流程图以及对应的 C 语言示例代码，有助于开发者在实际项目中应用此策略。</p>
+<h1 id="一种区间计时执行策略"><a href="#一种区间计时执行策略" class="headerlink" title="一种区间计时执行策略"></a>一种区间计时执行策略</h1><h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本文详细介绍了一种计时执行策略，即在特定的时间间隔 <code>T</code> 内，当某个变量积累的次数达到 <code>N</code> 时，触发执行一个特定动作。文中给出了该策略的设计思路、流程图以及对应的 C 语言示例代码，有助于开发者在实际项目中应用此策略。</p>
+<h2 id="一、引言"><a href="#一、引言" class="headerlink" title="一、引言"></a>一、引言</h2><p>在许多实际的编程场景中，我们常常需要根据一定的时间条件和计数条件来触发特定的动作。例如，在工业控制中，需要在一段时间内统计某个传感器的触发次数，当次数达到一定阈值时，执行相应的控制操作；在游戏开发中，可能需要在一定时间内统计玩家的某种操作次数，达到规定次数后触发特殊事件。本文提出的计时执行策略能够很好地满足这类需求。</p>
+<h2 id="二、计时执行策略设计思路"><a href="#二、计时执行策略设计思路" class="headerlink" title="二、计时执行策略设计思路"></a>二、计时执行策略设计思路</h2><p>该策略的核心思想是在一个固定的时间间隔 <code>T</code> 内，对某个变量的变化次数进行统计。当统计次数达到预设的阈值 <code>N</code> 时，执行一个预先定义好的动作。具体步骤如下：</p>
+<ol>
+<li>初始化计时和计数变量。</li>
+<li>开始计时，并在每次变量发生变化时增加计数。</li>
+<li>在时间间隔 <code>T</code> 结束时，检查计数是否达到阈值 <code>N</code>。</li>
+<li>如果达到阈值，则执行特定动作；否则，重置计数并开始下一个时间间隔的统计。</li>
+</ol>
+<h2 id="三、流程图"><a href="#三、流程图" class="headerlink" title="三、流程图"></a>三、流程图</h2><pre><code class="hljs mermaid">graph TD;
+    A[开始] --&gt; B[初始化计时和计数变量];
+    B --&gt; C[开始计时];
+    C --&gt; D&#123;时间是否到达 T&#125;;
+    D -- 否 --&gt; E&#123;变量是否变化&#125;;
+    E -- 是 --&gt; F[计数加 1];
+    F --&gt; D;
+    E -- 否 --&gt; D;
+    D -- 是 --&gt; G&#123;计数是否达到 N&#125;;
+    G -- 是 --&gt; H[执行特定动作];
+    H --&gt; I[重置计数和计时];
+    I --&gt; C;
+    G -- 否 --&gt; I;</code></pre>
+
+<h2 id="四、C-语言示例代码"><a href="#四、C-语言示例代码" class="headerlink" title="四、C 语言示例代码"></a>四、C 语言示例代码</h2><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;time.h&gt;</span></span>
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> T 5  <span class="hljs-comment">// 时间间隔，单位：秒</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> N 10 <span class="hljs-comment">// 计数阈值</span></span>
+
+<span class="hljs-comment">// 模拟变量变化检测函数</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">is_variable_changed</span><span class="hljs-params">()</span> </span>&#123;
+    <span class="hljs-comment">// 这里可以根据实际情况实现变量变化检测逻辑</span>
+    <span class="hljs-comment">// 为了示例，我们简单地随机返回 0 或 1</span>
+    <span class="hljs-keyword">return</span> rand() % <span class="hljs-number">2</span>;
+&#125;
+
+<span class="hljs-comment">// 模拟特定动作执行函数</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">perform_action</span><span class="hljs-params">()</span> </span>&#123;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;达到条件，执行特定动作！\n&quot;</span>);
+&#125;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
+    <span class="hljs-keyword">time_t</span> start_time, current_time;
+    <span class="hljs-keyword">int</span> count = <span class="hljs-number">0</span>;
+
+    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;
+        start_time = time(<span class="hljs-literal">NULL</span>);  <span class="hljs-comment">// 记录开始时间</span>
+        count = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 重置计数</span>
+
+        <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;
+            current_time = time(<span class="hljs-literal">NULL</span>);
+            <span class="hljs-keyword">if</span> (current_time - start_time &gt;= T) &#123;  <span class="hljs-comment">// 时间到达 T</span>
+                <span class="hljs-keyword">if</span> (count &gt;= N) &#123;  <span class="hljs-comment">// 计数达到 N</span>
+                    perform_action();
+                &#125;
+                <span class="hljs-keyword">break</span>;
+            &#125;
+
+            <span class="hljs-keyword">if</span> (is_variable_changed()) &#123;
+                count++;
+            &#125;
+        &#125;
+    &#125;
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+&#125;</code></pre>
+
+<h2 id="五、代码解释"><a href="#五、代码解释" class="headerlink" title="五、代码解释"></a>五、代码解释</h2><ol>
+<li><strong>宏定义</strong>：<code>T</code> 定义了时间间隔，<code>N</code> 定义了计数阈值。</li>
+<li><strong>is_variable_changed 函数</strong>：模拟变量变化检测，实际应用中需要根据具体情况实现该函数的逻辑。</li>
+<li><strong>perform_action 函数</strong>：模拟特定动作的执行，在实际应用中可以替换为具体的操作。</li>
+<li><strong>main 函数</strong>：<ul>
+<li>初始化计时和计数变量。</li>
+<li>进入一个无限循环，每次循环开始时重置计时和计数。</li>
+<li>在时间间隔 <code>T</code> 内，不断检查变量是否变化，若变化则增加计数。</li>
+<li>当时间到达 <code>T</code> 时，检查计数是否达到 <code>N</code>，若达到则执行特定动作。</li>
+</ul>
+</li>
+</ol>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%96%87%E9%9B%86-%E6%97%A5%E5%B8%B8%E9%9A%8F%E7%AC%94/">文集-日常随笔</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%96%87%E9%9B%86-%E6%97%A5%E5%B8%B8%E9%9A%8F%E7%AC%94/">文集-日常随笔</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/02/21/cmdbi6mr900aa7ch8bs0j0azc.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">一种既定时间内 IO 读写方法的研究</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2025/01/27/cmdbi6mrl00bz7ch8ez7n6mho.html">
+                        <span class="hidden-mobile">一种基于栈的虚拟机设计</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                  <script src="https://utteranc.es/client.js"
+                    repo="wwhai/gitalk"
+                    issue-term="url"
+                    label="[Utterances]"
+                    theme="preferred-color-scheme"
+                    crossorigin="anonymous"
+                    async>
+                  </script>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "一种区间计时执行策略&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "#"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>
