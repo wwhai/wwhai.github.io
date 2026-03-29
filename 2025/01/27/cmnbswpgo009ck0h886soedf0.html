@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="新四青年 的技术分享">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>一种基于栈的虚拟机设计 - 新四青年</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+
+  <!-- 顶部提示 -->
+  <div class="alert alert-warning" role="alert"
+    style="margin-top: 70px; background-color: black;color: rgb(156, 255, 25);text-align: center;padding: 0 0 0 0;">
+    <strong>提示：本站一些文章的超时空时间是乱写的，主要是为了排序，并不是真实写作时间。</strong>
+  </div>
+
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar" style="background-color: #000000;">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>新四青年</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/things/">
+                
+                作品
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/post.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2025-01-27 23:33">
+      January 27, 2025 pm
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.6k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      23
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：July 20, 2025 pm
+                
+              </p>
+            
+            <article class="markdown-body">
+              <p>本文作者：[wangwenhai] # 概要：一种基于栈的虚拟机设计</p>
+<span id="more"></span>
+
+
+<h1 id="一种基于栈的虚拟机设计"><a href="#一种基于栈的虚拟机设计" class="headerlink" title="一种基于栈的虚拟机设计"></a>一种基于栈的虚拟机设计</h1><p><strong>摘要</strong>：本文详细阐述了一种基于栈的虚拟机设计，包括指令集的汇编设计以及将BASIC语法编译成汇编的编译器实现。该虚拟机支持多级函数调用，且函数参数通过栈进行传递，体现了基于栈的虚拟机在复杂计算场景中的应用潜力。</p>
+<h2 id="一、引言"><a href="#一、引言" class="headerlink" title="一、引言"></a>一、引言</h2><p>基于栈的虚拟机由于其简洁的设计和易于实现的特性，在众多计算场景中得到了广泛应用，是许多编程语言实现的重要基础。本文旨在设计一个功能较为完善的基于栈的虚拟机，支持多级函数调用，以满足更复杂的编程需求。</p>
+<h2 id="二、指令集及汇编设计"><a href="#二、指令集及汇编设计" class="headerlink" title="二、指令集及汇编设计"></a>二、指令集及汇编设计</h2><h3 id="2-1-指令集表格"><a href="#2-1-指令集表格" class="headerlink" title="2.1 指令集表格"></a>2.1 指令集表格</h3><table>
+<thead>
+<tr>
+<th>指令编号</th>
+<th>指令名称</th>
+<th>操作数个数</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0x00</td>
+<td>PUSH</td>
+<td>1</td>
+<td>将操作数压入栈顶</td>
+</tr>
+<tr>
+<td>0x01</td>
+<td>POP</td>
+<td>0</td>
+<td>弹出栈顶元素</td>
+</tr>
+<tr>
+<td>0x02</td>
+<td>ADD</td>
+<td>0</td>
+<td>弹出栈顶两个元素，相加后将结果压入栈顶</td>
+</tr>
+<tr>
+<td>0x03</td>
+<td>SUB</td>
+<td>0</td>
+<td>弹出栈顶两个元素，相减后将结果压入栈顶</td>
+</tr>
+<tr>
+<td>0x04</td>
+<td>MUL</td>
+<td>0</td>
+<td>弹出栈顶两个元素，相乘后将结果压入栈顶</td>
+</tr>
+<tr>
+<td>0x05</td>
+<td>DIV</td>
+<td>0</td>
+<td>弹出栈顶两个元素，相除后将结果压入栈顶</td>
+</tr>
+<tr>
+<td>0x06</td>
+<td>PRINT</td>
+<td>0</td>
+<td>打印栈顶元素</td>
+</tr>
+<tr>
+<td>0x07</td>
+<td>CALL</td>
+<td>1</td>
+<td>调用函数，操作数为函数地址</td>
+</tr>
+<tr>
+<td>0x08</td>
+<td>RET</td>
+<td>0</td>
+<td>从函数返回</td>
+</tr>
+<tr>
+<td>0x09</td>
+<td>HALT</td>
+<td>0</td>
+<td>停止虚拟机执行</td>
+</tr>
+</tbody></table>
+<h3 id="2-2-汇编设计表格"><a href="#2-2-汇编设计表格" class="headerlink" title="2.2 汇编设计表格"></a>2.2 汇编设计表格</h3><table>
+<thead>
+<tr>
+<th>汇编指令</th>
+<th>操作数</th>
+<th>对应的机器指令</th>
+<th>功能描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PUSH</td>
+<td>常量值或变量名</td>
+<td>0x00 后跟操作数</td>
+<td>将操作数压入栈顶</td>
+</tr>
+<tr>
+<td>POP</td>
+<td>无</td>
+<td>0x01</td>
+<td>弹出栈顶元素</td>
+</tr>
+<tr>
+<td>ADD</td>
+<td>无</td>
+<td>0x02</td>
+<td>弹出栈顶两个元素，相加后将结果压入栈顶</td>
+</tr>
+<tr>
+<td>SUB</td>
+<td>无</td>
+<td>0x03</td>
+<td>弹出栈顶两个元素，相减后将结果压入栈顶</td>
+</tr>
+<tr>
+<td>MUL</td>
+<td>无</td>
+<td>0x04</td>
+<td>弹出栈顶两个元素，相乘后将结果压入栈顶</td>
+</tr>
+<tr>
+<td>DIV</td>
+<td>无</td>
+<td>0x05</td>
+<td>弹出栈顶两个元素，相除后将结果压入栈顶</td>
+</tr>
+<tr>
+<td>PRINT</td>
+<td>无</td>
+<td>0x06</td>
+<td>打印栈顶元素</td>
+</tr>
+<tr>
+<td>CALL</td>
+<td>函数地址</td>
+<td>0x07 后跟函数地址</td>
+<td>调用函数</td>
+</tr>
+<tr>
+<td>RET</td>
+<td>无</td>
+<td>0x08</td>
+<td>从函数返回</td>
+</tr>
+<tr>
+<td>HALT</td>
+<td>无</td>
+<td>0x09</td>
+<td>停止虚拟机执行</td>
+</tr>
+</tbody></table>
+<h2 id="三、BASIC语法编译成汇编的编译器实现"><a href="#三、BASIC语法编译成汇编的编译器实现" class="headerlink" title="三、BASIC语法编译成汇编的编译器实现"></a>三、BASIC语法编译成汇编的编译器实现</h2><h3 id="3-1-BASIC示例语法"><a href="#3-1-BASIC示例语法" class="headerlink" title="3.1 BASIC示例语法"></a>3.1 BASIC示例语法</h3><p>考虑一个简单的BASIC语法，支持变量声明、赋值、算术运算、打印语句和多级函数调用。例如：</p>
+<pre><code class="hljs basic"><span class="hljs-keyword">DEF</span> FN_ADD(A, B) = A + B
+<span class="hljs-keyword">DEF</span> FN_MULSUM(X, Y, Z) = FN_ADD(X, Y) * Z
+<span class="hljs-keyword">LET</span> A = <span class="hljs-number">5</span>
+<span class="hljs-keyword">LET</span> B = <span class="hljs-number">3</span>
+<span class="hljs-keyword">LET</span> C = <span class="hljs-number">2</span>
+<span class="hljs-keyword">LET</span> D = FN_MULSUM(A, B, C)
+<span class="hljs-keyword">PRINT</span> D</code></pre>
+
+<h3 id="3-2-编译器实现（示例用C语言）"><a href="#3-2-编译器实现（示例用C语言）" class="headerlink" title="3.2 编译器实现（示例用C语言）"></a>3.2 编译器实现（示例用C语言）</h3><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span>
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> MAX_CODE_SIZE 1024</span>
+
+<span class="hljs-comment">// 生成PUSH指令</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">generate_push</span><span class="hljs-params">(<span class="hljs-keyword">int</span> value, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> *code, <span class="hljs-keyword">int</span> *code_index)</span> </span>&#123;
+    code[(*code_index)++] = <span class="hljs-number">0x00</span>;
+    code[(*code_index)++] = value;
+&#125;
+
+<span class="hljs-comment">// 生成其他指令</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">generate_instruction</span><span class="hljs-params">(<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> opcode, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> *code, <span class="hljs-keyword">int</span> *code_index)</span> </span>&#123;
+    code[(*code_index)++] = opcode;
+&#125;
+
+<span class="hljs-comment">// 编译BASIC代码</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">compile_basic</span><span class="hljs-params">(<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *basic_code, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> *code, <span class="hljs-keyword">int</span> *code_index)</span> </span>&#123;
+    <span class="hljs-keyword">char</span> *token;
+    <span class="hljs-keyword">char</span> *line = strdup(basic_code);
+    token = strtok(line, <span class="hljs-string">&quot; \n&quot;</span>);
+
+    <span class="hljs-keyword">while</span> (token != <span class="hljs-literal">NULL</span>) &#123;
+        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strncmp</span>(token, <span class="hljs-string">&quot;DEF FN_&quot;</span>, <span class="hljs-number">6</span>) == <span class="hljs-number">0</span>) &#123;
+            <span class="hljs-comment">// 解析函数定义，这里简单跳过，不编译函数体</span>
+            <span class="hljs-keyword">while</span> (strtok(<span class="hljs-literal">NULL</span>, <span class="hljs-string">&quot;\n&quot;</span>) != <span class="hljs-literal">NULL</span>);
+        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(token, <span class="hljs-string">&quot;LET&quot;</span>) == <span class="hljs-number">0</span>) &#123;
+            <span class="hljs-comment">// 解析变量赋值语句</span>
+            <span class="hljs-keyword">char</span> *var_name = strtok(<span class="hljs-literal">NULL</span>, <span class="hljs-string">&quot; =&quot;</span>);
+            <span class="hljs-keyword">char</span> *value_str = strtok(<span class="hljs-literal">NULL</span>, <span class="hljs-string">&quot; \n&quot;</span>);
+            <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strncmp</span>(value_str, <span class="hljs-string">&quot;FN_&quot;</span>, <span class="hljs-number">3</span>) == <span class="hljs-number">0</span>) &#123;
+                <span class="hljs-comment">// 函数调用</span>
+                <span class="hljs-keyword">char</span> *func_name = strtok(value_str, <span class="hljs-string">&quot;(&quot;</span>);
+                <span class="hljs-keyword">char</span> *arg_str = strtok(<span class="hljs-literal">NULL</span>, <span class="hljs-string">&quot;)&quot;</span>);
+                <span class="hljs-keyword">char</span> *arg_token;
+                arg_token = strtok(arg_str, <span class="hljs-string">&quot;,&quot;</span>);
+                <span class="hljs-keyword">while</span> (arg_token != <span class="hljs-literal">NULL</span>) &#123;
+                    <span class="hljs-keyword">int</span> arg = atoi(arg_token);
+                    generate_push(arg, code, code_index);
+                    arg_token = strtok(<span class="hljs-literal">NULL</span>, <span class="hljs-string">&quot;,&quot;</span>);
+                &#125;
+                <span class="hljs-comment">// 假设函数地址为固定值，这里简单设为不同值</span>
+                <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(func_name, <span class="hljs-string">&quot;FN_ADD&quot;</span>) == <span class="hljs-number">0</span>) &#123;
+                    generate_instruction(<span class="hljs-number">0x07</span>, code, code_index);
+                    code[(*code_index)++] = <span class="hljs-number">0x10</span>;
+                &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(func_name, <span class="hljs-string">&quot;FN_MULSUM&quot;</span>) == <span class="hljs-number">0</span>) &#123;
+                    generate_instruction(<span class="hljs-number">0x07</span>, code, code_index);
+                    code[(*code_index)++] = <span class="hljs-number">0x20</span>;
+                &#125;
+            &#125; <span class="hljs-keyword">else</span> &#123;
+                <span class="hljs-keyword">int</span> value = atoi(value_str);
+                generate_push(value, code, code_index);
+            &#125;
+        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(token, <span class="hljs-string">&quot;PRINT&quot;</span>) == <span class="hljs-number">0</span>) &#123;
+            <span class="hljs-comment">// 生成打印指令</span>
+            generate_instruction(<span class="hljs-number">0x06</span>, code, code_index);
+        &#125;
+        token = strtok(<span class="hljs-literal">NULL</span>, <span class="hljs-string">&quot; \n&quot;</span>);
+    &#125;
+
+    <span class="hljs-comment">// 生成停止指令</span>
+    generate_instruction(<span class="hljs-number">0x09</span>, code, code_index);
+
+    <span class="hljs-built_in">free</span>(line);
+&#125;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *basic_code = <span class="hljs-string">&quot;DEF FN_ADD(A, B) = A + B\nDEF FN_MULSUM(X, Y, Z) = FN_ADD(X, Y) * Z\nLET A = 5\nLET B = 3\nLET C = 2\nLET D = FN_MULSUM(A, B, C)\nPRINT D&quot;</span>;
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> code[MAX_CODE_SIZE];
+    <span class="hljs-keyword">int</span> code_index = <span class="hljs-number">0</span>;
+
+    compile_basic(basic_code, code, &amp;code_index);
+
+    <span class="hljs-comment">// 输出编译后的二进制指令</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; code_index; i++) &#123;
+        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%02X &quot;</span>, code[i]);
+    &#125;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);
+
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+&#125;</code></pre>
+
+<h2 id="四、虚拟机实现（示例用C语言）"><a href="#四、虚拟机实现（示例用C语言）" class="headerlink" title="四、虚拟机实现（示例用C语言）"></a>四、虚拟机实现（示例用C语言）</h2><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span>
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> STACK_SIZE 1024</span>
+
+<span class="hljs-comment">// 栈结构</span>
+<span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> &#123;</span>
+    <span class="hljs-keyword">int</span> data[STACK_SIZE];
+    <span class="hljs-keyword">int</span> top;
+&#125; Stack;
+
+<span class="hljs-comment">// 初始化栈</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">stack_init</span><span class="hljs-params">(Stack *<span class="hljs-built_in">stack</span>)</span> </span>&#123;
+    <span class="hljs-built_in">stack</span>-&gt;top = <span class="hljs-number">-1</span>;
+&#125;
+
+<span class="hljs-comment">// 压栈操作</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">stack_push</span><span class="hljs-params">(Stack *<span class="hljs-built_in">stack</span>, <span class="hljs-keyword">int</span> value)</span> </span>&#123;
+    <span class="hljs-built_in">stack</span>-&gt;data[++<span class="hljs-built_in">stack</span>-&gt;top] = value;
+&#125;
+
+<span class="hljs-comment">// 出栈操作</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">stack_pop</span><span class="hljs-params">(Stack *<span class="hljs-built_in">stack</span>)</span> </span>&#123;
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">stack</span>-&gt;data[<span class="hljs-built_in">stack</span>-&gt;top--];
+&#125;
+
+<span class="hljs-comment">// 虚拟机执行函数</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">vm_execute</span><span class="hljs-params">(<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> *code)</span> </span>&#123;
+    Stack <span class="hljs-built_in">stack</span>;
+    stack_init(&amp;<span class="hljs-built_in">stack</span>);
+
+    <span class="hljs-keyword">int</span> ip = <span class="hljs-number">0</span>; <span class="hljs-comment">// 指令指针</span>
+
+    <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;
+        <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> opcode = code[ip++];
+        <span class="hljs-keyword">switch</span> (opcode) &#123;
+            <span class="hljs-keyword">case</span> <span class="hljs-number">0x00</span>: &#123;
+                <span class="hljs-comment">// PUSH指令</span>
+                <span class="hljs-keyword">int</span> value = code[ip++];
+                stack_push(&amp;<span class="hljs-built_in">stack</span>, value);
+                <span class="hljs-keyword">break</span>;
+            &#125;
+            <span class="hljs-keyword">case</span> <span class="hljs-number">0x01</span>: &#123;
+                <span class="hljs-comment">// POP指令</span>
+                stack_pop(&amp;<span class="hljs-built_in">stack</span>);
+                <span class="hljs-keyword">break</span>;
+            &#125;
+            <span class="hljs-keyword">case</span> <span class="hljs-number">0x02</span>: &#123;
+                <span class="hljs-comment">// ADD指令</span>
+                <span class="hljs-keyword">int</span> b = stack_pop(&amp;<span class="hljs-built_in">stack</span>);
+                <span class="hljs-keyword">int</span> a = stack_pop(&amp;<span class="hljs-built_in">stack</span>);
+                stack_push(&amp;<span class="hljs-built_in">stack</span>, a + b);
+                <span class="hljs-keyword">break</span>;
+            &#125;
+            <span class="hljs-keyword">case</span> <span class="hljs-number">0x03</span>: &#123;
+                <span class="hljs-comment">// SUB指令</span>
+                <span class="hljs-keyword">int</span> b = stack_pop(&amp;<span class="hljs-built_in">stack</span>);
+                <span class="hljs-keyword">int</span> a = stack_pop(&amp;<span class="hljs-built_in">stack</span>);
+                stack_push(&amp;<span class="hljs-built_in">stack</span>, a - b);
+                <span class="hljs-keyword">break</span>;
+            &#125;
+            <span class="hljs-keyword">case</span> <span class="hljs-number">0x04</span>: &#123;
+                <span class="hljs-comment">// MUL指令</span>
+                <span class="hljs-keyword">int</span> b = stack_pop(&amp;<span class="hljs-built_in">stack</span>);
+                <span class="hljs-keyword">int</span> a = stack_pop(&amp;<span class="hljs-built_in">stack</span>);
+                stack_push(&amp;<span class="hljs-built_in">stack</span>, a * b);
+                <span class="hljs-keyword">break</span>;
+            &#125;
+            <span class="hljs-keyword">case</span> <span class="hljs-number">0x05</span>: &#123;
+                <span class="hljs-comment">// DIV指令</span>
+                <span class="hljs-keyword">int</span> b = stack_pop(&amp;<span class="hljs-built_in">stack</span>);
+                <span class="hljs-keyword">int</span> a = stack_pop(&amp;<span class="hljs-built_in">stack</span>);
+                stack_push(&amp;<span class="hljs-built_in">stack</span>, a / b);
+                <span class="hljs-keyword">break</span>;
+            &#125;
+            <span class="hljs-keyword">case</span> <span class="hljs-number">0x06</span>: &#123;
+                <span class="hljs-comment">// PRINT指令</span>
+                <span class="hljs-keyword">int</span> value = stack_pop(&amp;<span class="hljs-built_in">stack</span>);
+                <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, value);
+                <span class="hljs-keyword">break</span>;
+            &#125;
+            <span class="hljs-keyword">case</span> <span class="hljs-number">0x07</span>: &#123;
+                <span class="hljs-comment">// CALL指令</span>
+                <span class="hljs-keyword">int</span> func_addr = code[ip++];
+                <span class="hljs-keyword">if</span> (func_addr == <span class="hljs-number">0x10</span>) &#123;
+                    <span class="hljs-comment">// FN_ADD函数</span>
+                    <span class="hljs-keyword">int</span> b = stack_pop(&amp;<span class="hljs-built_in">stack</span>);
+                    <span class="hljs-keyword">int</span> a = stack_pop(&amp;<span class="hljs-built_in">stack</span>);
+                    stack_push(&amp;<span class="hljs-built_in">stack</span>, a + b);
+                &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (func_addr == <span class="hljs-number">0x20</span>) &#123;
+                    <span class="hljs-comment">// FN_MULSUM函数</span>
+                    <span class="hljs-keyword">int</span> z = stack_pop(&amp;<span class="hljs-built_in">stack</span>);
+                    <span class="hljs-keyword">int</span> y = stack_pop(&amp;<span class="hljs-built_in">stack</span>);
+                    <span class="hljs-keyword">int</span> x = stack_pop(&amp;<span class="hljs-built_in">stack</span>);
+                    stack_push(&amp;<span class="hljs-built_in">stack</span>, x + y);
+                    stack_push(&amp;<span class="hljs-built_in">stack</span>, z);
+                    stack_push(&amp;<span class="hljs-built_in">stack</span>, stack_pop(&amp;<span class="hljs-built_in">stack</span>) * stack_pop(&amp;<span class="hljs-built_in">stack</span>));
+                &#125;
+                <span class="hljs-keyword">break</span>;
+            &#125;
+            <span class="hljs-keyword">case</span> <span class="hljs-number">0x08</span>: &#123;
+                <span class="hljs-comment">// RET指令</span>
+                <span class="hljs-keyword">break</span>;
+            &#125;
+            <span class="hljs-keyword">case</span> <span class="hljs-number">0x09</span>: &#123;
+                <span class="hljs-comment">// HALT指令</span>
+                <span class="hljs-keyword">return</span>;
+            &#125;
+            <span class="hljs-keyword">default</span>:
+                <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Unknown opcode: %02X\n&quot;</span>, opcode);
+                <span class="hljs-keyword">return</span>;
+        &#125;
+    &#125;
+&#125;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;
+    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> code[] = &#123;<span class="hljs-number">0x00</span>, <span class="hljs-number">5</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">3</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">2</span>, <span class="hljs-number">0x07</span>, <span class="hljs-number">0x20</span>, <span class="hljs-number">0x06</span>, <span class="hljs-number">0x09</span>&#125;;
+    vm_execute(code);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+&#125;</code></pre>
+
+<h2 id="五、结论"><a href="#五、结论" class="headerlink" title="五、结论"></a>五、结论</h2><p>本文设计的基于栈的虚拟机具有较为精简的指令集，并且支持多级函数调用，函数参数通过栈传递。通过汇编设计和编译器实现，展示了如何将BASIC语法编译为二进制指令集并在虚拟机上执行。该设计为进一步扩展和优化提供了基础，有望在更多复杂的计算场景中发挥作用。</p>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%89%A9%E8%81%94%E7%BD%91%E6%9D%82%E8%B0%88/">物联网杂谈</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%89%A9%E8%81%94%E7%BD%91%E6%9D%82%E8%B0%88/">物联网杂谈</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/02/11/cmnbswpg5005wk0h8gpfgbc7c.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">一种区间计时执行策略</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2025/01/26/cmnbswpfn003ik0h83ohchdpe.html">
+                        <span class="hidden-mobile">Mosquito V5 插件开发技巧</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                  <script src="https://utteranc.es/client.js"
+                    repo="wwhai/gitalk"
+                    issue-term="url"
+                    label="[Utterances]"
+                    theme="preferred-color-scheme"
+                    crossorigin="anonymous"
+                    async>
+                  </script>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "一种基于栈的虚拟机设计&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "#"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>

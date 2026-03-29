@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="新四青年 的技术分享">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>基于 PID 控制理论的恒温水箱设计 - 新四青年</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+
+  <!-- 顶部提示 -->
+  <div class="alert alert-warning" role="alert"
+    style="margin-top: 70px; background-color: black;color: rgb(156, 255, 25);text-align: center;padding: 0 0 0 0;">
+    <strong>提示：本站一些文章的超时空时间是乱写的，主要是为了排序，并不是真实写作时间。</strong>
+  </div>
+
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar" style="background-color: #000000;">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>新四青年</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/things/">
+                
+                作品
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/post.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2025-03-26 00:34">
+      March 26, 2025 am
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      14
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：July 20, 2025 pm
+                
+              </p>
+            
+            <article class="markdown-body">
+              <p>本文作者：[wangwenhai] # 概要：基于 PID 控制理论的恒温水箱设计.</p>
+<span id="more"></span>
+
+
+
+<h1 id="基于-PID-控制理论的恒温水箱设计"><a href="#基于-PID-控制理论的恒温水箱设计" class="headerlink" title="基于 PID 控制理论的恒温水箱设计"></a>基于 PID 控制理论的恒温水箱设计</h1><h2 id="一、PID-控制理论简介"><a href="#一、PID-控制理论简介" class="headerlink" title="一、PID 控制理论简介"></a>一、PID 控制理论简介</h2><p>PID（比例 - 积分 - 微分）控制器通过对设定值（目标温度）与实际测量值（水箱内水温）的偏差进行比例、积分和微分运算，输出控制信号来调节加热功率，以实现对水温的精确控制。其控制规律的数学表达式为：</p>
+<p>$u(t)=K_p e(t)+K_i \int_{0}^{t} e(\tau)d\tau + K_d \frac{de(t)}{dt}$</p>
+<p>其中，$u(t)$ 为 PID 控制器的输出，$K_p$ 为比例系数，$K_i$ 为积分系数，$K_d$ 为微分系数，$e(t)$ 为偏差，即 $e(t)=r(t)-y(t)$，$r(t)$ 是设定值（目标温度），$y(t)$ 是测量值（水箱内实际水温）。</p>
+<h2 id="二、PID-输出值区间与功率区间映射设计"><a href="#二、PID-输出值区间与功率区间映射设计" class="headerlink" title="二、PID 输出值区间与功率区间映射设计"></a>二、PID 输出值区间与功率区间映射设计</h2><h3 id="（一）确定-PID-输出值区间"><a href="#（一）确定-PID-输出值区间" class="headerlink" title="（一）确定 PID 输出值区间"></a>（一）确定 PID 输出值区间</h3><p>根据实验设备和控制要求，设定 PID 输出值 $u$ 的区间为 $[Pid_a, Pid_b]$，假设 $[Pid_a, Pid_b]=[-100, 100]$。这个区间的选择要考虑到控制器输出的物理意义以及执行机构（加热器）的响应范围，确保既能有效控制水温，又不会使输出信号超出合理范围导致设备损坏或不稳定。</p>
+<h3 id="（二）确定功率区间"><a href="#（二）确定功率区间" class="headerlink" title="（二）确定功率区间"></a>（二）确定功率区间</h3><p>实验中使用的是 $10Kw$ 加热器，为了合理利用加热器的功率范围并实现精确控制，设定功率区间 $[Power_A, Power_B]$ 为 $[0, 10Kw]$。</p>
+<h3 id="（三）建立映射关系"><a href="#（三）建立映射关系" class="headerlink" title="（三）建立映射关系"></a>（三）建立映射关系</h3><p>为了将 PID 输出值 $u$ 映射到加热功率 $P$，采用线性映射的方法。线性映射公式为：</p>
+<p>$P = \frac{Power_B - Power_A}{Pid_b - Pid_a}(u - Pid_a)+Power_A$</p>
+<p>将假设的区间值代入，即：</p>
+<p>$P = \frac{10 - 0}{100 - (-100)}(u - (-100)) + 0 = \frac{1}{20}(u + 100)$</p>
+<p>这样，当 $u = -100$ 时，$P = 0$，加热器不工作；当 $u = 100$ 时，$P = 10Kw$，加热器全功率工作。通过这种映射关系，PID 控制器的输出能够合理地控制加热器的加热功率，从而实现对水箱水温的调节。</p>
+<h2 id="三、实验操作步骤"><a href="#三、实验操作步骤" class="headerlink" title="三、实验操作步骤"></a>三、实验操作步骤</h2><h3 id="（一）实验设备搭建"><a href="#（一）实验设备搭建" class="headerlink" title="（一）实验设备搭建"></a>（一）实验设备搭建</h3><p>将 $Pt100$ 温度计安装在 $1$ 立方米水箱内合适位置，确保能够准确测量水箱内的水温。温度计的输出信号连接到数据采集模块或控制器的输入端口。</p>
+<p>将 $10Kw$ 加热器安装在水箱内，确保加热器能够正常工作且安全可靠。加热器的控制端口连接到控制器的输出端口，用于接收 PID 控制器输出的控制信号以调节加热功率。</p>
+<p>连接好控制器、数据采集模块、温度计和加热器之间的电气线路，确保线路连接正确、牢固，避免出现短路、断路等问题。</p>
+<p>对整个实验系统进行通电测试，检查设备是否正常工作，温度计是否能够准确显示水温，加热器是否能够正常加热。</p>
+<h3 id="（二）PID-参数初始化"><a href="#（二）PID-参数初始化" class="headerlink" title="（二）PID 参数初始化"></a>（二）PID 参数初始化</h3><p>根据经验或理论计算，初步设定 PID 控制器的比例系数 $K_p$、积分系数 $K_i$ 和微分系数 $K_d$。例如，可以先设定 $K_p = 10$，$K_i = 0.1$，$K_d = 1$。这些初始值只是一个参考，后续需要在实验过程中进行调整优化。</p>
+<p>在控制器中设置目标温度为 $50$ 摄氏度。</p>
+<h3 id="（三）实验运行与数据采集"><a href="#（三）实验运行与数据采集" class="headerlink" title="（三）实验运行与数据采集"></a>（三）实验运行与数据采集</h3><p>启动实验系统，控制器开始根据设定的 PID 参数和目标温度对水箱水温进行控制。</p>
+<p>在实验过程中，每隔一定时间（例如 $10$ 秒）采集一次水箱内的实际水温数据，并记录下来。同时，记录下对应的 PID 输出值和加热功率值。</p>
+<p>观察水温的变化情况，注意水温是否能够稳定地接近目标温度 $50$ 摄氏度，以及水温在达到目标温度后的波动情况。如果水温波动较大或长时间无法达到目标温度，则需要调整 PID 参数。</p>
+<h3 id="（四）PID-参数调整优化"><a href="#（四）PID-参数调整优化" class="headerlink" title="（四）PID 参数调整优化"></a>（四）PID 参数调整优化</h3><p>根据实验数据和水温变化情况，分析当前 PID 参数的控制效果。如果水温上升过快或超调量过大，说明比例系数 $K_p$ 可能过大，需要适当减小 $K_p$ 的值；如果水温上升缓慢且长时间无法达到目标温度，说明比例系数 $K_p$ 可能过小，需要适当增大 $K_p$ 的值。</p>
+<p>对于积分系数 $K_i$，如果水温存在稳态误差（即实际水温与目标温度始终存在一定偏差），则需要增大 $K_i$ 的值以减小稳态误差；但如果积分作用过强，可能会导致系统响应变慢甚至出现振荡，此时需要减小 $K_i$ 的值。</p>
+<p>微分系数 $K_d$ 主要用于改善系统的动态性能，抑制超调。如果水温超调严重，可适当增大 $K_d$ 的值；但如果微分作用过强，可能会对噪声过于敏感，此时需要减小 $K_d$ 的值。</p>
+<p>在调整 PID 参数时，每次只调整一个参数，观察调整后的控制效果，然后根据需要再调整其他参数，逐步优化 PID 参数，直到水温能够快速、稳定地达到目标温度 $50$ 摄氏度，并且在达到目标温度后波动较小。</p>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%96%87%E9%9B%86-%E9%87%8E%E7%94%9F%E7%A7%91%E7%A0%94%E9%83%A8%E9%97%A8/">文集-野生科研部门</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%96%87%E9%9B%86-%E9%87%8E%E7%94%9F%E7%A7%91%E7%A0%94%E9%83%A8%E9%97%A8/">文集-野生科研部门</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/04/13/cmnbswpgi0087k0h87dmzb9om.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">精致为己和付出不矛盾</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2025/02/25/cmnbswpg60061k0h8gyoa81rc.html">
+                        <span class="hidden-mobile">CGO原理与实现</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                  <script src="https://utteranc.es/client.js"
+                    repo="wwhai/gitalk"
+                    issue-term="url"
+                    label="[Utterances]"
+                    theme="preferred-color-scheme"
+                    crossorigin="anonymous"
+                    async>
+                  </script>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "基于 PID 控制理论的恒温水箱设计&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "#"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>
