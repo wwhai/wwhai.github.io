@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="WWHAI 的个人网站">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>公堂斗：一个梦设计出来的桌游 - WWHAI</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar" style="background-color: #000000;">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>WWHAI</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/things/">
+                
+                作品
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/post.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2026-10-09 08:00">
+      October 9, 2026 am
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      25
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：October 9, 2026 pm
+                
+              </p>
+            
+            <article class="markdown-body">
+              <p>本文作者：[wangwenhai] # 概要：从梦境到成品，一款国风公堂斗桌游的完整设计。</p>
+<span id="more"></span>
+
+<p>《公堂斗》游戏规则深度解析·最终定稿（印刷版）<br>一、核心定位与设计亮点<br>《公堂斗》为纯原创国风2v2策略推理卡牌桌游，以「地主分产、县官监审受贿」为核心剧情背景，依托明身份、暗阵营独创博弈机制，兼顾新手低上手门槛与高阶策略上限。游戏节奏适中、对局公平无失衡，运气摸牌与战术操作双向平衡，无无脑碾压对局，适配亲友聚会、休闲博弈线下游玩，整体机制闭环完整、题材辨识度极高，为成熟可落地的成品桌游体系。<br>核心差异化亮点</p>
+<ul>
+<li>身份明置，阵营暗博弈：四名角色身份全程公开，降低新手认知门槛；地主、县太爷随机暗阵营偏心机制，让每局对战阵营不固定，彻底规避固化打法，每局均可展开全新心理博弈。</li>
+<li>策略运气双向平衡：基础手牌保留卡牌游戏的随机性，同时通过花色特性、特技克制、角色被动、阵营推理四层策略体系，支持玩家依靠操作逆风翻盘，兼顾娱乐性与竞技性。</li>
+<li>题材机制高度自洽：公堂审案、家产争夺、刑狱问责等古风设定，完全贴合卡牌特技与花色效果，机制服务剧情、剧情赋能玩法，摆脱通用卡牌模板化问题，国风氛围感拉满。</li>
+<li>深浅适配全人群：基础规则一分钟即可上手，熟练后可开发技能叠加、节奏运营、心理钓鱼、精准反制等高阶战术，适配新手娱乐、老手博弈双重需求。<br>二、四层递进博弈体系（完整闭环）<br>游戏策略深度由四层逻辑层层递进，从基础数值操作到高阶心理博弈，无机制断层，对局内容饱满且无冗余设计。</li>
+</ul>
+<ol>
+<li>基础层：牌型数值博弈<br>单张、对子、普通三张、特技三张形成清晰的攻防数值梯度，牌型压制关系明确。玩家需通过合理凑牌、把控出牌节奏、管控对局伤害，完成基础攻防拉扯，是对局最核心的基础操作逻辑。</li>
+<li>进阶层：花色战术博弈<br>四大花色绑定专属战术定位，彻底避免出牌同质化，同款牌型可适配不同对局思路：黑桃主打爆发增伤、斩杀破防；红桃主打减伤自保、团队续航；梅花适配稳健凑牌、稳定触发技能；方块主打信息差博弈、窥探对手布局。花色搭配牌型、特技可衍生多种战术组合。</li>
+<li>高阶层：角色技能克制博弈<br>四名角色被动技能各司其职、互相制衡，形成完整克制闭环，无废技能、无超模角色，不存在绝对强势或弱势身份，角色强度仅取决于对局打法与阵容适配。</li>
+<li>核心层：阵营心理博弈<br>游戏核心特色机制：大少爷、二少爷永久对立，为固定对战双方；地主、县太爷为隐藏偏心阵营，每局随机站队。玩家需通过对手出牌倾向、攻击目标、辅助行为推理隐藏阵营，亦可通过钓鱼式操作误导对手判断，实现战术与心理双重博弈。<br>三、四大角色定位与平衡解析（定稿版）</li>
+<li>地主老爹【家法】—— 团队节奏运营位<br>技能机制：回合初始手牌不足2张时，额外摸1张，持续提供团队资源续航。角色定位为团队润滑剂，核心作用是稳定对局节奏、辅助队友凑牌成型、弥补手牌短板。角色无爆发伤害、无自保反制能力，极度依赖队友配合，主打稳健运营打法，强度适中、适配所有阵容，无失衡问题。</li>
+<li>县太爷【威严】—— 全局战术反制位<br>技能机制：受到敌方特技攻击时，可弃1张手牌触发判定，概率抵消敌方全部特技效果。作为全局唯一特技反制角色，完美克制各类斩杀、控制、拆牌特技，是防守反击、破解对手核心战术的关键。技能存在明确资源代价，无脑触发会导致手牌崩盘，操作具备合理门槛，无超模风险，平衡度极佳。</li>
+<li>大少爷【嫡出】—— 前期节奏压制位<br>技能机制：每回合首张出牌，所有数值效果+1，搭配黑桃花色可打出高额爆发伤害，具备快速压血、滚雪球的前期压制能力。角色短板清晰，后期无容错、无自保手段，前期压制失败后极易陷入被动，存在明确的强弱周期，有效规避单方面碾压对局。</li>
+<li>二少爷【偏房】—— 残局绝境容错位<br>技能机制：永久手牌上限+2，气势归零出局瞬间可弃光手牌复活、恢复1点气势，整局仅一次。作为游戏唯一绝境翻盘角色，主打前期苟发育、后期残局反打，弥补团队容错短板，与大少爷的前期压制形成完美的前后场平衡，战术定位独一无二。<br>角色平衡总结：四名角色分工明确、互相克制、互补适配，无强弱碾压、无废身份，仅存在打法差异，全局平衡闭环，适配任意对局阵容。<br>四、特技体系战术梯度（定稿分类+作战用途）<br>所有特技无废技能、无超模效果，攻、防、控、辅全覆盖，梯度清晰、战术用途明确，适配各类对局打法。</li>
+<li>资源辅助类特技（运营拉扯）<br>三张8【传讯】：摸牌补给、团队传牌，辅助队友凑出核心牌型，主打团队资源运营；三张J【通融】：临时提升手牌上限，支持玩家囤积关键手牌、蓄力高阶战术，适配稳健拉扯打法。</li>
+<li>战术控制类特技（打断破局）<br>三张9【问责】：封禁敌方单名角色全部被动技能，精准克制核心被动体系，打断对手节奏；三张K【裁断】：弃置敌方手牌、破坏对手牌型布局，瓦解对手蓄力战术，是攻防博弈的关键控制手段。</li>
+<li>斩杀输出类特技（对局终结）<br>三张10【廷杖】：定点无视基础防御，造成固定破防伤害，主打单体精准斩杀；三张A【终审】：群体压血且封锁弃牌规避，是全场终结、锁定对局胜负的核心技能。</li>
+<li>团队防守类特技（保核容错）<br>三张Q【庇护】：转移队友所受全部伤害，单人承担团队伤害，核心作用是保护残血核心、保留对局容错，完善团队防守体系。<br>五、双胜负机制（完整定稿规则）</li>
+<li>常规出局胜利<br>优先将敌方全员气势清零、使其出局，即可直接获胜。适配激进强攻打法，支持快速终结对局，满足快节奏对战需求。</li>
+<li>退堂结算胜利<br>玩家空手牌无法继续出牌时触发退堂结算，统计双方剩余总气势，气势总值更高的一方获胜。该机制有效保护弱势方，杜绝无脑碾压，鼓励谨慎出牌、运营拉扯，丰富对局战术维度。<br>机制总结：双胜负机制互补兼容，兼顾快节奏斩杀与慢节奏博弈，适配不同玩家打法风格，对局容错率高、节奏灵活无短板。<br>六、全局固定严谨规则（补齐所有漏洞·印刷定稿）<br>本章节为最终强制执行规则，统一所有模糊点位、补齐全部机制漏洞，线下对局无争议、无扯皮，为印刷落地核心依据。</li>
+</ol>
+<ul>
+<li>花色效果规则固化：花色效果仅作用于伤害类数值，红桃减伤只抵消受到的伤害，无法免疫封禁技能、弃牌拆牌、偷看手牌等功能类效果，机制边界清晰无争议。</li>
+<li>癞子规则固化：大小王为万能癞子，可替代任意点数、任意花色凑牌型，无独立技能与伤害，新手对局可选择关闭，老手对局开启提升博弈深度，规则灵活适配不同场景。</li>
+<li>回合阶段规则固化：每局回合固定为「摸牌阶段—出牌阶段—弃牌阶段—回合结束」，阶段不可逆、不可跳步，所有操作严格按阶段执行。</li>
+<li>阵营公平规则固化：双少爷永久对立，地主、县太爷随机暗阵营，严格保证2v2公平对战格局，无阵营失衡、无对局不公问题。</li>
+<li>多特技结算优先级（新增定稿）：多名玩家同时打出多张特技时，控制类特技优先结算，伤害类特技后置结算；问责、裁断等控制效果生效后，再执行廷杖、终审等伤害效果。</li>
+<li>县太爷判定适配规则（新增定稿）：县太爷【威严】可判定抵消所有敌方单体、群体特技效果，包括三张A【终审】群体伤害，判定成功则自身完全免疫该次特技伤害与效果。</li>
+<li>二少爷复活时机（新增定稿）：二少爷气势归零的瞬间优先触发复活机制，再执行出局结算，为全局最高优先级被动，杜绝出局后无法复活的机制争议。</li>
+<li>数值叠加规则固化：花色增伤、大少爷首牌增伤、牌型基础伤害可多层叠加，所有叠加数值计算方式统一、无冲突。</li>
+</ul>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%96%87%E9%9B%86-%E8%B8%89%E8%B7%84%E4%BA%8E%E4%B8%96/">文集-踉跄于世</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%96%87%E9%9B%86-%E8%B8%89%E8%B7%84%E4%B8%8E%E4%B8%96/">文集-踉跄与世</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2026/10/07/cmuy8trd90000ogh8gytd56pa.html">
+                        <span class="hidden-mobile">为何删除历史博客</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                  <script src="https://utteranc.es/client.js"
+                    repo="wwhai/gitalk"
+                    issue-term="url"
+                    label="[Utterances]"
+                    theme="preferred-color-scheme"
+                    crossorigin="anonymous"
+                    async>
+                  </script>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "公堂斗：一个梦设计出来的桌游&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "#"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>

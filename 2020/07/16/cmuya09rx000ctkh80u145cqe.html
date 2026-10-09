@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="WWHAI 的个人网站">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>远离垃圾人群 - WWHAI</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar" style="background-color: #000000;">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>WWHAI</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/things/">
+                
+                作品
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/post.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2020-07-16 15:40">
+      July 16, 2020 pm
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      20
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：October 7, 2026 pm
+                
+              </p>
+            
+            <article class="markdown-body">
+              <p>本文作者：[wangwenhai] # 概要：毕业后的第一课——我从一家烂公司里学到的东西。</p>
+<span id="more"></span>
+
+<blockquote>
+<p>写在前面：这不是一篇泄愤的文字，而是我走出校门后上的第一课。多年以后回头看，那些荒唐、屈辱和恐惧，最后都长进了我的骨头里。把它写下来，一是给自己留个记号，二是希望后来的人能少走一段弯路。</p>
+</blockquote>
+<h2 id="一、初出茅庐"><a href="#一、初出茅庐" class="headerlink" title="一、初出茅庐"></a>一、初出茅庐</h2><p>2018年8月27日，我入职了那家公司。那时候我刚毕业，对”社会”这两个字还抱着一层温和的想象——总觉得只要肯干、肯学，就总有人看得见。如今想来，那不过是学生气的天真。我到11月19日离职，前后不到三个月，却像是熬了许久。</p>
+<h2 id="二、一屋子荒唐的人"><a href="#二、一屋子荒唐的人" class="headerlink" title="二、一屋子荒唐的人"></a>二、一屋子荒唐的人</h2><p>先说那位”技术主管”。他是那种把吹牛当饭吃的人：号称三天精通C++，网吧里一小时能写个编译器，一秒钟五行代码；在他嘴里，阿里巴巴是垃圾公司，科大讯飞是垃圾公司，Java是垃圾，C++也是垃圾，唯独只有连他自己都不会写的Kotlin天下无敌。他还说360花十万一个月求他上班，腾讯请他去写代码他都不去。后来才知道，他连高中都没读完，简历上那份文凭，是花钱找人P的。</p>
+<p>后来他不知从哪儿弄来一个工具包，所有依赖一股脑打包进去，足有七十多兆，硬说是他自己写的——连org.json都成了他的成果。他逼着全公司”学习”这套东西，谁不服从就拿开除威胁谁。说实话，接触过的人没有一个不觉得那是垃圾，之前带我的架构师，也被他恶心走了。</p>
+<p>至于那位老板，来历也差不多。他原本是在电脑城里给人装机器的，后来不知怎么发了一笔横财，忽然就想开公司。于是租下办公室、招了一批人，风风火火地要做”高科技”。技术他不懂，管理他也不懂，摊子却越铺越大——大到后来，只能靠不停地招人、再不停地赶人来维持运转。</p>
+<p>比吹牛更让人心里发凉的，是这家公司的日常：前前后后开除了三十多人。他们打着招聘的名义把人招来，收拾以前的烂尾项目，交付给客户收了钱，转脸就把人赶走，一分补偿都没有。去大学校招，offer都发了，临了通知”你们不用来了”；从培训机构招来一批人，养了几周，又像赶狗一样赶走。</p>
+<h2 id="三、我做的那个项目"><a href="#三、我做的那个项目" class="headerlink" title="三、我做的那个项目"></a>三、我做的那个项目</h2><p>那段时间我是真在干活的。公司唯一一个能上线的项目，是我做的，这一点所有同事都可以作证。九月整整一个月，我几乎没有按时回过家，加班到凌晨是常事，周末还要强制加班，没有任何补偿。</p>
+<p>项目连需求都没有，全靠下面的人自己猜，所以做得极慢。公司负责人一句”先摸索着做”，就把人打发了。管理者骂人是家常便饭，”垃圾””傻逼”整天挂在嘴边。我干得很不痛快。</p>
+<h2 id="四、辞职"><a href="#四、辞职" class="headerlink" title="四、辞职"></a>四、辞职</h2><p>到了十一月，同事一个个被开除，我也挨了骂。我反复想过，还是决定走。11月11日我提了辞职，却被驳回——理由是我必须给公司招到接班人。可比我技术好的同事全被无故开除了，一时半会儿上哪儿招人？他们就是不许我走，晚上还打电话，说我不介绍人进来就别想走。</p>
+<p>我按他们的要求，把资料、源代码，连同写好的几个文档，全部交了出去，移交给新来的同事阮XX（此人我至今还有联系方式，可以作证）。期间我没有做过任何对不起他们的事。11月19日，公司负责人突然来电话，说X总点头了、我可以走了，然后在钉钉上给我批了离职。只是工资没结，说是下个月——12月15号——来领，四千块。我答应了。</p>
+<h2 id="五、恐吓"><a href="#五、恐吓" class="headerlink" title="五、恐吓"></a>五、恐吓</h2><p>进入十二月，眼看要发工资了，公司又打来电话：没人接手我的项目，要我继续帮他们做几个新需求，不然就”吊销你的毕业证””把你送进监狱””让你赔几十万””我们只手遮天”。威胁的话一句接一句。</p>
+<p>他们还说我的代码不见了、没提交——其实是他们自己操作不当，把我的账户删了，再嫁祸到我头上。我那时还讲责任，硬是从自己的硬盘里把离职时删掉的代码恢复出来，给他们找了回去。我的代码一直用git管着，从2018年9月起每一次提交都有记录，同事和实习生都能为我作证。</p>
+<p>我心里畏惧，就继续帮。那时我已经在新公司上了一个月班，他们仍旧一天一个电话，逼我”必须负责”。负责人说15号来领工资，到了又说16号。</p>
+<p>16号那天我去了。负责人先给我一个下马威，说我给公司造成了损失，说领导看了我的项目大发雷霆。我问是什么损失，他说有两个需求没实现——可那本是新来的同事负责的，人早就被开除了。他说因为我的”过失”，有可能把我送进监狱，还要通知我的女朋友、老师、学校，甚至吊销我的学位证（这些都有录音为证）。最后公司”决定”，从我工资里扣2500，只发1500；负责人又说他私下给我加了500，凑成2000。我想，多一事不如少一事，两千就两千吧。可话音刚落，他又说今天领不了，过了对账期，下个月再来。我签了字，拿了离职证明和一张空头工资条，回了家。</p>
+<p><img src="/uploads/image-20200526224229628.png" srcset="/img/loading.gif" alt="image-20200526224229628"></p>
+<p>2019年1月4日，距离辞职已经快两个月，我还是没拿到那笔工资。整个十二月，我都在想他们威胁我的那些话，天天睡不好觉。那天在一个QQ群里碰见那位负责人，我提起工资的事，他非但不给，还变本加厉地威胁，连同我的学校一起辱骂。</p>
+<h2 id="六、尘埃落定"><a href="#六、尘埃落定" class="headerlink" title="六、尘埃落定"></a>六、尘埃落定</h2><p>后来，我的老师帮我申请了法律援助。他们一听说，立刻就软了：把剩下的两千补上，还赔了礼、道了歉。</p>
+<p>原来那些凶神恶煞，不过是一层纸。</p>
+<h2 id="七、这一课"><a href="#七、这一课" class="headerlink" title="七、这一课"></a>七、这一课</h2><p>这件事我记了很多年。它教会我的，其实不是”社会很黑暗”这么简单。</p>
+<p>它让我明白，人的尊严不是别人给的，是自己守住的。退让换不来体面，只会喂饱恶意。那些靠恐吓、靠拖延、靠欺负年轻人的人，最怕的恰恰是你把事情摆到台面上——你越怕，他越凶；你一站直，他反倒矮了下去。</p>
+<p>我也想对刚毕业的年轻人说一句：愿你晚一点遇到这类人；万一遇到了，也别慌。守住你的证据，守住你的底线，把该做的事做完，然后头也不回地走。恶人不值得你用心情和青春去陪。</p>
+<p>那段经历像一根刺，扎了很多年。可也正是那根刺，让我后来每到一家新公司，都先看人、再看事；让我懂得，一份工作可以普通，但共事的人不能烂。带着这一课往前走，我反而走得更稳了。</p>
+<p>也把这些当时曝光过的信息留在这里，给后来人提个醒：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.tianyancha.com/company/3019068015">https://www.tianyancha.com/company/3019068015</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.tianyancha.com/company/672969176">https://www.tianyancha.com/company/672969176</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.tianyancha.com/company/3161936849">https://www.tianyancha.com/company/3161936849</a></li>
+</ul>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%96%87%E9%9B%86-%E8%B8%89%E8%B7%84%E4%BA%8E%E4%B8%96/">文集-踉跄于世</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%96%87%E9%9B%86-%E8%B8%89%E8%B7%84%E4%B8%8E%E4%B8%96/">文集-踉跄与世</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/08/13/cmnbswpgv00aik0h82apjco2y.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">在闽回忆录</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2020/07/14/cmuyaacxm0000b4h801x8hphu.html">
+                        <span class="hidden-mobile">人生一次失败创业</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                  <script src="https://utteranc.es/client.js"
+                    repo="wwhai/gitalk"
+                    issue-term="url"
+                    label="[Utterances]"
+                    theme="preferred-color-scheme"
+                    crossorigin="anonymous"
+                    async>
+                  </script>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "远离垃圾人群&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "#"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>

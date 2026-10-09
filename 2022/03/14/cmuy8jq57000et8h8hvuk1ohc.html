@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/nn.png">
+  <link rel="icon" type="image/png" href="/img/nn.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="WWHAI 的个人网站">
+  <meta name="author" content="wwhai">
+  <meta name="keywords" content="">
+  <title>梦开始的地方 - WWHAI</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar" style="background-color: #000000;">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>WWHAI</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/things/">
+                
+                作品
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" target="_blank" rel="noopener" href="https://space.bilibili.com/14649762">
+                
+                Bilibili
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+</nav>
+
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('/img/post.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2022-03-14 18:49">
+      March 14, 2022 pm
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      13
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" style="border: 0px;outline: 1px solid rgb(204,204,204);" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：October 7, 2026 pm
+                
+              </p>
+            
+            <article class="markdown-body">
+              <p>本文作者：[wangwenhai] # 概要：不小心翻出来大学的时候写的代码。</p>
+<span id="more"></span>
+
+<p>2022年3月14日，我在码云上翻出了大学时写的一段代码，一时感慨万千。</p>
+<p>那是2017年，我才大二下学期。那时候心里揣着一个念头——做一个物联网平台，于是动手写了个demo，取名easylinker。现在想想，它大概算得上国内第一个公开的物联网平台。</p>
+<p>当初我并不觉得这是什么了不起的事。只是身边同学的老问题总在眼前晃：单片机采到的数据，得抱着仪器才能看；想让它上网、想在手机上瞧一眼，又得从头再搭一遍。硬件和网络之间，横着一道谁都不愿意管的沟。我就想，能不能搭一个通用的平台，把这沟填上，让一切联网都容易一点。</p>
+<p>我没想到，这么个连”半成品”都算不上的东西，后来竟一直牵着我的路走。看着当年自己写下的项目简介，对照着当初那份初衷，满满都是回忆。</p>
+<h2 id="当年的项目简介"><a href="#当年的项目简介" class="headerlink" title="当年的项目简介"></a>当年的项目简介</h2><blockquote>
+<p>本人是电子信息工程理工科男一枚，标准技术宅。本该去研究CPU架构和汇编语言的我，却迷上了WEB互联网开发；加上平时喜欢折腾极客玩具，渐渐对硬件也来了兴趣。</p>
+<p>身处硬件相关专业，身边总围绕着各种各样的问题。比如有同学做STM32单片机时会抱怨：”我要是能把拿到的数据用软件存起来就好了，到时候直接拿出来看。”还有人说：”要是能把单片机的数据传到网络里就好了，可以随便查看。”这些都是硬件工程师的难处——硬件不负责数据的可视化，他们更习惯用各种仪器去看。</p>
+<p>我便想：能不能解决这个问题？让硬件工程师随时都能查看数据，用手机、用浏览器、用APP都可以观测结果，也就是打造一个”通用的平台，让硬件把数据送到互联网上去”。</p>
+<p>于是自己动手试。前后试了很多方法，也解决了一部分问题，却总是不完美。中间用Python在树莓派上做过一个数据呈现平台，效果不理想。折腾许久，最终决定用Java来实现它。这就是这个项目的由来，它的含义只有一句话：<strong>让一切联网变得更加容易。</strong></p>
+</blockquote>
+<h2 id="当年的界面"><a href="#当年的界面" class="headerlink" title="当年的界面"></a>当年的界面</h2><p><img src="/uploads/dream_start/1.png" srcset="/img/loading.gif" alt="=="><br><img src="/uploads/dream_start/2.png" srcset="/img/loading.gif" alt="=="><br><img src="/uploads/dream_start/3.png" srcset="/img/loading.gif" alt="=="><br><img src="/uploads/dream_start/4.png" srcset="/img/loading.gif" alt="=="><br><img src="/uploads/dream_start/5.png" srcset="/img/loading.gif" alt="=="></p>
+<h2 id="一点技术细节"><a href="#一点技术细节" class="headerlink" title="一点技术细节"></a>一点技术细节</h2><p>这个项目当年是用Springboot框架做的，前端大概是用Java的模板引擎，为了它还专门学了Activemq的二次开发。下面这个插件，就是那时候写的：</p>
+<pre><code class="hljs scala"><span class="hljs-keyword">package</span> com.wwh.iot.easylinker.activemqplugin;
+
+<span class="hljs-keyword">import</span> org.apache.activemq.broker.<span class="hljs-type">Broker</span>;
+<span class="hljs-keyword">import</span> org.apache.activemq.broker.<span class="hljs-type">BrokerFilter</span>;
+<span class="hljs-keyword">import</span> org.apache.activemq.broker.<span class="hljs-type">ProducerBrokerExchange</span>;
+<span class="hljs-keyword">import</span> org.apache.activemq.command.<span class="hljs-type">ActiveMQTextMessage</span>;
+<span class="hljs-keyword">import</span> org.apache.activemq.command.<span class="hljs-type">Message</span>;
+
+<span class="hljs-comment">/**</span>
+<span class="hljs-comment"> * Created by wwhai on 2017/9/1.</span>
+<span class="hljs-comment"> */</span>
+public <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AuthBroker</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">BrokerFilter</span> </span>&#123;
+
+    public <span class="hljs-type">AuthBroker</span>(<span class="hljs-type">Broker</span> next) &#123;
+        <span class="hljs-keyword">super</span>(next);
+    &#125;
+
+    <span class="hljs-meta">@Override</span>
+    public void send(<span class="hljs-type">ProducerBrokerExchange</span> producerExchange, <span class="hljs-type">Message</span> messageSend) <span class="hljs-keyword">throws</span> <span class="hljs-type">Exception</span> &#123;
+        <span class="hljs-type">ActiveMQTextMessage</span> receivedMessage = (<span class="hljs-type">ActiveMQTextMessage</span>) messageSend;
+        <span class="hljs-type">String</span> dest=receivedMessage.getDestination().toString();
+        <span class="hljs-keyword">if</span> (dest.equals(<span class="hljs-string">&quot;topic://DISCONNECTED&quot;</span>)) &#123;
+            removeConnection(getAdminConnectionContext(), receivedMessage.getConnection().getConnectionInfo(), <span class="hljs-keyword">new</span> <span class="hljs-type">Exception</span>(<span class="hljs-string">&quot;error&quot;</span>));
+            <span class="hljs-type">System</span>.out.println(<span class="hljs-string">&quot;remove connection :&quot;</span>+receivedMessage.getProducerId());
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+
+<h2 id="后来这些年"><a href="#后来这些年" class="headerlink" title="后来这些年"></a>后来这些年</h2><p>2018年毕业以后，我辗转福州、厦门。2019年进了研究院，做工业机器人的后台，也接过人脸识别，绕了一圈，最后又绕回到物联网上——研究EMQ，啃Erlang，光是为了写个能跑起来的服务器就花了一个多月；从那年10月起，Erlang正式进了我的技术栈。</p>
+<p>那几年我换过好几座城市：2020年去杭州，2021年到了深圳，一待就是两年，2023年又回到福州。工作换了几茬，方向也修正过几回，可”做一个物联网平台”这个念头，始终搁在心里，没有扔下。白天上班、晚上写代码玩开发板的那些日子，说到底，都是在给这个念头添砖。</p>
+<h2 id="尾声"><a href="#尾声" class="headerlink" title="尾声"></a>尾声</h2><p>时光过得很快，从写下这份简介到今天，已经五年了。我始终没能做出当年想要的那个物联网平台，几次离它最近的时刻，也都差了点火候。但正是它，成了我梦想的起点，支撑我一路走到现在。</p>
+<p>说不清是庆幸还是遗憾——如果当年没有那个demo，我大概不会那么早就认准物联网，也不会在后来那些疲惫的夜里，还愿意为一个”没什么用”的念头熬下去。</p>
+<p>但愿我们不忘初心，还能找回当初写的代码，共同纪念我们这代人那逝去的青春。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://gitee.com/wwhai/easylinker">https://gitee.com/wwhai/easylinker</a></li>
+</ul>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%9D%82%E6%96%87/">杂文</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%9D%82%E6%96%87/">杂文</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/05/26/cmnbswpgx00ayk0h85s2yeftd.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">雨夜他乡遇故知</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2022/02/26/cmnbswpgx00atk0h896zy4sw9.html">
+                        <span class="hidden-mobile">口水歌歌词</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                  <script src="https://utteranc.es/client.js"
+                    repo="wwhai/gitalk"
+                    issue-term="url"
+                    label="[Utterances]"
+                    theme="preferred-color-scheme"
+                    crossorigin="anonymous"
+                    async>
+                  </script>
+              </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener">
+        <span>Fluid</span></a>
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "梦开始的地方&nbsp;",
+      ],
+      cursorChar: "$>",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+      icon: "#"
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.staticfile.org/mathjax/3.0.5/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/mermaid/8.5.0/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?fe7a4b213463c7ca15598e31d7eabfd4";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+</body>
+</html>
