@@ -76,6 +76,10 @@ pagination_dir: page
 ## Themes: https://hexo.io/themes/
 theme: fluid
 
+# Static game pages are copied verbatim, never passed through a renderer
+skip_render:
+  - "games/play/**"
+
 # Deployment
 deploy:
   type: git

@@ -1,0 +1,52 @@
+# Games page data source, rendered by themes/fluid/layout/games.ejs
+# Every entry becomes one card; clicking it opens the game inside the page player.
+#
+# Fields:
+#   group  Section name, entries sharing the same value stay together
+#   name   Card title (required)
+#   mark   Short marquee text painted on the card screen
+#   desc   One line summary
+#   play   Absolute site path of the standalone html (required)
+#   tags   Small labels, optional
+#   hint   Controls hint shown in the player bar, optional
+
+games:
+  - group: 益智
+    name: 2048
+    mark: "2048"
+    desc: 滑动合并数字，一路推到 2048。带撤销与最高分记录。
+    play: /games/play/2048/index.html
+    tags:
+      - 键盘
+      - 触屏
+    hint: 方向键或 WASD 移动；触屏上下左右滑动。终局可按撤销回退一步。
+
+  - group: 益智
+    name: 扫雷
+    mark: "MINE"
+    desc: 经典雷区推演，三档难度，首点必安全。
+    play: /games/play/minesweeper/index.html
+    tags:
+      - 鼠标
+      - 逻辑
+    hint: 左键翻开，右键插旗；手机长按插旗，双击已翻开数字可快速展开。
+
+  - group: 街机
+    name: 贪吃蛇
+    mark: "SNAKE"
+    desc: 一条越吃越长的蛇，速度随长度递增。
+    play: /games/play/snake/index.html
+    tags:
+      - 键盘
+      - 触屏
+    hint: 方向键或 WASD 转向；空格暂停；触屏滑动即可转向。
+
+  - group: 街机
+    name: 打砖块
+    mark: "BRKOUT"
+    desc: 板子接球，逐层清砖。三命制，清屏后球速提升。
+    play: /games/play/breakout/index.html
+    tags:
+      - 键盘
+      - 鼠标
+    hint: 移动鼠标或按左右键控制板子；空格开始或暂停。

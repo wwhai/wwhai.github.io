@@ -1,0 +1,452 @@
+<%
+  var data = site.data.games || {}
+  var list = (data.games || []).filter(function (item) { return item && item.name && item.play })
+  var groups = []
+  var seen = {}
+  list.forEach(function (item) {
+    var key = item.group || '全部'
+    if (!seen[key]) {
+      seen[key] = { title: key, items: [] }
+      groups.push(seen[key])
+    }
+    seen[key].items.push(item)
+  })
+  var multiGroup = groups.length > 1
+%>
+
+<% if (page.content) { %>
+  <div class="games-lead"><%- page.content %></div>
+<% } %>
+
+<% if (list.length === 0) { %>
+  <div class="games-empty">暂无游戏</div>
+<% } %>
+
+<% groups.forEach(function (group) { %>
+  <% if (multiGroup) { %>
+    <h2 class="games-heading"><%= group.title %></h2>
+  <% } %>
+  <div class="games-grid">
+    <% group.items.forEach(function (item) { %>
+      <a class="game-card"
+         href="<%= url_for(item.play) %>"
+         data-play="<%= url_for(item.play) %>"
+         data-name="<%= item.name %>"
+         data-hint="<%= item.hint || '' %>">
+        <span class="game-screen">
+          <span class="game-mark"><%= item.mark || item.name %></span>
+          <span class="game-cta">点开玩</span>
+        </span>
+        <span class="game-info">
+          <span class="game-name"><%= item.name %></span>
+          <% if (item.desc) { %>
+            <span class="game-desc"><%= item.desc %></span>
+          <% } %>
+          <% if (item.tags && item.tags.length) { %>
+            <span class="game-tags">
+              <% item.tags.forEach(function (tag) { %>
+                <span class="game-tag"><%= tag %></span>
+              <% }) %>
+            </span>
+          <% } %>
+        </span>
+      </a>
+    <% }) %>
+  </div>
+<% }) %>
+
+<div class="game-player" id="game-player" hidden>
+  <div class="game-player-mask" data-action="close"></div>
+  <div class="game-player-panel" role="dialog" aria-modal="true" aria-label="游戏">
+    <div class="game-player-bar">
+      <span class="game-player-title"></span>
+      <span class="game-player-tools">
+        <a class="game-tool" data-action="open" target="_blank" rel="noopener">新窗口</a>
+        <button class="game-tool" data-action="full" type="button">全屏</button>
+        <button class="game-tool game-tool-close" data-action="close" type="button">关闭</button>
+      </span>
+    </div>
+    <iframe class="game-player-frame" title="game" allowfullscreen></iframe>
+    <div class="game-player-hint"></div>
+  </div>
+</div>
+
+<style>
+  .games-lead {
+    margin-bottom: 1.6rem;
+    font-size: .92rem;
+    line-height: 1.7;
+    color: var(--sec-text-color);
+  }
+
+  .games-lead p {
+    margin: 0 0 .5rem;
+  }
+
+  .games-heading {
+    position: relative;
+    margin: 1.4rem 0 .8rem;
+    padding-left: .65rem;
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--text-color);
+  }
+
+  .games-heading::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: .28em;
+    bottom: .28em;
+    width: 4px;
+    border-radius: 2px;
+    background-color: var(--link-hover-color);
+  }
+
+  .games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(216px, 1fr));
+    gap: 1rem;
+    margin-bottom: .5rem;
+  }
+
+  .game-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--line-color);
+    border-radius: 12px;
+    background-color: var(--board-bg-color);
+    color: var(--text-color);
+    text-decoration: none;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+
+  .game-card:hover,
+  .game-card:focus-visible {
+    transform: translateY(-3px);
+    border-color: var(--link-hover-color);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, .14);
+    color: var(--text-color);
+    text-decoration: none;
+    outline: none;
+  }
+
+  .game-screen {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 9;
+    background:
+      radial-gradient(circle at 28% 18%, rgba(79, 182, 165, .20), transparent 62%),
+      linear-gradient(158deg, #111923 0%, #0b1117 100%);
+  }
+
+  .game-screen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, .05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, .05) 1px, transparent 1px);
+    background-size: 18px 18px;
+    opacity: .75;
+    pointer-events: none;
+  }
+
+  .game-mark {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: 1.55rem;
+    letter-spacing: .22em;
+    text-indent: .22em;
+    color: #e8b04b;
+    text-shadow: 0 0 18px rgba(232, 176, 75, .38);
+    white-space: nowrap;
+  }
+
+  .game-cta {
+    position: absolute;
+    right: .55rem;
+    bottom: .5rem;
+    z-index: 1;
+    padding: .08rem .5rem;
+    border: 1px solid rgba(255, 255, 255, .16);
+    border-radius: 1rem;
+    font-size: .68rem;
+    letter-spacing: .06em;
+    color: #93a3b3;
+    background-color: rgba(255, 255, 255, .04);
+    transition: color .2s ease, border-color .2s ease, background-color .2s ease;
+  }
+
+  .game-card:hover .game-cta {
+    color: #fff;
+    border-color: rgba(232, 176, 75, .8);
+    background-color: rgba(232, 176, 75, .16);
+  }
+
+  .game-info {
+    display: flex;
+    flex-direction: column;
+    gap: .28rem;
+    padding: .72rem .85rem .85rem;
+  }
+
+  .game-name {
+    font-size: .95rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  .game-desc {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-size: .78rem;
+    line-height: 1.5;
+    color: var(--sec-text-color);
+  }
+
+  .game-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .3rem;
+    margin-top: .1rem;
+  }
+
+  .game-tag {
+    padding: .04rem .4rem;
+    border-radius: 1rem;
+    font-size: .68rem;
+    color: var(--sec-text-color);
+    background-color: var(--link-hover-bg-color);
+  }
+
+  .games-empty {
+    padding: 1.2rem 0;
+    text-align: center;
+    color: var(--sec-text-color);
+  }
+
+  .game-player {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+
+  .game-player[hidden] {
+    display: none;
+  }
+
+  .game-player-mask {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(6, 10, 15, .74);
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+  }
+
+  .game-player-panel {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: min(920px, 96vw);
+    height: min(640px, 88vh);
+    overflow: hidden;
+    border: 1px solid #26333f;
+    border-radius: 14px;
+    background-color: #0e141b;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, .46);
+  }
+
+  .game-player-panel:fullscreen {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .game-player-bar {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: .5rem .7rem .5rem 1rem;
+    border-bottom: 1px solid #22303f;
+    background-color: #121a23;
+  }
+
+  .game-player-title {
+    overflow: hidden;
+    font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: .86rem;
+    letter-spacing: .1em;
+    color: #e3eaf1;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .game-player-tools {
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: .4rem;
+  }
+
+  .game-tool {
+    appearance: none;
+    padding: .24rem .55rem;
+    border: 1px solid #2b3a49;
+    border-radius: .4rem;
+    background-color: #18222d;
+    color: #c9d5e0;
+    font-family: inherit;
+    font-size: .72rem;
+    line-height: 1.5;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color .15s ease, border-color .15s ease, background-color .15s ease;
+  }
+
+  .game-tool:hover {
+    border-color: #e8b04b;
+    background-color: #22303f;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .game-tool-close:hover {
+    border-color: #e06c75;
+  }
+
+  .game-player-frame {
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    border: 0;
+    background-color: #0e141b;
+  }
+
+  .game-player-hint {
+    flex: none;
+    padding: .45rem .8rem;
+    border-top: 1px solid #22303f;
+    background-color: #121a23;
+    font-size: .72rem;
+    line-height: 1.5;
+    color: #8fa0b0;
+  }
+
+  .game-player-hint:empty {
+    display: none;
+  }
+
+  @media (max-width: 640px) {
+    .game-player {
+      padding: 0;
+    }
+
+    .game-player-panel {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      border-radius: 0;
+    }
+
+    .games-grid {
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: .7rem;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    var player = document.getElementById('game-player');
+    if (!player) return;
+
+    var frame = player.querySelector('.game-player-frame');
+    var panel = player.querySelector('.game-player-panel');
+    var title = player.querySelector('.game-player-title');
+    var hint = player.querySelector('.game-player-hint');
+    var openLink = player.querySelector('[data-action="open"]');
+    var lastFocus = null;
+
+    function open(src, name, text) {
+      lastFocus = document.activeElement;
+      title.textContent = name || '';
+      hint.textContent = text || '';
+      openLink.setAttribute('href', src);
+      frame.setAttribute('src', src);
+      player.hidden = false;
+      document.body.style.overflow = 'hidden';
+      setTimeout(function () {
+        try { frame.focus(); } catch (e) {}
+      }, 0);
+    }
+
+    function close() {
+      player.hidden = true;
+      frame.setAttribute('src', 'about:blank');
+      document.body.style.overflow = '';
+      if (document.fullscreenElement && document.exitFullscreen) {
+        document.exitFullscreen().catch(function () {});
+      }
+      if (lastFocus && lastFocus.focus) {
+        try { lastFocus.focus(); } catch (e) {}
+      }
+    }
+
+    function toggleFullscreen() {
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(function () {});
+        return;
+      }
+      if (panel.requestFullscreen) {
+        panel.requestFullscreen().catch(function () {});
+      }
+    }
+
+    document.addEventListener('click', function (event) {
+      var el = event.target;
+      if (!el || !el.closest) return;
+
+      var card = el.closest('.game-card');
+      if (card) {
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button === 1) return;
+        event.preventDefault();
+        open(card.getAttribute('data-play'), card.getAttribute('data-name'), card.getAttribute('data-hint'));
+        return;
+      }
+
+      var tool = el.closest('[data-action]');
+      if (!tool || !player.contains(tool)) return;
+      var action = tool.getAttribute('data-action');
+      if (action === 'close') {
+        close();
+      } else if (action === 'full') {
+        toggleFullscreen();
+      }
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && !player.hidden) close();
+    });
+
+    window.addEventListener('message', function (event) {
+      if (event.origin !== window.location.origin) return;
+      if (event.data === 'games-close') close();
+    });
+  })();
+</script>
