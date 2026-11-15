@@ -1,5 +1,8 @@
-#!/usr/bin/env node
 'use strict';
+
+// No shebang here on purpose: hexo wraps every file in scripts/ inside a
+// function scope, and a leading "#!" line makes that wrapper a syntax error.
+// The script is invoked explicitly via `node scripts/pin-ids.js`.
 
 // Assigns a stable `_id` to every post that lacks one.
 //
